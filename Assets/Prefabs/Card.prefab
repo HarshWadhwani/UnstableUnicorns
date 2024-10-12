@@ -108,6 +108,10 @@ MonoBehaviour:
   cardBack: {fileID: 5794695409819567667}
   cardName: {fileID: 1685413634890184321}
   cardDescription: {fileID: 3702754133603475709}
+  cardScriptableObject: {fileID: 0}
+  cardType: 0
+  specialActionType: 0
+  afterAction: 0
 --- !u!114 &405866235899723490
 MonoBehaviour:
   m_ObjectHideFlags: 0

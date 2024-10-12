@@ -16,11 +16,18 @@ public class Card : MonoBehaviour, IPointerClickHandler
     public SpecialActionType specialActionType;
     public AfterAction afterAction;
 
+    private TurnManager turnManager;
+
+    void Start()
+    {
+        this.turnManager = GameObject.FindObjectOfType<TurnManager>();
+    }
+
     public void SetCardName(string cardNameText)
     {
         if (cardName != null)
         {
-            cardName.text = cardNameText;
+            this.cardName.text = cardNameText;
         }
         else
         {
@@ -32,7 +39,7 @@ public class Card : MonoBehaviour, IPointerClickHandler
     {
         if (cardDescription != null)
         {
-            cardDescription.text = cardDescriptionText;
+            this.cardDescription.text = cardDescriptionText;
         }
         else
         {
@@ -40,11 +47,25 @@ public class Card : MonoBehaviour, IPointerClickHandler
         }
     }
 
+    public void AssignCardData(CardScriptableObject cardScriptableObject)
+    {
+        this.name = cardScriptableObject.cardNameVariations[0];
+        SetCardName(cardScriptableObject.cardNameVariations[0]);
+        SetCardDescription(cardScriptableObject.cardDescriptionText);
+        this.cardType = cardScriptableObject.cardType;
+        this.specialActionType = cardScriptableObject.specialActionType;
+        this.afterAction = cardScriptableObject.afterAction;
+        this.cardScriptableObject = cardScriptableObject;
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         RevealCard();
+        turnManager.DrawCardFromDeck(this);
         Debug.Log("Card clicked: " + cardName.text);
     }
+
+
 
     public void HideCard()
     {
