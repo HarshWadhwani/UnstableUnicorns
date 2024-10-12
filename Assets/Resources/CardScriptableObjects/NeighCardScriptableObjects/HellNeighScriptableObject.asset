@@ -9,16 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f966ec82b913ca8498a0eec448c91ed7, type: 3}
-  m_Name: NeighCardSOTypeA
+  m_Script: {fileID: 11500000, guid: 62a6cf84eea017647ac7f7584af5595e, type: 3}
+  m_Name: HellNeighScriptableObject
   m_EditorClassIdentifier: 
   cardNameVariations:
   - Hell Neigh
-  - The Safeword is Neigh
   - Neigh, Bitch
-  cardType: 0
-  cardDescriptionText: Play this card when another player tries to play a card. Stop
-    their card from being played and send it to the discard pile.
+  - The Safeword is Neigh
+  cardDescriptionText: 
   instances: 11
-  shouldOpponentDiscard: 0
-  isFinal: 0
+  cardType: 0
+  specialActionType: 0
+  afterAction: 0
+  neighType: 0

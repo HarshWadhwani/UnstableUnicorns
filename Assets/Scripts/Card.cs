@@ -11,6 +11,10 @@ public class Card : MonoBehaviour, IPointerClickHandler
     public GameObject cardBack;
     public TextMeshProUGUI cardName;
     public TextMeshProUGUI cardDescription;
+    public CardScriptableObject cardScriptableObject;
+    public CardType cardType;
+    public SpecialActionType specialActionType;
+    public AfterAction afterAction;
 
     public void SetCardName(string cardNameText)
     {

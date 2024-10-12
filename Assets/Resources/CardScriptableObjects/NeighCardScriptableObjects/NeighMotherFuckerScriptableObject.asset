@@ -9,15 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f966ec82b913ca8498a0eec448c91ed7, type: 3}
-  m_Name: NeighCardSOTypeB
+  m_Script: {fileID: 11500000, guid: 681635d0ec0704f4d890825097440c2c, type: 3}
+  m_Name: NeighMotherFuckerScriptableObject
   m_EditorClassIdentifier: 
   cardNameVariations:
   - Neigh, Motherfucker
-  cardType: 0
-  cardDescriptionText: Play this card when another player tries to play a card. Stop
-    their card from being played and send it to the discard pile. That player must
-    DISCARD a card.
+  cardDescriptionText: 
   instances: 3
-  shouldOpponentDiscard: 1
-  isFinal: 0
+  cardType: 0
+  specialActionType: 0
+  afterAction: 0
+  neighType: 1
