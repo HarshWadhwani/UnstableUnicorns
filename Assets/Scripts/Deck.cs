@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class Deck : MonoBehaviour
+public class Deck : CardSpace
 {
     public List<CardScriptableObject> cardScriptableObjects;
 
     public GameObject cardPrefab;
 
     public List<GameObject> deckCards;
-
-    public TurnManager turnManager;
 
     void Start()
     {
@@ -33,18 +31,24 @@ public class Deck : MonoBehaviour
         {
             CardScriptableObject selectedCardData = cardScriptableObjects[Random.Range(0, cardScriptableObjects.Count)];
 
-            GameObject newCard = GenerateNewCard(cardPrefab, selectedCardData);
+            GameObject newCard = GenerateNewCard(selectedCardData);
 
             PositionAndAppendCardDeck(newCard);
         }
     }
 
-    GameObject GenerateNewCard(GameObject cardPrefab, CardScriptableObject selectedCardData)
+    public override void HandleCardClick(Card card)
+    {
+        turnManager.DrawCardFromDeck(card);
+    }
+
+    GameObject GenerateNewCard(CardScriptableObject selectedCardData)
     {
         var newCard = Instantiate(cardPrefab);
         Card cardComponent = newCard.GetComponent<Card>();
 
         cardComponent.AssignCardData(selectedCardData);
+        cardComponent.cardSpace = this;
         cardComponent.HideCard();
 
         return newCard;

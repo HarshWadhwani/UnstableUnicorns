@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Stable : MonoBehaviour
+public class Stable : CardSpace
 {
     public List<Card> stableCards;
     public int maxCardsInStable;
@@ -19,11 +19,14 @@ public class Stable : MonoBehaviour
         
     }
 
+    
+
     public void AddCardToStable(Card card)
     {
         if (stableCards.Count < maxCardsInStable)
         {
             stableCards.Add(card);
+            card.cardSpace = this;
             card.transform.SetParent(transform, false);
             PositionCardsInStable();
             //PositionCardInStable(card);
@@ -34,12 +37,17 @@ public class Stable : MonoBehaviour
         }
     }
 
+    public override void HandleCardClick(Card card)
+    {
+        Debug.Log("Reached stable");
+    }
+
     protected virtual void PositionCardsInStable()
     {
 
     }
 
-    protected virtual void PositionCardInStable(Card card)
+    protected void PositionCardInStable(Card card)
     {
         RectTransform stableRect = GetComponent<RectTransform>();
         float stableWidth = stableRect.rect.width;

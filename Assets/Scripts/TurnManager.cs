@@ -21,7 +21,7 @@ public class TurnManager : MonoBehaviour
 
     public void DrawCardFromDeck(Card drawnCard)
     {
-        Debug.Log(drawnCard);
+        drawnCard.RevealCard();
         activePlayer.handStable.AddCardToStable(drawnCard); 
     }
 }

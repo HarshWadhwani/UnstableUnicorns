@@ -15,6 +15,7 @@ public class Card : MonoBehaviour, IPointerClickHandler
     public CardType cardType;
     public SpecialActionType specialActionType;
     public AfterAction afterAction;
+    public CardSpace cardSpace;
 
     private TurnManager turnManager;
 
@@ -60,12 +61,8 @@ public class Card : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        RevealCard();
-        turnManager.DrawCardFromDeck(this);
-        //Debug.Log("Card clicked: " + cardName.text);
+        cardSpace.HandleCardClick(this);
     }
-
-
 
     public void HideCard()
     {

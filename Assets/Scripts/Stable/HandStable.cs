@@ -19,6 +19,11 @@ public class HandStable : Stable
         
     }
 
+    public override void HandleCardClick(Card card)
+    {
+        Debug.Log("Reached HandStable");
+    }
+
     protected override void PositionCardsInStable()
     {
 
