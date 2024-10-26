@@ -62,7 +62,7 @@ public class Card : MonoBehaviour, IPointerClickHandler
     {
         RevealCard();
         turnManager.DrawCardFromDeck(this);
-        Debug.Log("Card clicked: " + cardName.text);
+        //Debug.Log("Card clicked: " + cardName.text);
     }
 
 

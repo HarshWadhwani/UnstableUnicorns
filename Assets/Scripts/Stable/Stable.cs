@@ -5,7 +5,7 @@ using UnityEngine;
 public class Stable : MonoBehaviour
 {
     public List<Card> stableCards;
-    public int maxCardsInStable = 7;
+    public int maxCardsInStable;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +24,9 @@ public class Stable : MonoBehaviour
         if (stableCards.Count < maxCardsInStable)
         {
             stableCards.Add(card);
-            PositionCardInStable(card);
+            card.transform.SetParent(transform, false);
+            PositionCardsInStable();
+            //PositionCardInStable(card);
         }
         else
         {
@@ -32,7 +34,12 @@ public class Stable : MonoBehaviour
         }
     }
 
-    void PositionCardInStable(Card card)
+    protected virtual void PositionCardsInStable()
+    {
+
+    }
+
+    protected virtual void PositionCardInStable(Card card)
     {
         RectTransform stableRect = GetComponent<RectTransform>();
         float stableWidth = stableRect.rect.width;
