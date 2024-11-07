@@ -21,26 +21,30 @@ public class HandStable : Stable
 
     public override void HandleCardClick(Card card)
     {
-        Debug.Log("Reached HandStable");
+        turnManager.PlaceCardInStable(card);
+        this.RemoveCardFromCurrentStable(card);
     }
 
-    protected override void PositionCardsInStable()
+    
+
+    protected override void PositionCardsInStable(Card card)
     {
+        Debug.Log(spaceCards.Count);
 
         RectTransform stableRect = GetComponent<RectTransform>();
 
-        float cardSlotAngle = fanTotalAngle / stableCards.Count;
+        float cardSlotAngle = fanTotalAngle / spaceCards.Count;
 
-        for (int i = 0; i < stableCards.Count; i++)
+        for (int i = 0; i < spaceCards.Count; i++)
         {
-            RectTransform cardRect = stableCards[i].GetComponent<RectTransform>();
+            RectTransform cardRect = spaceCards[i].GetComponent<RectTransform>();
             
             float openSlot = i * cardSlotAngle;
             float zRotation = stableRect.localEulerAngles.z + 70 - (cardSlotAngle / 2) - openSlot;
 
-            var xPosition = stableRect.anchoredPosition.x + GetXPositionOffsetValue(stableCards.Count, i);
+            var xPosition = stableRect.anchoredPosition.x + GetXPositionOffsetValue(spaceCards.Count, i);
 
-            var yPosition = GetYPositionOffsetValue(stableCards.Count, i);
+            var yPosition = GetYPositionOffsetValue(spaceCards.Count, i);
 
             cardRect.anchoredPosition = new Vector2(xPosition, yPosition);
             cardRect.localEulerAngles = new Vector3(stableRect.localEulerAngles.x, stableRect.localEulerAngles.y, zRotation);

@@ -365,7 +365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c75b40165c49404caf8b486f1e0acfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnManager: {fileID: 0}
+  turnManager: {fileID: 1218204562}
   stableCards: []
   maxCardsInStable: 7
   fanTotalAngle: 140
@@ -435,6 +435,7 @@ MonoBehaviour:
   players:
   - {fileID: 697327481}
   activePlayer: {fileID: 0}
+  currentPhase: 0
 --- !u!1 &1565046666
 GameObject:
   m_ObjectHideFlags: 0

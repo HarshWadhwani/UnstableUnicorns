@@ -19,17 +19,12 @@ public class Stable : CardSpace
         
     }
 
-    
-
     public void AddCardToStable(Card card)
     {
-        if (stableCards.Count < maxCardsInStable)
+        if (spaceCards.Count < maxCardsInStable)
         {
-            stableCards.Add(card);
-            card.cardSpace = this;
-            card.transform.SetParent(transform, false);
-            PositionCardsInStable();
-            //PositionCardInStable(card);
+            this.AddCardToSpace(card);
+            PositionCardsInStable(card);
         }
         else
         {
@@ -39,38 +34,23 @@ public class Stable : CardSpace
 
     public override void HandleCardClick(Card card)
     {
-        Debug.Log("Reached stable");
     }
 
-    protected virtual void PositionCardsInStable()
+    protected virtual void PositionCardsInStable(Card card)
     {
-
-    }
-
-    protected void PositionCardInStable(Card card)
-    {
+        Debug.Log("Position in Unicorn");
         RectTransform stableRect = GetComponent<RectTransform>();
         float stableWidth = stableRect.rect.width;
 
-        Debug.Log("stableWidth is " + stableWidth);
-
         float cardSlotWidth = stableWidth / maxCardsInStable;
-
-        Debug.Log("cardSlotWidth is " + cardSlotWidth);
 
         RectTransform cardRect = card.GetComponent<RectTransform>();
 
-        Debug.Log("cardRect.rect.width is " + cardRect.rect.width);
-
         float cardBuffer = (cardSlotWidth - cardRect.rect.width) / 2;
 
-        Debug.Log("cardBuffer is " + cardBuffer);
-
-        float openSlot = (stableCards.Count - 1) * 2 * cardBuffer + cardRect.rect.width;
+        float openSlot = (spaceCards.Count - 1) * 2 * cardBuffer + cardRect.rect.width;
 
         float xPos = stableRect.anchoredPosition.x - (stableWidth / 2) + cardBuffer + (cardRect.rect.width / 2) + openSlot;
-
-        Debug.Log("xPos is " + xPos);
 
         cardRect.anchoredPosition = new Vector2(xPos, 0);
 

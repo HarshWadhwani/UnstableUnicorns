@@ -31,32 +31,27 @@ public class Deck : CardSpace
         {
             CardScriptableObject selectedCardData = cardScriptableObjects[Random.Range(0, cardScriptableObjects.Count)];
 
-            GameObject newCard = GenerateNewCard(selectedCardData);
+            Card newCard = GenerateNewCard(selectedCardData);
 
-            PositionAndAppendCardDeck(newCard);
+            this.AddCardToSpace(newCard);
+
+            newCard.HideCard();
         }
+    }
+
+    Card GenerateNewCard(CardScriptableObject selectedCardData)
+    {
+        var newCardObject = Instantiate(cardPrefab);
+        Card cardComponent = newCardObject.GetComponent<Card>();
+
+        cardComponent.AssignCardData(selectedCardData);
+
+        return cardComponent;
     }
 
     public override void HandleCardClick(Card card)
     {
         turnManager.DrawCardFromDeck(card);
-    }
-
-    GameObject GenerateNewCard(CardScriptableObject selectedCardData)
-    {
-        var newCard = Instantiate(cardPrefab);
-        Card cardComponent = newCard.GetComponent<Card>();
-
-        cardComponent.AssignCardData(selectedCardData);
-        cardComponent.cardSpace = this;
-        cardComponent.HideCard();
-
-        return newCard;
-    }
-
-    void PositionAndAppendCardDeck(GameObject card)
-    {
-        card.transform.SetParent(transform, false);
-        deckCards.Add(card);
+        this.RemoveCardFromCurrentStable(card);
     }
 }

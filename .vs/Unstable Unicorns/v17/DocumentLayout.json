@@ -3,28 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\assets\\scripts\\deck.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|c:\\users\\harsh wadhwani\\desktop\\personal projects\\unity\\unstable unicorns\\assets\\scripts\\stable\\stable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\stable\\stable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|c:\\users\\harsh wadhwani\\desktop\\personal projects\\unity\\unstable unicorns\\assets\\scripts\\deck.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\deck.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|c:\\users\\harsh wadhwani\\desktop\\personal projects\\unity\\unstable unicorns\\assets\\scripts\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\assets\\scripts\\turnmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\turnmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|c:\\users\\harsh wadhwani\\desktop\\personal projects\\unity\\unstable unicorns\\assets\\scripts\\cardspace.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\cardspace.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|c:\\users\\harsh wadhwani\\desktop\\personal projects\\unity\\unstable unicorns\\assets\\scripts\\stable\\handstable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\stable\\handstable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|c:\\users\\harsh wadhwani\\desktop\\personal projects\\unity\\unstable unicorns\\assets\\scripts\\stable\\stable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\stable\\stable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|c:\\users\\harsh wadhwani\\desktop\\personal projects\\unity\\unstable unicorns\\assets\\scripts\\turnmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\turnmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|c:\\users\\harsh wadhwani\\desktop\\personal projects\\unity\\unstable unicorns\\assets\\scripts\\cardspace.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\cardspace.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|c:\\users\\harsh wadhwani\\desktop\\personal projects\\unity\\unstable unicorns\\assets\\scripts\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|c:\\users\\harsh wadhwani\\desktop\\personal projects\\unity\\unstable unicorns\\assets\\scripts\\stable\\unicornstable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\stable\\unicornstable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,38 +38,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Card.cs",
-              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Card.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Card.cs",
-              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Card.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Card.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAowC0AAAAJAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "UnicornStable.cs",
+              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Stable\\UnicornStable.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Stable\\UnicornStable.cs",
+              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Stable\\UnicornStable.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Stable\\UnicornStable.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-12T21:29:41.859Z",
+              "WhenOpened": "2024-11-07T03:40:11.026Z",
               "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Deck.cs",
-              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Deck.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Deck.cs",
-              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Deck.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Deck.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAA1wCAAAAAAAAAAAAAAAA==",
+              "Title": "Stable.cs",
+              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Stable\\Stable.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Stable\\Stable.cs",
+              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Stable\\Stable.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Stable\\Stable.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAACAAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-12T21:27:16.326Z",
+              "WhenOpened": "2024-11-07T03:26:13.78Z",
               "EditorCaption": ""
             },
             {
@@ -76,48 +74,67 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\Stable\\HandStable.cs",
               "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Stable\\HandStable.cs",
               "RelativeToolTip": "Assets\\Scripts\\Stable\\HandStable.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAACsAAAAAAAAAAAAlwC4AAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-26T05:14:33.181Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Stable.cs",
-              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Stable\\Stable.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Stable\\Stable.cs",
-              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Stable\\Stable.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Stable\\Stable.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAACoAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-26T05:12:36.631Z",
+              "WhenOpened": "2024-11-07T03:26:10.362Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "CardSpace.cs",
-              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\CardSpace.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\CardSpace.cs",
-              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\CardSpace.cs",
-              "RelativeToolTip": "Assets\\Scripts\\CardSpace.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAHAAAAAAAAAA==",
+              "Title": "Card.cs",
+              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Card.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Card.cs",
+              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Card.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Card.cs",
+              "ViewState": "AgIAADIAAAAAAAAAAAAwwD8AAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-26T04:45:19.609Z",
+              "WhenOpened": "2024-11-07T03:19:55.106Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "CardSpace.cs",
+              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\CardSpace.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\CardSpace.cs",
+              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\CardSpace.cs",
+              "RelativeToolTip": "Assets\\Scripts\\CardSpace.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAQwBEAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T03:19:10.261Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "TurnManager.cs",
               "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\TurnManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\TurnManager.cs",
               "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\TurnManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\TurnManager.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAAD4vxUAAAAQAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAIA3wCQAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-12T21:02:08.005Z",
+              "WhenOpened": "2024-11-07T03:17:12.506Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Deck.cs",
+              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Deck.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Deck.cs",
+              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Deck.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Deck.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAwwDcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T03:18:45.396Z",
               "EditorCaption": ""
             }
           ]

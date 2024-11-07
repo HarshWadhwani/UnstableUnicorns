@@ -3,24 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|c:\\users\\harsh wadhwani\\desktop\\personal projects\\unity\\unstable unicorns\\assets\\scripts\\cardspace.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\cardspace.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|c:\\users\\harsh wadhwani\\desktop\\personal projects\\unity\\unstable unicorns\\assets\\scripts\\enums\\turnphase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\enums\\turnphase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\assets\\scripts\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\assets\\scripts\\deck.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\deck.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\assets\\scripts\\turnmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\turnmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|c:\\users\\harsh wadhwani\\desktop\\personal projects\\unity\\unstable unicorns\\assets\\scripts\\enums\\specialactiontype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\enums\\specialactiontype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,77 +18,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Card.cs",
-              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Card.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Card.cs",
-              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Card.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Card.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAowCwAAAAMAAAAAAAAAA==",
+              "Title": "SpecialActionType.cs",
+              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Enums\\SpecialActionType.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Enums\\SpecialActionType.cs",
+              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Enums\\SpecialActionType.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Enums\\SpecialActionType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-12T21:29:41.859Z",
+              "WhenOpened": "2024-11-07T03:15:45.683Z",
               "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "CardSpace.cs",
-              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\CardSpace.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\CardSpace.cs",
-              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\CardSpace.cs",
-              "RelativeToolTip": "Assets\\Scripts\\CardSpace.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAA0AAAAAAAAAA==",
+              "Title": "TurnPhase.cs",
+              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Enums\\TurnPhase.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Enums\\TurnPhase.cs",
+              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Enums\\TurnPhase.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Enums\\TurnPhase.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-26T04:45:19.609Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Deck.cs",
-              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Deck.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Deck.cs",
-              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Deck.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Deck.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAWwDIAAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-12T21:27:16.326Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Player.cs",
-              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Player.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Player.cs",
-              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\Player.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Player.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-12T21:28:08.717Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "TurnManager.cs",
-              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\TurnManager.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\TurnManager.cs",
-              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\TurnManager.cs",
-              "RelativeToolTip": "Assets\\Scripts\\TurnManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-12T21:02:08.005Z",
+              "WhenOpened": "2024-11-07T03:16:27.296Z",
               "EditorCaption": ""
             }
           ]
