@@ -23,6 +23,12 @@ public class Deck : CardSpace
         cardScriptableObjects.AddRange(Resources.LoadAll<CardScriptableObject>("CardScriptableObjects"));
     }
 
+    public override void HandleCardClick(Card card)
+    {
+        turnManager.MoveCardBetweenDecks(card);
+        RemoveCardFromCurrentStable(card);
+    }
+
     void GenerateCardDeck()
     {
         int numberOfCards = cardScriptableObjects.Select(cardSO => cardSO.instances).Sum();
@@ -47,11 +53,5 @@ public class Deck : CardSpace
         cardComponent.AssignCardData(selectedCardData);
 
         return cardComponent;
-    }
-
-    public override void HandleCardClick(Card card)
-    {
-        turnManager.DrawCardFromDeck(card);
-        this.RemoveCardFromCurrentStable(card);
     }
 }

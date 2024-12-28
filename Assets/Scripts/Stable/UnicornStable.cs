@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UnicornStable : Stable
 {
-    
+
 
     // Start is called before the first frame update
     void Start()
@@ -16,5 +16,19 @@ public class UnicornStable : Stable
     void Update()
     {
         
+    }
+
+    public override void AddCardToStable(Card card)
+    {
+        AddCardToSpace(card);
+        PositionCardsInStable();
+    }
+
+    public void CheckWinCondition()
+    {
+        if (spaceCards.Count == maxCardsInStable)
+        {
+            Debug.Log("Player wins!");
+        }
     }
 }

@@ -22,15 +22,12 @@ public class HandStable : Stable
     public override void HandleCardClick(Card card)
     {
         turnManager.PlaceCardInStable(card);
-        this.RemoveCardFromCurrentStable(card);
+        RemoveCardFromCurrentStable(card);
+        PositionCardsInStable();
     }
 
-    
-
-    protected override void PositionCardsInStable(Card card)
+    protected override void PositionCardsInStable()
     {
-        Debug.Log(spaceCards.Count);
-
         RectTransform stableRect = GetComponent<RectTransform>();
 
         float cardSlotAngle = fanTotalAngle / spaceCards.Count;

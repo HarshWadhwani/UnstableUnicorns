@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "UnicornCardSO", menuName = "ScriptableObjects/UnicornCardSO")]
+[CreateAssetMenu(fileName = "UnicornCardScriptableObject", menuName = "ScriptableObjects/UnicornCard")]
 public class UnicornCardScriptableOject : CardScriptableObject
 {
     public UnicornType unicornType;
