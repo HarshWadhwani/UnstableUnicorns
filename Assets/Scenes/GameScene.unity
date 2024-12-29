@@ -262,7 +262,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c4e189d6080bab4a84eeaa71df0098a, type: 3}
+  m_Script: {fileID: 11500000, guid: e3747f3173177da4b91fbd0ffd5145b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &786892824
@@ -347,7 +347,7 @@ MonoBehaviour:
   players:
   - {fileID: 697327481}
   - {fileID: 1345823695}
-  activePlayer: {fileID: 0}
+  activePlayer: {fileID: 697327481}
   currentPhase: 0
 --- !u!114 &1345823695 stripped
 MonoBehaviour:
@@ -357,7 +357,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c4e189d6080bab4a84eeaa71df0098a, type: 3}
+  m_Script: {fileID: 11500000, guid: e3747f3173177da4b91fbd0ffd5145b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &1345823696 stripped
@@ -441,10 +441,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2008879915}
     m_Modifications:
-    - target: {fileID: 1178260588128457450, guid: 1487136a20487134a89592c6a03e728c, type: 3}
-      propertyPath: m_Name
-      value: PlayerTwoDowngradeStable
-      objectReference: {fileID: 0}
     - target: {fileID: 2498505222438969314, guid: 1487136a20487134a89592c6a03e728c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -525,25 +521,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
-    - target: {fileID: 6843809200536145351, guid: 1487136a20487134a89592c6a03e728c, type: 3}
-      propertyPath: m_Name
-      value: PlayerTwoUnicornStable
-      objectReference: {fileID: 0}
-    - target: {fileID: 6928800616626100562, guid: 1487136a20487134a89592c6a03e728c, type: 3}
-      propertyPath: m_Name
-      value: PlayerTwoUpgradeStable
-      objectReference: {fileID: 0}
-    - target: {fileID: 7692536413895936826, guid: 1487136a20487134a89592c6a03e728c, type: 3}
-      propertyPath: turnManager
-      value: 
-      objectReference: {fileID: 1218204562}
     - target: {fileID: 8655843030583308325, guid: 1487136a20487134a89592c6a03e728c, type: 3}
       propertyPath: m_Name
       value: PlayerTwo
-      objectReference: {fileID: 0}
-    - target: {fileID: 8940009190337679088, guid: 1487136a20487134a89592c6a03e728c, type: 3}
-      propertyPath: m_Name
-      value: PlayerTwoHandStable
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -679,14 +659,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1916461357}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecd75c6d1a0474b4e897f7117f970e8b, type: 3}
+  m_Script: {fileID: 11500000, guid: 38cc6f1e176de5140b9aedbacc0243df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spaceCards: []
   turnManager: {fileID: 1218204562}
+  cardPrefab: {fileID: 5800291328387177000, guid: 421bea3af5945be4ebad5f34200ad327, type: 3}
   cardScriptableObjects: []
-  cardPrefab: {fileID: 528675848590658164, guid: 421bea3af5945be4ebad5f34200ad327, type: 3}
-  deckCards: []
 --- !u!1 &2008879911
 GameObject:
   m_ObjectHideFlags: 0
@@ -881,10 +860,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7692536413895936826, guid: 1487136a20487134a89592c6a03e728c, type: 3}
-      propertyPath: turnManager
-      value: 
-      objectReference: {fileID: 1218204562}
     - target: {fileID: 8655843030583308325, guid: 1487136a20487134a89592c6a03e728c, type: 3}
       propertyPath: m_Name
       value: PlayerOne

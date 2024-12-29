@@ -50,8 +50,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spaceCards: []
   turnManager: {fileID: 0}
+  cardPrefab: {fileID: 5800291328387177000, guid: 421bea3af5945be4ebad5f34200ad327, type: 3}
   maxCardsInStable: 7
-  cardPrefab: {fileID: 0}
 --- !u!1 &6843809200536145351
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,8 +102,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spaceCards: []
   turnManager: {fileID: 0}
-  maxCardsInStable: 7
   cardPrefab: {fileID: 5800291328387177000, guid: 421bea3af5945be4ebad5f34200ad327, type: 3}
+  maxCardsInStable: 7
 --- !u!1 &6928800616626100562
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,8 +154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spaceCards: []
   turnManager: {fileID: 0}
+  cardPrefab: {fileID: 5800291328387177000, guid: 421bea3af5945be4ebad5f34200ad327, type: 3}
   maxCardsInStable: 7
-  cardPrefab: {fileID: 0}
 --- !u!1 &8655843030583308325
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,7 +205,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8655843030583308325}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c4e189d6080bab4a84eeaa71df0098a, type: 3}
+  m_Script: {fileID: 11500000, guid: e3747f3173177da4b91fbd0ffd5145b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unicornStable: {fileID: 3003665228945303195}
@@ -260,6 +260,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spaceCards: []
   turnManager: {fileID: 0}
+  cardPrefab: {fileID: 5800291328387177000, guid: 421bea3af5945be4ebad5f34200ad327, type: 3}
   maxCardsInStable: 7
-  cardPrefab: {fileID: 0}
   fanTotalAngle: 140

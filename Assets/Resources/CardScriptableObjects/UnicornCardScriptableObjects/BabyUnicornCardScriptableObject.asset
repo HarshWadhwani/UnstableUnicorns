@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c16877f9436e29745893a506a42e2e9a, type: 3}
+  m_Name: BabyUnicornCardScriptableObject
+  m_EditorClassIdentifier: 
+  cardNameVariations:
+  - Shotgun Baby Unicorn
+  - Fucklng Ugly Baby Unicorn
+  - Bye Bye Baby Unicorn
+  - Upside Down Baby Unicorn
+  - Tasty Baby Unicorn
+  - Conjoined Baby Unicorn
+  - Paegent Baby Unicorn
+  - Cannibal Baby Unicorn
+  - Dumpster Baby Unicorn
+  - Someone Else's Baby Unicorn
+  - Fucking Cute Baby Unicorn
+  - Baby Unicorn of Incest
+  - Faceless Baby Unicorn
+  cardDescriptionText: 
+  instances: 13
+  cardType: 0
+  specialActionType: 2
+  afterAction: 1
+  unicornType: 3
