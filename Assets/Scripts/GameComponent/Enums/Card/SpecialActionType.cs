@@ -2,7 +2,7 @@ using UnityEngine;
 
 public enum SpecialActionType
 {
-    Immediate,
-    EveryTurn,
-    None
+    IMMEDIATE,
+    EVERY_TURN,
+    NONE
 }

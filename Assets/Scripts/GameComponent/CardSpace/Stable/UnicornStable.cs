@@ -20,7 +20,7 @@ public class UnicornStable : Stable
 
     public override void AddCardToStable(Card card)
     {
-        AddCardToSpace(card);
+        AddCard(card);
         PositionCardsInStable();
     }
 

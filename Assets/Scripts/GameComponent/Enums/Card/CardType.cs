@@ -2,9 +2,9 @@ using UnityEngine;
 
 public enum CardType
 {
-    Unicorn,
-    Magic,
-    Upgrade,
-    Downgrade,
-    Neigh
+    UNICORN,
+    MAGIC,
+    UPGRADE,
+    DOWNGRADE,
+    NEIGH
 }

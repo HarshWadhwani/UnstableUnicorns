@@ -2,8 +2,8 @@ using UnityEngine;
 
 public enum UnicornType
 {
-    NotApplicable,
-    Basic,
-    Magical,
-    Baby
+    BASIC,
+    MAGIC,
+    BABY,
+    SPECIAL
 }

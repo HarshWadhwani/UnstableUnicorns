@@ -11,7 +11,7 @@ public class Card : MonoBehaviour, IPointerClickHandler
     public GameObject cardBack;
     public TextMeshProUGUI cardName;
     public TextMeshProUGUI cardDescription;
-    public CardScriptableObject cardScriptableObject;
+    public CardData cardScriptableObject;
     public CardType cardType;
     public SpecialActionType specialActionType;
     public AfterAction afterAction;
@@ -24,7 +24,18 @@ public class Card : MonoBehaviour, IPointerClickHandler
         turnManager = GameObject.FindObjectOfType<TurnManager>();
     }
 
-    public void SetCardName(string cardNameText)
+    public void Initialize(CardData cardScriptableObject)
+    {
+        this.name = cardScriptableObject.cardNameVariations[0];
+        SetCardName(cardScriptableObject.cardNameVariations[0]);
+        SetCardDescription(cardScriptableObject.cardDescriptionText);
+        this.cardType = cardScriptableObject.cardType;
+        this.specialActionType = cardScriptableObject.specialActionType;
+        this.afterAction = cardScriptableObject.afterAction;
+        this.cardScriptableObject = cardScriptableObject;
+    }
+
+    private void SetCardName(string cardNameText)
     {
         if (cardName != null)
         {
@@ -36,7 +47,7 @@ public class Card : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    public void SetCardDescription(string cardDescriptionText)
+    private void SetCardDescription(string cardDescriptionText)
     {
         if (cardDescription != null)
         {
@@ -46,17 +57,6 @@ public class Card : MonoBehaviour, IPointerClickHandler
         {
             Debug.LogError("Card Description Text component is not assigned!");
         }
-    }
-
-    public void AssignCardData(CardScriptableObject cardScriptableObject)
-    {
-        this.name = cardScriptableObject.cardNameVariations[0];
-        SetCardName(cardScriptableObject.cardNameVariations[0]);
-        SetCardDescription(cardScriptableObject.cardDescriptionText);
-        this.cardType = cardScriptableObject.cardType;
-        this.specialActionType = cardScriptableObject.specialActionType;
-        this.afterAction = cardScriptableObject.afterAction;
-        this.cardScriptableObject = cardScriptableObject;
     }
 
     public void OnPointerClick(PointerEventData eventData)

@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "FinalNeighScriptableObject", menuName = "ScriptableObjects/NeighCards/FinalNeigh")]
-public class FinalNeighScriptableObject : NeighCardScriptableObject
+[CreateAssetMenu(menuName = "CardData/NeighCardData/FinalNeighCardData")]
+public class FinalNeighCardData : NeighCardData
 {
     public override void TriggerSpecialAction()
     {
         Debug.Log("Triggered special action for FinalNeighScriptableObject");
+    }
+
+    public override void OnEnable()
+    {
+        base.OnEnable();
     }
 }

@@ -27,7 +27,7 @@ public class Stable : CardSpace
     {
         if (spaceCards.Count < maxCardsInStable)
         {
-            AddCardToSpace(card);
+            AddCard(card);
             PositionCardsInStable();
         }
         else

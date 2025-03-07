@@ -2,6 +2,7 @@ using UnityEngine;
 
 public enum AfterAction
 {
-    Discard,
-    PlaceInStable
+    DISCARD,
+    PLACE_IN_STABLE,
+        PLACE_IN_ENEMY_STABLE
 }

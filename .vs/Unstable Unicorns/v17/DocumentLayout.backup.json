@@ -3,32 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\assets\\scripts\\scriptableobjects\\neighcardscriptableobjects\\basicneighscriptableobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\scriptableobjects\\neighcardscriptableobjects\\basicneighscriptableobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|c:\\users\\harsh wadhwani\\desktop\\personal projects\\unity\\unstable unicorns\\assets\\scripts\\scriptableobjects\\neighcardscriptableobjects\\discardneighscriptableobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\scriptableobjects\\neighcardscriptableobjects\\discardneighscriptableobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|c:\\users\\harsh wadhwani\\desktop\\personal projects\\unity\\unstable unicorns\\assets\\scripts\\scriptableobjects\\neighcardscriptableobjects\\finalneighscriptableobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\scriptableobjects\\neighcardscriptableobjects\\finalneighscriptableobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\assets\\scripts\\scriptableobjects\\unicorncardscriptableobjects\\babyunicorncardscriptableoject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\scriptableobjects\\unicorncardscriptableobjects\\babyunicorncardscriptableoject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\assets\\scripts\\gamecomponent\\enums\\card\\specialactiontype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamecomponent\\enums\\card\\specialactiontype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\assets\\scripts\\gamecomponent\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamecomponent\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\assets\\scripts\\gamecomponent\\cardspace\\deck.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamecomponent\\cardspace\\deck.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|c:\\users\\harsh wadhwani\\desktop\\personal projects\\unity\\unstable unicorns\\assets\\scripts\\gamecomponent\\cardspace\\deck\\playdeck.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9905F432-0696-2327-83C3-5F5DB746781F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamecomponent\\cardspace\\deck\\playdeck.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,94 +14,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 223,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "DiscardNeighScriptableObject.cs",
-              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\ScriptableObjects\\NeighCardScriptableObjects\\DiscardNeighScriptableObject.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\ScriptableObjects\\NeighCardScriptableObjects\\DiscardNeighScriptableObject.cs",
-              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\ScriptableObjects\\NeighCardScriptableObjects\\DiscardNeighScriptableObject.cs",
-              "RelativeToolTip": "Assets\\Scripts\\ScriptableObjects\\NeighCardScriptableObjects\\DiscardNeighScriptableObject.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAA8AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-29T03:02:59.019Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "FinalNeighScriptableObject.cs",
-              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\ScriptableObjects\\NeighCardScriptableObjects\\FinalNeighScriptableObject.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\ScriptableObjects\\NeighCardScriptableObjects\\FinalNeighScriptableObject.cs",
-              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\ScriptableObjects\\NeighCardScriptableObjects\\FinalNeighScriptableObject.cs",
-              "RelativeToolTip": "Assets\\Scripts\\ScriptableObjects\\NeighCardScriptableObjects\\FinalNeighScriptableObject.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-29T03:00:51.17Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "BasicNeighScriptableObject.cs",
-              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\ScriptableObjects\\NeighCardScriptableObjects\\BasicNeighScriptableObject.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\ScriptableObjects\\NeighCardScriptableObjects\\BasicNeighScriptableObject.cs",
-              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\ScriptableObjects\\NeighCardScriptableObjects\\BasicNeighScriptableObject.cs",
-              "RelativeToolTip": "Assets\\Scripts\\ScriptableObjects\\NeighCardScriptableObjects\\BasicNeighScriptableObject.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAnAAAAAAAAAA==",
+              "Title": "PlayDeck.cs",
+              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\GameComponent\\CardSpace\\Deck\\PlayDeck.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\GameComponent\\CardSpace\\Deck\\PlayDeck.cs",
+              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\GameComponent\\CardSpace\\Deck\\PlayDeck.cs",
+              "RelativeToolTip": "Assets\\Scripts\\GameComponent\\CardSpace\\Deck\\PlayDeck.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-29T02:54:47.441Z",
+              "WhenOpened": "2025-03-07T09:37:05.544Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Card.cs",
-              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\GameComponent\\Card.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\GameComponent\\Card.cs",
-              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\GameComponent\\Card.cs",
-              "RelativeToolTip": "Assets\\Scripts\\GameComponent\\Card.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-29T02:51:40.542Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "BabyUnicornCardScriptableOject.cs",
-              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\ScriptableObjects\\UnicornCardScriptableObjects\\BabyUnicornCardScriptableOject.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\ScriptableObjects\\UnicornCardScriptableObjects\\BabyUnicornCardScriptableOject.cs",
-              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\ScriptableObjects\\UnicornCardScriptableObjects\\BabyUnicornCardScriptableOject.cs",
-              "RelativeToolTip": "Assets\\Scripts\\ScriptableObjects\\UnicornCardScriptableObjects\\BabyUnicornCardScriptableOject.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-29T02:38:39.454Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "SpecialActionType.cs",
-              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\GameComponent\\Enums\\Card\\SpecialActionType.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\GameComponent\\Enums\\Card\\SpecialActionType.cs",
-              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\GameComponent\\Enums\\Card\\SpecialActionType.cs",
-              "RelativeToolTip": "Assets\\Scripts\\GameComponent\\Enums\\Card\\SpecialActionType.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-29T02:26:19.725Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Deck.cs",
-              "DocumentMoniker": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\GameComponent\\CardSpace\\Deck.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\GameComponent\\CardSpace\\Deck.cs",
-              "ToolTip": "C:\\Users\\Harsh Wadhwani\\Desktop\\Personal Projects\\Unity\\Unstable Unicorns\\Assets\\Scripts\\GameComponent\\CardSpace\\Deck.cs",
-              "RelativeToolTip": "Assets\\Scripts\\GameComponent\\CardSpace\\Deck.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-28T20:12:44.759Z"
             }
           ]
         }

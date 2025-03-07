@@ -21,7 +21,7 @@ public abstract class CardSpace : MonoBehaviour
         }
     }
 
-    public void AddCardToSpace(Card card)
+    public void AddCard(Card card)
     {
         spaceCards.Add(card);
         card.cardSpace = this;
