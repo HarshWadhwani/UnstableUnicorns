@@ -21,9 +21,26 @@ public class HandStable : Stable
 
     public override void HandleCardClick(Card card)
     {
-        turnManager.PlaceCardInStable(card);
-        RemoveCardFromCurrentStable(card);
-        PositionCardsInStable();
+        if (allowedTurnPhases.Contains(turnManager.currentPhase))
+        {
+            bool isCardplayed = PlayCard(card);
+            if (isCardplayed)
+            {
+                PositionCardsInStable();
+                turnManager.StartNextTurnPhase();
+            }
+        }
+    }
+
+    private bool PlayCard(Card card)
+    {
+        if (player != turnManager.activePlayer)
+        {
+            Debug.LogWarning("player is not active");
+            return false;
+        }
+        
+        return cardManager.PlayCardForCurrentPlayer(card, this);
     }
 
     protected override void PositionCardsInStable()

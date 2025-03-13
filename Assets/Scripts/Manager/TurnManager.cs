@@ -27,32 +27,32 @@ public class TurnManager : MonoBehaviour
         
     }
 
-    public void MoveCardBetweenDecks(Card drawnCard)
-    {
-        if (TurnPhaseGrouping.ActionsForDrawingFromDeck.Contains(currentPhase))
-        {
-            DrawCardFromDeck(drawnCard);
-            StartNextTurnPhase();
-        }
-    }
+    //public void MoveCardBetweenDecks(Card drawnCard)
+    //{
+    //    if (TurnPhaseGrouping.ActionsForDrawingFromDeck.Contains(currentPhase))
+    //    {
+    //        DrawCardFromDeck(drawnCard);
+    //        StartNextTurnPhase();
+    //    }
+    //}
 
-    private void DrawCardFromDeck(Card drawnCard)
-    {
-        drawnCard.RevealCard();
-        activePlayer.handStable.AddCardToStable(drawnCard);
-    }
+    //private void DrawCardFromDeck(Card drawnCard)
+    //{
+    //    drawnCard.RevealCard();
+    //    activePlayer.handStable.AddCardToStable(drawnCard);
+    //}
 
     public void PlaceCardInStable(Card drawnCard)
     {
         if (currentPhase == TurnPhase.Action)
         {
-            activePlayer.unicornStable.AddCardToStable(drawnCard);
+            activePlayer.unicornStable.AddCard(drawnCard);
             activePlayer.unicornStable.CheckWinCondition();
             StartNextTurnPhase();
         }
     }
 
-    private void StartNextTurnPhase()
+    public void StartNextTurnPhase()
     {
         if (currentPhase == TurnPhase.Draw) 
         { 

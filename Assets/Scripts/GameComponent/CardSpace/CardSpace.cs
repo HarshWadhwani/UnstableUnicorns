@@ -6,15 +6,17 @@ using System;
 
 public abstract class CardSpace : MonoBehaviour
 {
+    public Card cardPrefab;
     public List<Card> spaceCards;
 
     public TurnManager turnManager;
+    public CardManager cardManager;
 
-    public Card cardPrefab;
+    public List<TurnPhase> allowedTurnPhases; 
 
     public abstract void HandleCardClick(Card card);
 
-    protected void RemoveCardFromCurrentStable(Card card)
+    public void RemoveCard(Card card)
     {
         if (spaceCards.Contains(card))
         {
@@ -22,13 +24,7 @@ public abstract class CardSpace : MonoBehaviour
         }
     }
 
-    public void AddCards(List<Card> cards)
-    {
-        Debug.Log("adding cards");
-        cards.ForEach(card => AddCard(card));
-    }
-
-    public void AddCard(Card card)
+    public virtual void AddCard(Card card)
     {
         spaceCards.Add(card);
         card.cardSpace = this;

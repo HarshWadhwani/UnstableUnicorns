@@ -7,56 +7,35 @@ using UnityEngine.EventSystems;
 
 public class Card : MonoBehaviour, IPointerClickHandler
 {
+    public CardData cardData;
+
     public GameObject cardFront;
     public GameObject cardBack;
     public TextMeshProUGUI cardName;
     public TextMeshProUGUI cardDescription;
-    public CardData cardScriptableObject;
+    
     public CardType cardType;
     public SpecialActionType specialActionType;
     public AfterAction afterAction;
+
     public CardSpace cardSpace;
 
-    private TurnManager turnManager;
+    public TurnManager turnManager;
 
     void Start()
     {
         turnManager = GameObject.FindObjectOfType<TurnManager>();
     }
 
-    public void Initialize(CardData cardScriptableObject)
+    public void Initialize(CardData cardData)
     {
-        this.name = cardScriptableObject.cardNameVariations[0];
-        SetCardName(cardScriptableObject.cardNameVariations[0]);
-        SetCardDescription(cardScriptableObject.cardDescriptionText);
-        this.cardType = cardScriptableObject.cardType;
-        this.specialActionType = cardScriptableObject.specialActionType;
-        this.afterAction = cardScriptableObject.afterAction;
-        this.cardScriptableObject = cardScriptableObject;
-    }
-
-    private void SetCardName(string cardNameText)
-    {
-        if (cardName != null)
-        {
-            cardName.text = cardNameText;
-        }
-        else
-        {
-            Debug.LogError("Card Name Text component is not assigned!");
-        }
-    }
-
-    private void SetCardDescription(string cardDescriptionText)
-    {
-        if (cardDescription != null)
-        {
-            this.cardDescription.text = cardDescriptionText;
-        }
-        else
-        {
-            Debug.LogError("Card Description Text component is not assigned!");
-        }
+        name = cardData.cardNameVariations[0];
+        cardName.text = cardData.cardNameVariations[0];
+        cardDescription.text = cardData.cardDescriptionText;
+        cardType = cardData.cardType;
+        specialActionType = cardData.specialActionType;
+        afterAction = cardData.afterAction;
+        this.cardData = cardData;
     }
 
     public void OnPointerClick(PointerEventData eventData)

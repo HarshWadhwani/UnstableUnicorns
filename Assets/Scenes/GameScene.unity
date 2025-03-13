@@ -170,9 +170,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38cc6f1e176de5140b9aedbacc0243df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spaceCards: []
-  turnManager: {fileID: 0}
   cardPrefab: {fileID: 0}
+  spaceCards: []
+  turnManager: {fileID: 1218204562}
+  cardManager: {fileID: 941346929}
+  allowedTurnPhases: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,6 +307,51 @@ RectTransform:
   m_AnchoredPosition: {x: 160, y: 0}
   m_SizeDelta: {x: 66.7932, y: 98.8694}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &941346928
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 941346930}
+  - component: {fileID: 941346929}
+  m_Layer: 0
+  m_Name: CardManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &941346929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941346928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d80af627c0fdcd848a0a0fd3c35101c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turnManager: {fileID: 1218204562}
+--- !u!4 &941346930
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941346928}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 463.0177, y: 90.07966, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1218204559
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,13 +431,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 5800291328387177000, guid: 421bea3af5945be4ebad5f34200ad327, type: 3}
-  playDeck: {fileID: 1916461359}
-  nursery: {fileID: 272715773}
   playCardDatas:
   - {fileID: 11400000, guid: bc7a8a66c4e1898438e67bbec40a294c, type: 2}
   - {fileID: 11400000, guid: c2898f471a1f9774988470a7683349e0, type: 2}
   - {fileID: 11400000, guid: 31863925ae09cac43a7bc871897d5efd, type: 2}
   babyUnicornCardData: {fileID: 11400000, guid: a897329ac9eb541429917c268611986f, type: 2}
+  playDeck: {fileID: 1916461359}
+  nursery: {fileID: 272715773}
+  turnManager: {fileID: 1218204562}
+  cardManager: {fileID: 941346929}
 --- !u!4 &1333643177
 Transform:
   m_ObjectHideFlags: 0
@@ -719,9 +768,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38cc6f1e176de5140b9aedbacc0243df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 5800291328387177000, guid: 421bea3af5945be4ebad5f34200ad327, type: 3}
   spaceCards: []
   turnManager: {fileID: 1218204562}
-  cardPrefab: {fileID: 5800291328387177000, guid: 421bea3af5945be4ebad5f34200ad327, type: 3}
+  cardManager: {fileID: 941346929}
+  allowedTurnPhases: 0100000002000000
 --- !u!1 &2008879911
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,3 +997,4 @@ SceneRoots:
   - {fileID: 1565046669}
   - {fileID: 1218204561}
   - {fileID: 1333643177}
+  - {fileID: 941346930}

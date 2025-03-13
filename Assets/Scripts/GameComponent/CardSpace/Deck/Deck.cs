@@ -8,7 +8,10 @@ public class Deck : CardSpace
 
     public override void HandleCardClick(Card card)
     {
-        turnManager.MoveCardBetweenDecks(card);
-        RemoveCardFromCurrentStable(card);
+        if (allowedTurnPhases.Contains(turnManager.currentPhase))
+        {
+            cardManager.DrawCard(card, this, turnManager.activePlayer);
+            turnManager.StartNextTurnPhase();
+        }   
     }
 }

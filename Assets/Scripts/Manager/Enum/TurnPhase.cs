@@ -7,12 +7,3 @@ public enum TurnPhase
     Draw,
     Action
 }
-
-public static class TurnPhaseGrouping
-{
-    public static readonly HashSet<TurnPhase> ActionsForDrawingFromDeck = new()
-    {
-        TurnPhase.Draw,
-        TurnPhase.Action
-    };
-}

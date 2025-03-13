@@ -5,6 +5,7 @@ using UnityEngine;
 public class Stable : CardSpace
 {
     public int maxCardsInStable;
+    public Player player;
 
     // Start is called before the first frame update
     void Start()
@@ -23,17 +24,16 @@ public class Stable : CardSpace
 
     }
 
-    public virtual void AddCardToStable(Card card)
+    public override void AddCard(Card card)
     {
-        if (spaceCards.Count < maxCardsInStable)
-        {
-            AddCard(card);
-            PositionCardsInStable();
-        }
-        else
+        if (spaceCards.Count >= maxCardsInStable)
         {
             Debug.LogWarning("Stable is full. Cannot add more cards.");
+            return;
         }
+
+        base.AddCard(card);
+        PositionCardsInStable();
     }
 
     protected virtual void PositionCardsInStable()

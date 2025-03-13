@@ -18,11 +18,11 @@ public class UnicornStable : Stable
         
     }
 
-    public override void AddCardToStable(Card card)
-    {
-        AddCard(card);
-        PositionCardsInStable();
-    }
+    //public override void AddCard(Card card)
+    //{
+    //    base.AddCard(card);
+    //    PositionCardsInStable();
+    //}
 
     public void CheckWinCondition()
     {

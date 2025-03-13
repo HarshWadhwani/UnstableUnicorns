@@ -48,10 +48,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 397a0b536696bda4bb05b19673af7c4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 5800291328387177000, guid: 421bea3af5945be4ebad5f34200ad327, type: 3}
   spaceCards: []
   turnManager: {fileID: 0}
-  cardPrefab: {fileID: 5800291328387177000, guid: 421bea3af5945be4ebad5f34200ad327, type: 3}
+  cardManager: {fileID: 0}
+  allowedTurnPhases: 
   maxCardsInStable: 7
+  player: {fileID: 1168632485362962641}
 --- !u!1 &6843809200536145351
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,10 +103,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 397a0b536696bda4bb05b19673af7c4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 5800291328387177000, guid: 421bea3af5945be4ebad5f34200ad327, type: 3}
   spaceCards: []
   turnManager: {fileID: 0}
-  cardPrefab: {fileID: 5800291328387177000, guid: 421bea3af5945be4ebad5f34200ad327, type: 3}
+  cardManager: {fileID: 0}
+  allowedTurnPhases: 
   maxCardsInStable: 7
+  player: {fileID: 1168632485362962641}
 --- !u!1 &6928800616626100562
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,10 +158,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 397a0b536696bda4bb05b19673af7c4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 5800291328387177000, guid: 421bea3af5945be4ebad5f34200ad327, type: 3}
   spaceCards: []
   turnManager: {fileID: 0}
-  cardPrefab: {fileID: 5800291328387177000, guid: 421bea3af5945be4ebad5f34200ad327, type: 3}
+  cardManager: {fileID: 0}
+  allowedTurnPhases: 
   maxCardsInStable: 7
+  player: {fileID: 1168632485362962641}
 --- !u!1 &8655843030583308325
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,8 +267,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c75b40165c49404caf8b486f1e0acfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 5800291328387177000, guid: 421bea3af5945be4ebad5f34200ad327, type: 3}
   spaceCards: []
   turnManager: {fileID: 0}
-  cardPrefab: {fileID: 5800291328387177000, guid: 421bea3af5945be4ebad5f34200ad327, type: 3}
+  cardManager: {fileID: 0}
+  allowedTurnPhases: 02000000
   maxCardsInStable: 7
+  player: {fileID: 1168632485362962641}
   fanTotalAngle: 140

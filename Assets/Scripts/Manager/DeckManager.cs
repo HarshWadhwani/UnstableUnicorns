@@ -5,15 +5,24 @@ using System;
 
 public class DeckManager : MonoBehaviour
 {
-    public Card cardPrefab; // Assign your card prefab in the Inspector
-    public Deck playDeck;  // The Deck GameObject where cards will be stored
-    public Deck nursery;
-    public List<CardData> playCardDatas; // List of ScriptableObjects containing card data
+    public Card cardPrefab;
+    public List<CardData> playCardDatas;
     public CardData babyUnicornCardData;
 
+    public Deck playDeck;  
+    public Deck nursery;
+
+    public TurnManager turnManager;
+    public CardManager cardManager;
+    
     void Start()
     {
         SetupGameDecks();
+
+        foreach (var player in turnManager.players)
+        {
+            cardManager.DrawCard(nursery.spaceCards[0], nursery, player);
+        }
     }
 
     void SetupGameDecks()
@@ -39,9 +48,11 @@ public class DeckManager : MonoBehaviour
     {
         List<Card> cards = GenerateCards(cardData);
 
-        cards.ForEach(card => HideCard(card));
-
-        deck.AddCards(cards);
+        foreach (var card in cards)
+        {
+            card.HideCard();
+            deck.AddCard(card);
+        }
     }
 
     List<Card> GenerateCards(CardData cardData)
@@ -56,10 +67,5 @@ public class DeckManager : MonoBehaviour
         }
 
         return cards;
-    }
-
-    void HideCard(Card card)
-    {
-        card.HideCard();
     }
 }
