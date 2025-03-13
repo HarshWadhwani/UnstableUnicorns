@@ -13,5 +13,6 @@ public class BabyUnicornCardData : UnicornCardData
     public override void OnEnable()
     {
         base.OnEnable();
+        unicornType = UnicornType.BABY;
     }
 }

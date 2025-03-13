@@ -131,6 +131,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 272715772}
+  - component: {fileID: 272715773}
   m_Layer: 5
   m_Name: Nursery
   m_TagString: Untagged
@@ -157,6 +158,21 @@ RectTransform:
   m_AnchoredPosition: {x: -160, y: 0}
   m_SizeDelta: {x: 66.7932, y: 98.8694}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &272715773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272715771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38cc6f1e176de5140b9aedbacc0243df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spaceCards: []
+  turnManager: {fileID: 0}
+  cardPrefab: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,8 +385,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 5800291328387177000, guid: 421bea3af5945be4ebad5f34200ad327, type: 3}
   playDeck: {fileID: 1916461359}
-  cardDataList:
-  - {fileID: 11400000, guid: a897329ac9eb541429917c268611986f, type: 2}
+  nursery: {fileID: 272715773}
+  playCardDatas:
+  - {fileID: 11400000, guid: bc7a8a66c4e1898438e67bbec40a294c, type: 2}
+  - {fileID: 11400000, guid: c2898f471a1f9774988470a7683349e0, type: 2}
+  - {fileID: 11400000, guid: 31863925ae09cac43a7bc871897d5efd, type: 2}
+  babyUnicornCardData: {fileID: 11400000, guid: a897329ac9eb541429917c268611986f, type: 2}
 --- !u!4 &1333643177
 Transform:
   m_ObjectHideFlags: 0
@@ -702,7 +722,6 @@ MonoBehaviour:
   spaceCards: []
   turnManager: {fileID: 1218204562}
   cardPrefab: {fileID: 5800291328387177000, guid: 421bea3af5945be4ebad5f34200ad327, type: 3}
-  cardScriptableObjects: []
 --- !u!1 &2008879911
 GameObject:
   m_ObjectHideFlags: 0

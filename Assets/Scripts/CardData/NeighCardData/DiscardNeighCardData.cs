@@ -13,5 +13,6 @@ public class DiscardNeighCardData : NeighCardData
     public override void OnEnable()
     {
         base.OnEnable();
+        neighType = NeighType.ForceOpponentDiscard;
     }
 }

@@ -13,5 +13,6 @@ public class FinalNeighCardData : NeighCardData
     public override void OnEnable()
     {
         base.OnEnable();
+        neighType = NeighType.Final;
     }
 }

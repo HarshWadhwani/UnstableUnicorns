@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca1d8b866b8ff7a48871e233b4497f08, type: 3}
-  m_Name: FinalNeighScriptableObject
+  m_Name: FinalNeighCardData
   m_EditorClassIdentifier: 
   cardNameVariations:
   - Neigh means neigh

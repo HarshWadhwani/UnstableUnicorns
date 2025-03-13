@@ -1,25 +1,65 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using System;
 
 public class DeckManager : MonoBehaviour
 {
     public Card cardPrefab; // Assign your card prefab in the Inspector
-    public PlayDeck playDeck;  // The Deck GameObject where cards will be stored
-    public List<CardData> cardDataList; // List of ScriptableObjects containing card data
+    public Deck playDeck;  // The Deck GameObject where cards will be stored
+    public Deck nursery;
+    public List<CardData> playCardDatas; // List of ScriptableObjects containing card data
+    public CardData babyUnicornCardData;
 
     void Start()
     {
-        SetupDeck();
+        SetupGameDecks();
     }
 
-    void SetupDeck()
+    void SetupGameDecks()
     {
-        foreach (CardData data in cardDataList)
-        {
-            Card newCard = Instantiate(cardPrefab); // Your Card script
-            newCard.Initialize(data); // Apply the data
+        GeneratePlayDeckCards();
+        GenerateNurseryCards();
+    }
 
-            playDeck.AddCard(newCard);
+    void GeneratePlayDeckCards()
+    {
+        foreach (var playCardData in playCardDatas)
+        {
+            SetupDeck(playDeck, playCardData);
         }
+    }
+
+    void GenerateNurseryCards()
+    {
+        SetupDeck(nursery, babyUnicornCardData);
+    }
+
+    void SetupDeck(Deck deck, CardData cardData)
+    {
+        List<Card> cards = GenerateCards(cardData);
+
+        cards.ForEach(card => HideCard(card));
+
+        deck.AddCards(cards);
+    }
+
+    List<Card> GenerateCards(CardData cardData)
+    {
+        List<Card> cards = new List<Card>();
+
+        for (int i = 0; i < cardData.instances; i++)
+        {
+            Card newCard = Instantiate(cardPrefab); // Instantiate card from prefab
+            newCard.Initialize(cardData);               // Call a void method for the card
+            cards.Add(newCard);                      // Add the card to the list
+        }
+
+        return cards;
+    }
+
+    void HideCard(Card card)
+    {
+        card.HideCard();
     }
 }

@@ -8,7 +8,8 @@ public abstract class UnicornCardData : CardData
 
     public override void OnEnable()
     {
-        cardType = CardType.NEIGH;
+        cardType = CardType.UNICORN;
+        specialActionType = SpecialActionType.NONE;
         afterAction = AfterAction.PLACE_IN_STABLE;
     }
 }

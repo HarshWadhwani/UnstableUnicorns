@@ -9,16 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62a6cf84eea017647ac7f7584af5595e, type: 3}
-  m_Name: BasicNeighScriptableObject
+  m_Script: {fileID: 11500000, guid: 681635d0ec0704f4d890825097440c2c, type: 3}
+  m_Name: DiscardNeighCardData
   m_EditorClassIdentifier: 
   cardNameVariations:
-  - Hell Neigh
-  - The Safeword is Neigh
-  - Neigh, Bitch
+  - Neigh, Motherfucker
   cardDescriptionText: 
-  instances: 11
+  instances: 3
   cardType: 4
   specialActionType: 0
   afterAction: 0
-  neighType: 0
+  neighType: 1

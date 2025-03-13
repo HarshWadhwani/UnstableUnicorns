@@ -13,5 +13,6 @@ public class BasicNeighCardData : NeighCardData
     public override void OnEnable()
     {
         base.OnEnable();
+        neighType = NeighType.Basic;
     }
 }

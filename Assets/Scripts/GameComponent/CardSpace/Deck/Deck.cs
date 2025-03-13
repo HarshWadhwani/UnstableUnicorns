@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class PlayDeck : CardSpace
+public class Deck : CardSpace
 {
-    public List<CardData> cardScriptableObjects;
 
     public override void HandleCardClick(Card card)
     {
