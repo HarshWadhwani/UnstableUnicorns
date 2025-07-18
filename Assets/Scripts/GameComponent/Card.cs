@@ -24,7 +24,7 @@ public class Card : MonoBehaviour, IPointerClickHandler
 
     void Start()
     {
-        turnManager = GameObject.FindObjectOfType<TurnManager>();
+        turnManager = GameObject.FindFirstObjectByType<TurnManager>();
     }
 
     public void Initialize(CardData cardData)

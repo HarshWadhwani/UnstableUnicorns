@@ -30,13 +30,19 @@ public class CardManager : MonoBehaviour
 
     public bool PlayCardForCurrentPlayer(Card card, HandStable handStable)
     {
-        if (card.cardType == CardType.UNICORN)
+        switch (card.cardType)
         {
-            MoveCard(card, handStable, turnManager.activePlayer.unicornStable);
-            turnManager.activePlayer.unicornStable.CheckWinCondition();
-            return true;
+            case CardType.UNICORN:
+                MoveCard(card, handStable, turnManager.activePlayer.unicornStable);
+                turnManager.activePlayer.unicornStable.CheckWinCondition();
+                return true;
+            case CardType.UPGRADE:
+                Debug.Log(card);
+                MoveCard(card, handStable, turnManager.activePlayer.upgradeStable);
+                return true;
+            default:
+                return false;
         }
-        return false;
     }
 
     private void MoveCard(Card card, CardSpace oldCardSpace, CardSpace newCardSpace)

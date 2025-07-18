@@ -23,8 +23,8 @@ public class HandStable : Stable
     {
         if (allowedTurnPhases.Contains(turnManager.currentPhase))
         {
-            bool isCardplayed = PlayCard(card);
-            if (isCardplayed)
+            bool isCardPlayed = PlayCard(card);
+            if (isCardPlayed)
             {
                 PositionCardsInStable();
                 turnManager.StartNextTurnPhase();

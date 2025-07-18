@@ -8,10 +8,12 @@ public class Deck : CardSpace
 
     public override void HandleCardClick(Card card)
     {
-        if (allowedTurnPhases.Contains(turnManager.currentPhase))
+        if (!allowedTurnPhases.Contains(turnManager.currentPhase))
         {
-            cardManager.DrawCard(card, this, turnManager.activePlayer);
-            turnManager.StartNextTurnPhase();
-        }   
+            return;
+        }
+        
+        cardManager.DrawCard(card, this, turnManager.activePlayer);
+        turnManager.StartNextTurnPhase();
     }
 }

@@ -21,37 +21,6 @@ public class TurnManager : MonoBehaviour
         currentPhase = TurnPhase.Draw;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    //public void MoveCardBetweenDecks(Card drawnCard)
-    //{
-    //    if (TurnPhaseGrouping.ActionsForDrawingFromDeck.Contains(currentPhase))
-    //    {
-    //        DrawCardFromDeck(drawnCard);
-    //        StartNextTurnPhase();
-    //    }
-    //}
-
-    //private void DrawCardFromDeck(Card drawnCard)
-    //{
-    //    drawnCard.RevealCard();
-    //    activePlayer.handStable.AddCardToStable(drawnCard);
-    //}
-
-    public void PlaceCardInStable(Card drawnCard)
-    {
-        if (currentPhase == TurnPhase.Action)
-        {
-            activePlayer.unicornStable.AddCard(drawnCard);
-            activePlayer.unicornStable.CheckWinCondition();
-            StartNextTurnPhase();
-        }
-    }
-
     public void StartNextTurnPhase()
     {
         if (currentPhase == TurnPhase.Draw) 
@@ -64,7 +33,7 @@ public class TurnManager : MonoBehaviour
             SwitchToNextPlayer(); }
     }
 
-    public void SwitchToNextPlayer()
+    private void SwitchToNextPlayer()
     {
         var activePlayerIndex = players.IndexOf(activePlayer);
         var newActivePlayerIndex = activePlayerIndex + 1;

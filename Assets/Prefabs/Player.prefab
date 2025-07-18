@@ -119,7 +119,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 245609008855043751}
-  - component: {fileID: 4513518911848019974}
+  - component: {fileID: 1860490570872290664}
   m_Layer: 5
   m_Name: PlayerUpgradeStable
   m_TagString: Untagged
@@ -146,7 +146,7 @@ RectTransform:
   m_AnchoredPosition: {x: 275.5772, y: 64.08917}
   m_SizeDelta: {x: 279.3497, y: 69.4842}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4513518911848019974
+--- !u!114 &1860490570872290664
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -155,7 +155,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6928800616626100562}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 397a0b536696bda4bb05b19673af7c4f, type: 3}
+  m_Script: {fileID: 11500000, guid: 399cedbf665e4e0c9f8e42e63705ba55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 5800291328387177000, guid: 421bea3af5945be4ebad5f34200ad327, type: 3}
@@ -163,7 +163,7 @@ MonoBehaviour:
   turnManager: {fileID: 0}
   cardManager: {fileID: 0}
   allowedTurnPhases: 
-  maxCardsInStable: 7
+  maxCardsInStable: 100
   player: {fileID: 1168632485362962641}
 --- !u!1 &8655843030583308325
 GameObject:
@@ -219,6 +219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unicornStable: {fileID: 3003665228945303195}
   handStable: {fileID: 7692536413895936826}
+  upgradeStable: {fileID: 1860490570872290664}
 --- !u!1 &8940009190337679088
 GameObject:
   m_ObjectHideFlags: 0
