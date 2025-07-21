@@ -20,13 +20,6 @@ public class Card : MonoBehaviour, IPointerClickHandler
 
     public CardSpace cardSpace;
 
-    public TurnManager turnManager;
-
-    void Start()
-    {
-        turnManager = GameObject.FindFirstObjectByType<TurnManager>();
-    }
-
     public void Initialize(CardData cardData)
     {
         name = cardData.cardNameVariations[0];
