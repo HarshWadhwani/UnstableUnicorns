@@ -37,8 +37,10 @@ public class CardManager : MonoBehaviour
                 turnManager.activePlayer.unicornStable.CheckWinCondition();
                 return true;
             case CardType.UPGRADE:
-                Debug.Log(card);
                 MoveCard(card, handStable, turnManager.activePlayer.upgradeStable);
+                return true;
+            case CardType.DOWNGRADE:
+                MoveCard(card, handStable, turnManager.activePlayer.downgradeStable);
                 return true;
             default:
                 return false;

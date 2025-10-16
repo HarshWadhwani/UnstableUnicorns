@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class DowngradeCardData : CardData
+[CreateAssetMenu(menuName = "CardData/DowngradeCardData")]
+public class DowngradeCardData : CardData
 {
 
     public override void TriggerSpecialAction()

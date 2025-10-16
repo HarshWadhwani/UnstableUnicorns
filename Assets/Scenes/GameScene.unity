@@ -433,6 +433,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c2898f471a1f9774988470a7683349e0, type: 2}
   - {fileID: 11400000, guid: 31863925ae09cac43a7bc871897d5efd, type: 2}
   - {fileID: 11400000, guid: 082edfd83bf5747cf9310cf6a4a8cd58, type: 2}
+  - {fileID: 11400000, guid: 0b9c025e82e61412c94295dd2f868f8d, type: 2}
   babyUnicornCardData: {fileID: 11400000, guid: a897329ac9eb541429917c268611986f, type: 2}
   playDeck: {fileID: 1916461359}
   nursery: {fileID: 272715773}
@@ -671,6 +672,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -692,6 +695,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -888,6 +892,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2008879915}
     m_Modifications:
+    - target: {fileID: 245609008855043751, guid: 1487136a20487134a89592c6a03e728c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 278.1
+      objectReference: {fileID: 0}
     - target: {fileID: 2498505222438969314, guid: 1487136a20487134a89592c6a03e728c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

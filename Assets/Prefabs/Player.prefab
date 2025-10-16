@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1010984117701772978}
-  - component: {fileID: 1844633382822731666}
+  - component: {fileID: 203390179442833437}
   m_Layer: 5
   m_Name: PlayerDowngradeStable
   m_TagString: Untagged
@@ -36,7 +36,7 @@ RectTransform:
   m_AnchoredPosition: {x: -275.57724, y: 64.08917}
   m_SizeDelta: {x: 279.3497, y: 69.4842}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1844633382822731666
+--- !u!114 &203390179442833437
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,15 +45,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1178260588128457450}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 397a0b536696bda4bb05b19673af7c4f, type: 3}
+  m_Script: {fileID: 11500000, guid: 722097fd7bf5b4911aa31c2a46091b93, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::DowngradeStable
   cardPrefab: {fileID: 5800291328387177000, guid: 421bea3af5945be4ebad5f34200ad327, type: 3}
   spaceCards: []
   turnManager: {fileID: 0}
   cardManager: {fileID: 0}
   allowedTurnPhases: 
-  maxCardsInStable: 7
+  maxCardsInStable: 100
   player: {fileID: 1168632485362962641}
 --- !u!1 &6843809200536145351
 GameObject:
@@ -202,8 +202,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -129.62035}
-  m_SizeDelta: {x: 878.7711, y: 224.0282}
+  m_AnchoredPosition: {x: 83.14563, y: -82.41054}
+  m_SizeDelta: {x: 712.4799, y: 129.6086}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1168632485362962641
 MonoBehaviour:
@@ -220,6 +220,7 @@ MonoBehaviour:
   unicornStable: {fileID: 3003665228945303195}
   handStable: {fileID: 7692536413895936826}
   upgradeStable: {fileID: 1860490570872290664}
+  downgradeStable: {fileID: 203390179442833437}
 --- !u!1 &8940009190337679088
 GameObject:
   m_ObjectHideFlags: 0

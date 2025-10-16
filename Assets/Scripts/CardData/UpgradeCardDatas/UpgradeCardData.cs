@@ -7,7 +7,7 @@ public class UpgradeCardData : CardData
 {
     public override void TriggerSpecialAction()
     {
-        Debug.Log("No Special Action for BabyUnicornCardData");
+        Debug.Log("Triggered Special Action");
     }
     
     public override void OnEnable()

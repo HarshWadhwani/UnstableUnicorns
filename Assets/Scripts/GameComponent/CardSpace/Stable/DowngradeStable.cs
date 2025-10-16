@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UpgradeStable : Stable
+public class DowngradeStable : Stable
 {
 
     // Start is called before the first frame update
@@ -30,10 +30,9 @@ public class UpgradeStable : Stable
         var cardWidth = firstCardRect.rect.width;
         var overlap = 0.5f * cardWidth; // 20% overlap between cards
 
-        // Compute the base position: center of rightmost card is at (right edge - 2 * cardWidth)
-        var stableRect = GetComponent<RectTransform>();
-        var rightEdgeX = stableRect.rect.width;
-        var startingX = rightEdgeX - (cardWidth / 2);
+        // Compute the base position: center of rightmost card is at (right edge - (cardWidth / 2))
+        var leftEdgeX = 0f;
+        var startingX = leftEdgeX + (cardWidth / 2);
 
         for (var i = 0; i < spaceCards.Count; i++)
         {
@@ -47,7 +46,7 @@ public class UpgradeStable : Stable
             cardRect.localEulerAngles = Vector3.zero;
 
             // Compute position
-            var xOffset = -i * overlap;
+            var xOffset = i * overlap;
             var xPos = startingX + xOffset;
 
             cardRect.anchoredPosition = new Vector2(xPos, 0);
