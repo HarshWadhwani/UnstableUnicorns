@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
@@ -40,7 +41,16 @@ public class CardManager : MonoBehaviour
                 MoveCard(card, handStable, turnManager.activePlayer.upgradeStable);
                 return true;
             case CardType.DOWNGRADE:
-                MoveCard(card, handStable, turnManager.activePlayer.downgradeStable);
+                var opponent = turnManager.players
+                    .FirstOrDefault(player => player != turnManager.activePlayer);
+                
+                if (opponent == null)
+                {
+                    Debug.Log($"Player {turnManager.activePlayer.name} has no opponent");
+                    return false;
+                }
+                
+                MoveCard(card, handStable, opponent.downgradeStable);
                 return true;
             default:
                 return false;
