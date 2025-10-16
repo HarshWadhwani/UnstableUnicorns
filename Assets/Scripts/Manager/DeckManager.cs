@@ -18,6 +18,9 @@ public class DeckManager : MonoBehaviour
     void Start()
     {
         SetupGameDecks();
+        Debug.Log("Before shuffle: " + string.Join(",", playDeck.spaceCards.Select(c => c.name)));
+        ShuffleDecks();
+        Debug.Log("After shuffle: " + string.Join(",", playDeck.spaceCards.Select(c => c.name)));
 
         foreach (var player in turnManager.players)
         {
@@ -67,5 +70,35 @@ public class DeckManager : MonoBehaviour
         }
 
         return cards;
+    }
+
+    void ShuffleDecks()
+    {
+        ShuffleDeck(playDeck);
+        ShuffleDeck(nursery);
+    }
+
+    public void ShuffleDeck(Deck deck)
+    {
+        // Step 1: Put all children into a list
+        List<Transform> children = new List<Transform>();
+        foreach (Transform child in deck.transform)
+            children.Add(child);
+
+        // Step 2: Shuffle the list
+        for (int i = children.Count - 1; i > 0; i--)
+        {
+            int j = UnityEngine.Random.Range(0, i + 1);
+            (children[i], children[j]) = (children[j], children[i]);
+        }
+
+        // Step 3: Reassign sibling indices
+        for (int i = 0; i < children.Count; i++)
+        {
+            children[i].SetSiblingIndex(i);
+        }
+
+        // Debug: log shuffled order
+        Debug.Log("Shuffled deck: " + string.Join(", ", children.ConvertAll(c => c.name)));
     }
 }
