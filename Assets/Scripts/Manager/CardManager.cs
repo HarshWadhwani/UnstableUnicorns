@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class CardManager : MonoBehaviour
 {
     public TurnManager turnManager;
+    public DiscardPile discardPile;
 
-    // Start is called before the first frame update
     void Start()
     {
         foreach (Player player in turnManager.players)
@@ -17,7 +16,6 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -51,6 +49,10 @@ public class CardManager : MonoBehaviour
                 }
                 
                 MoveCard(card, handStable, opponent.downgradeStable);
+                return true;
+            case CardType.MAGIC:
+            case CardType.NEIGH:
+                MoveCard(card, handStable, discardPile);
                 return true;
             default:
                 return false;

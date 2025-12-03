@@ -7,7 +7,7 @@ public class UpgradeCardData : CardData
 {
     public override void TriggerSpecialAction()
     {
-        Debug.Log("Triggered Special Action");
+        Debug.Log("Triggered Special Action for UpgradeCardDataScriptableObjects");
     }
     
     public override void OnEnable()

@@ -2,8 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class MagicCardData : CardData
+
+[CreateAssetMenu(menuName = "CardData/MagicCardData")]
+public class MagicCardData : CardData
 {
+    
+    public override void TriggerSpecialAction()
+    {
+        Debug.Log("Triggered special action for MagicCardDataScriptableObject");
+    }
 
     public override void OnEnable()
     {

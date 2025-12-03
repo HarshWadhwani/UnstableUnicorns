@@ -278,6 +278,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 786892825}
+  - component: {fileID: 786892826}
   m_Layer: 5
   m_Name: DiscardPile
   m_TagString: Untagged
@@ -304,6 +305,23 @@ RectTransform:
   m_AnchoredPosition: {x: 160, y: 0}
   m_SizeDelta: {x: 66.7932, y: 98.8694}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &786892826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786892824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41b226d72e68044e9bc1faba685acc51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DiscardPile
+  cardPrefab: {fileID: 0}
+  spaceCards: []
+  turnManager: {fileID: 0}
+  cardManager: {fileID: 0}
+  allowedTurnPhases: 
 --- !u!1 &941346928
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,6 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnManager: {fileID: 1218204562}
+  discardPile: {fileID: 786892826}
 --- !u!4 &941346930
 Transform:
   m_ObjectHideFlags: 0
@@ -433,7 +452,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c2898f471a1f9774988470a7683349e0, type: 2}
   - {fileID: 11400000, guid: 31863925ae09cac43a7bc871897d5efd, type: 2}
   - {fileID: 11400000, guid: 082edfd83bf5747cf9310cf6a4a8cd58, type: 2}
-  - {fileID: 11400000, guid: 0b9c025e82e61412c94295dd2f868f8d, type: 2}
+  - {fileID: 11400000, guid: 90a83b951f6c0456b9dca773ddbdae2b, type: 2}
+  - {fileID: 11400000, guid: 404bcfee1a55f4807a16110bbc3fa744, type: 2}
   babyUnicornCardData: {fileID: 11400000, guid: a897329ac9eb541429917c268611986f, type: 2}
   playDeck: {fileID: 1916461359}
   nursery: {fileID: 272715773}
