@@ -71,3 +71,64 @@ The tradeoff: adding a new card requires writing a new `CardData` subclass even 
 These are intentionally separate concerns. A Magic card discards itself (`afterAction = DISCARD`) while also causing the opponent to discard a card from their hand (`DiscardCardAction`). Conflating the two would make it impossible to express "this card goes to your stable AND causes an opponent effect."
 
 `AfterAction` is currently only partially used — `PLACE_IN_ENEMY_STABLE` is defined but never routed in `CardManager`. This would be the hook for cards that physically place themselves onto an opponent's board.
+
+---
+
+## `Special` is split into `ImmediateSpecial` and `EveryTurnSpecial`
+
+**Files:** `TurnPhase.cs`, `TurnManager.cs`, `CardActionExecutor.cs`
+
+The original single `Special` phase was used for both IMMEDIATE card effects (e.g. FMK) and was incorrectly being triggered by EVERY_TURN cards played from hand. These are fundamentally different concepts with different triggers and timing, so they became two separate phases.
+
+`ImmediateSpecial` fires mid-turn when the active player plays an IMMEDIATE card. The turn pauses here while the executor runs to completion, then advances to the next player.
+
+`EveryTurnSpecial` fires at the start of each player's turn before Draw, driven by what is already in their stables — not by what they just played. It is skipped entirely if there are no EVERY_TURN actions to run.
+
+Keeping them separate means the `StartNextTurnPhase` switch can route each case independently with no flags or special-casing inside the executor.
+
+**Watch out for:** Unity serializes enum values as integers. New `TurnPhase` values must always be added at the end of the enum to avoid shifting existing integer indices and breaking `allowedTurnPhases` lists serialized in the scene.
+
+---
+
+## `StartNextTurnPhase` receives `SpecialActionType` as a parameter rather than reading from a field
+
+**Files:** `TurnManager.cs`, `HandStable.cs`
+
+When deciding whether to enter `ImmediateSpecial` after the Action phase, `TurnManager` needs to know the `SpecialActionType` of the card that was just played. Two approaches were considered:
+
+- **`lastPlayedCard` field on `TurnManager`** — `CardManager` sets it after a card is played; `TurnManager` reads it when advancing. This adds a field that exists solely to bridge one method call, creating a second source of truth for information that is already available at the call site.
+- **Parameter on `StartNextTurnPhase`** — `HandStable` passes `card.specialActionType` directly. The information flows through the call stack without any intermediate state.
+
+The parameter approach was chosen. The default value `SpecialActionType.NONE` means callers that don't care (e.g. the Deck advancing from Draw to Action) don't need to pass anything.
+
+---
+
+## `EveryTurnSpecial` fires before Draw, not after Action
+
+**Files:** `TurnManager.cs`
+
+EVERY_TURN effects in the physical card game trigger "at the start of your turn", which is before you draw. Placing `EveryTurnSpecial` after the Action phase of the previous player's turn (i.e. post-action, pre-switch) would misattribute the effect to the wrong player's turn and make the ordering confusing.
+
+The chosen order is: switch player → check for EVERY_TURN actions → `EveryTurnSpecial` (if any) → `Draw`. This matches the physical game's turn structure and means the effect always fires in the context of the player whose turn it affects.
+
+---
+
+## `EveryTurnSpecial` entry is gated on collected actions, not on card count
+
+**Files:** `TurnManager.cs`
+
+`AdvanceToNextPlayerTurn()` collects the full list of EVERY_TURN actions from the new active player's stables before deciding whether to enter `EveryTurnSpecial`. The phase only activates if `everyTurnActions.Count > 0`.
+
+An earlier version checked `ActivePlayerHasEveryTurnCards()` (card existence) first, then collected actions separately in `TriggerEveryTurnActions()`. This created a gap: a card with `specialActionType = EVERY_TURN` but an empty `actions` list would set the phase to `EveryTurnSpecial` but never start the executor — leaving the turn stuck permanently.
+
+Collecting actions first and using the count as the gate eliminates the gap in one pass.
+
+---
+
+## Card data is loaded dynamically via `Resources.LoadAll`, not a manually wired Inspector list
+
+**Files:** `DeckManager.cs`
+
+`DeckManager` previously had a serialized `List<CardData> playCardDatas` field that required manually adding each new card asset in the Unity Inspector. This meant adding a new card was a two-step process: create the asset, then remember to wire it up.
+
+`Resources.LoadAll<CardData>("CardDataInstances")` at runtime discovers all card assets automatically. The only requirement is that the asset lives in the correct `Resources/` subdirectory. Each `CardData` asset already has an `instances` field that controls how many copies appear in the deck, so the loader respects that without any additional configuration.
