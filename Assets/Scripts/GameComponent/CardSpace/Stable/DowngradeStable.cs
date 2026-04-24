@@ -20,6 +20,17 @@ public class DowngradeStable : Stable
 
     public override void HandleCardClick(Card card)
     {
+        if (CardActionExecutor.Instance != null && CardActionExecutor.Instance.currentPendingAction == PendingActionType.DestroyCard)
+        {
+            if (player == turnManager.activePlayer)
+            {
+                Debug.LogWarning("Cannot destroy your own cards.");
+                return;
+            }
+
+            CardActionExecutor.Instance.ExecutePendingAction(card);
+            PositionCardsInStable();
+        }
     }
 
     protected override void PositionCardsInStable()

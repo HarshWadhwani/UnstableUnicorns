@@ -4,25 +4,32 @@ using UnityEngine;
 
 public class UnicornStable : Stable
 {
-
-
-    // Start is called before the first frame update
     void Start()
     {
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
 
-    //public override void AddCard(Card card)
-    //{
-    //    base.AddCard(card);
-    //    PositionCardsInStable();
-    //}
+    public override void HandleCardClick(Card card)
+    {
+        if (CardActionExecutor.Instance != null && CardActionExecutor.Instance.currentPendingAction == PendingActionType.DestroyCard)
+        {
+            Debug.Log("player " + player);
+            Debug.Log("turnManager.activePlayer " + turnManager.activePlayer);
+            if (player == turnManager.activePlayer)
+            {
+                Debug.LogWarning("Cannot destroy your own cards.");
+                return;
+            }
+
+            CardActionExecutor.Instance.ExecutePendingAction(card);
+            PositionCardsInStable();
+        }
+    }
 
     public void CheckWinCondition()
     {
@@ -32,3 +39,4 @@ public class UnicornStable : Stable
         }
     }
 }
+

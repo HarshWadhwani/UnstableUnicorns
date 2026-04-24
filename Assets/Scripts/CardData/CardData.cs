@@ -10,8 +10,20 @@ public abstract class CardData : ScriptableObject
     public CardType cardType;
     public SpecialActionType specialActionType;
     public AfterAction afterAction;
+    public List<CardAction> actions = new List<CardAction>();
 
     public abstract void OnEnable();
 
-    public abstract void TriggerSpecialAction();
+    public virtual void TriggerSpecialAction(Card sourceCard)
+    {
+        if (actions.Count > 0 && CardActionExecutor.Instance != null)
+        {
+            Debug.Log($"Executing {actions.Count} actions for card: {cardNameVariations[0]}");
+            CardActionExecutor.Instance.ExecuteActions(actions, sourceCard);
+        }
+        else
+        {
+            Debug.Log($"No actions configured for card: {cardNameVariations[0]}");
+        }
+    }
 }

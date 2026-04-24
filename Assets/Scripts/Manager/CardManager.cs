@@ -29,6 +29,11 @@ public class CardManager : MonoBehaviour
 
     public bool PlayCardForCurrentPlayer(Card card, HandStable handStable)
     {
+        if (card.specialActionType == SpecialActionType.IMMEDIATE)
+        {
+            card.cardData.TriggerSpecialAction(card);
+        }
+
         switch (card.cardType)
         {
             case CardType.UNICORN:
@@ -59,7 +64,7 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    private void MoveCard(Card card, CardSpace oldCardSpace, CardSpace newCardSpace)
+    public void MoveCard(Card card, CardSpace oldCardSpace, CardSpace newCardSpace)
     {
         oldCardSpace.RemoveCard(card);
         newCardSpace.AddCard(card);
