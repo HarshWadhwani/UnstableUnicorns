@@ -11,7 +11,7 @@ Tracked issues from code and design review. Work through these one by one.
 | ID | Description | Status |
 |----|-------------|--------|
 | B1 | `ShuffleDeck` doesn't shuffle draw order | ✅ Fixed |
-| B2 | `Stable.PositionCardsInStable` off-by-one | 🔲 Open |
+| B2 | `Stable.PositionCardsInStable` off-by-one | ✅ Fixed |
 | B3 | `TriggerSpecialAction` overrides suppress base | 🔲 Open |
 | B4 | `DestroyCardAction.Any` silently falls back to Unicorn | 🔲 Open |
 | R1 | `UpgradeStable`/`DowngradeStable` identical `HandleCardClick` | 🔲 Open |
@@ -36,7 +36,7 @@ The shuffle reorders Unity Transform siblings but `CardSpace.spaceCards` is a se
 ---
 
 ### B2 — `Stable.PositionCardsInStable` has an off-by-one in card placement
-**Status:** Open  
+**Status:** Fixed  
 **File:** `Stable.cs`  
 `leftMostOpenPosition` is incremented before placing a card only when `i > 0 && spaceCards.Count > 1`. For a 2-card stable this skips placing the first card at its correct slot center — both cards end up shifted right by one slot width.  
 **Fix:** Compute position as `startX + i * cardSlotWidth` unconditionally, remove the conditional increment.
