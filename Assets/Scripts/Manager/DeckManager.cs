@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using System;
 
 public class DeckManager : MonoBehaviour
 {
@@ -20,9 +18,7 @@ public class DeckManager : MonoBehaviour
     {
         LoadAllCardData();
         SetupGameDecks();
-        Debug.Log("Before shuffle: " + string.Join(",", playDeck.spaceCards.Select(c => c.name)));
         ShuffleDecks();
-        Debug.Log("After shuffle: " + string.Join(",", playDeck.spaceCards.Select(c => c.name)));
 
         foreach (var player in turnManager.players)
         {
@@ -99,25 +95,13 @@ public class DeckManager : MonoBehaviour
 
     public void ShuffleDeck(Deck deck)
     {
-        // Step 1: Put all children into a list
-        List<Transform> children = new List<Transform>();
-        foreach (Transform child in deck.transform)
-            children.Add(child);
-
-        // Step 2: Shuffle the list
-        for (int i = children.Count - 1; i > 0; i--)
+        for (int i = deck.spaceCards.Count - 1; i > 0; i--)
         {
             int j = UnityEngine.Random.Range(0, i + 1);
-            (children[i], children[j]) = (children[j], children[i]);
+            (deck.spaceCards[i], deck.spaceCards[j]) = (deck.spaceCards[j], deck.spaceCards[i]);
         }
 
-        // Step 3: Reassign sibling indices
-        for (int i = 0; i < children.Count; i++)
-        {
-            children[i].SetSiblingIndex(i);
-        }
-
-        // Debug: log shuffled order
-        Debug.Log("Shuffled deck: " + string.Join(", ", children.ConvertAll(c => c.name)));
+        for (int i = 0; i < deck.spaceCards.Count; i++)
+            deck.spaceCards[i].transform.SetSiblingIndex(i);
     }
 }

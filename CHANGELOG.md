@@ -4,6 +4,13 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.1] — 2026-04-23
+
+### Bugfixes
+- **B1:** `DeckManager.ShuffleDeck` now shuffles the `spaceCards` list directly (Fisher-Yates) and syncs the hierarchy to match — previously only the UI hierarchy was reordered, leaving draw order unaffected
+
+---
+
 ## [v0.2.0] — 2026-04-23
 
 ### CardActionExecutor System

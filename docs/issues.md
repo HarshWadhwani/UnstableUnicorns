@@ -7,7 +7,7 @@ Tracked issues from code and design review. Work through these one by one — ma
 ## Bugs
 
 ### B1 — `DeckManager.ShuffleDeck` doesn't actually shuffle draw order
-**Status:** Open  
+**Status:** Fixed  
 **File:** `DeckManager.cs`  
 The shuffle reorders Unity Transform siblings but `CardSpace.spaceCards` is a separate `List<Card>` that is never reordered. Since `Deck.HandleCardClick` draws `spaceCards[0]`, the shuffle has zero effect on gameplay.  
 **Fix:** After reordering siblings, rebuild `spaceCards` from the new sibling order, or shuffle `spaceCards` directly using Fisher-Yates.
