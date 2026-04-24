@@ -39,21 +39,15 @@ public class Stable : CardSpace
     protected virtual void PositionCardsInStable()
     {
         RectTransform stableRect = GetComponent<RectTransform>();
-        float stableWidth = stableRect.rect.width;
-        float cardSlotWidth = stableWidth / maxCardsInStable;
+        float cardSlotWidth = stableRect.rect.width / maxCardsInStable;
+        float startX = stableRect.anchoredPosition.x - (stableRect.rect.width / 2) + cardSlotWidth / 2;
+        float cardRotation = cardPrefab.GetComponent<RectTransform>().localEulerAngles.z;
 
-        float leftMostOpenPosition = stableRect.anchoredPosition.x - (stableWidth / 2) + cardSlotWidth / 2;
-
-        for (int i = 0; i < spaceCards.Count; i++) {
-
-            if (spaceCards.Count > 1 && i > 0) {
-                leftMostOpenPosition += cardSlotWidth;
-            }
-            
+        for (int i = 0; i < spaceCards.Count; i++)
+        {
             RectTransform cardRect = spaceCards[i].GetComponent<RectTransform>();
-
-            cardRect.anchoredPosition = new Vector2(leftMostOpenPosition, 0);
-            cardRect.localEulerAngles = new Vector3(0, 0, cardPrefab.GetComponent<RectTransform>().localEulerAngles.z);
+            cardRect.anchoredPosition = new Vector2(startX + i * cardSlotWidth, 0);
+            cardRect.localEulerAngles = new Vector3(0, 0, cardRotation);
         }
     }
 }
