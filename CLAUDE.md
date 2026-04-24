@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Working Instructions
+
+- When the user declares an issue complete, update its **Status** line in `docs/issues.md` and mark it ✅ in the tracker table — do this in the same response.
+
 ## Project Overview
 
 A Unity 6 (6000.2.6f2) digital implementation of the card game **Unstable Unicorns**. UI-based (Canvas/RectTransform), currently supporting 2 players.
@@ -109,3 +113,5 @@ Detailed reasoning and per-card notes live in `docs/` — read on demand, not ne
 
 - `docs/design-decisions.md` — full reasoning behind structural choices (CardActionExecutor player reassignment, DowngradeStable ownership, layout decisions, OnEnable action pattern, AfterAction separation)
 - `docs/cards/fuck-marry-kill.md` — implementation detail, execution trace, quirks, and test checklist for FMK
+- `docs/future-architecture-mvc.md` — when and how to migrate to a model-separated architecture (prerequisite for multiplayer, AI, save/load)
+- `docs/issues.md` — tracked bugs and tech debt with fix directions

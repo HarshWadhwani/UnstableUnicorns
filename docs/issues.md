@@ -1,6 +1,27 @@
 # Issues & Tech Debt
 
-Tracked issues from code and design review. Work through these one by one — mark **Status** when done.
+Tracked issues from code and design review. Work through these one by one.
+
+**For Claude:** When the user declares an issue complete, update its **Status** line and the tracker table below in the same response.
+
+---
+
+## Tracker
+
+| ID | Description | Status |
+|----|-------------|--------|
+| B1 | `ShuffleDeck` doesn't shuffle draw order | ✅ Fixed |
+| B2 | `Stable.PositionCardsInStable` off-by-one | 🔲 Open |
+| B3 | `TriggerSpecialAction` overrides suppress base | 🔲 Open |
+| B4 | `DestroyCardAction.Any` silently falls back to Unicorn | 🔲 Open |
+| R1 | `UpgradeStable`/`DowngradeStable` identical `HandleCardClick` | 🔲 Open |
+| R2 | `UpgradeStable`/`DowngradeStable` near-identical `PositionCardsInStable` | 🔲 Open |
+| R3 | `Card` duplicates fields from `CardData` | 🔲 Open |
+| R4 | Three near-identical `PromptPlayer*` methods | 🔲 Open |
+| R5 | `AfterAction` enum never read | 🔲 Open |
+| M1 | Special phase checks hand instead of stables | 🔲 Open |
+| M2 | Win condition tied to `maxCardsInStable` | 🔲 Open |
+| M3 | Hand size >8 throws exception | 🔲 Open |
 
 ---
 
