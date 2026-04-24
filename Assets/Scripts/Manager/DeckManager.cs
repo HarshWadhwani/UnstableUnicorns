@@ -6,7 +6,6 @@ using System;
 public class DeckManager : MonoBehaviour
 {
     public Card cardPrefab;
-    public List<CardData> playCardDatas;
     public CardData babyUnicornCardData;
 
     public Deck playDeck;  
@@ -14,9 +13,12 @@ public class DeckManager : MonoBehaviour
 
     public TurnManager turnManager;
     public CardManager cardManager;
+
+    private List<CardData> playCardDatas;
     
     void Start()
     {
+        LoadAllCardData();
         SetupGameDecks();
         Debug.Log("Before shuffle: " + string.Join(",", playDeck.spaceCards.Select(c => c.name)));
         ShuffleDecks();
@@ -26,6 +28,23 @@ public class DeckManager : MonoBehaviour
         {
             cardManager.DrawCard(nursery.spaceCards[0], nursery, player);
         }
+    }
+
+    void LoadAllCardData()
+    {
+        CardData[] allCardData = Resources.LoadAll<CardData>("CardDataInstances");
+        
+        playCardDatas = new List<CardData>();
+        
+        foreach (var cardData in allCardData)
+        {
+            if (cardData != babyUnicornCardData)
+            {
+                playCardDatas.Add(cardData);
+            }
+        }
+        
+        Debug.Log($"Loaded {playCardDatas.Count} card data instances for play deck");
     }
 
     void SetupGameDecks()

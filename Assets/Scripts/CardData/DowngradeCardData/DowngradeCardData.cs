@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "CardData/DowngradeCardData")]
 public class DowngradeCardData : CardData
 {
-    public override void TriggerSpecialAction()
+    public override void TriggerSpecialAction(Card sourceCard)
     {
         Debug.Log("Triggered Special Action for DowngradeCardDataScriptableObjects");
     }
@@ -15,5 +15,7 @@ public class DowngradeCardData : CardData
         cardType = CardType.DOWNGRADE;
         specialActionType = SpecialActionType.EVERY_TURN;
         afterAction = AfterAction.PLACE_IN_STABLE;
+        
+        
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "CardData/NeighCardData/BasicNeighCardData")]
 public class BasicNeighCardData : NeighCardData
 {
-    public override void TriggerSpecialAction()
+    public override void TriggerSpecialAction(Card sourceCard)
     {
         Debug.Log("Triggered special action for BasicNeighScriptableObject");
     }

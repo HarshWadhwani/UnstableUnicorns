@@ -21,13 +21,32 @@ public class HandStable : Stable
 
     public override void HandleCardClick(Card card)
     {
+        if (CardActionExecutor.Instance != null && CardActionExecutor.Instance.currentPendingAction != PendingActionType.None)
+        {
+            if (player != turnManager.activePlayer)
+            {
+                Debug.LogWarning("Card does not belong to the active player.");
+                return;
+            }
+
+            if (CardActionExecutor.Instance.currentPendingAction == PendingActionType.DiscardCard ||
+                CardActionExecutor.Instance.currentPendingAction == PendingActionType.GiveCard)
+            {
+                CardActionExecutor.Instance.ExecutePendingAction(card);
+                PositionCardsInStable();
+                Debug.Log("Hand stable is not starting next turn phase");
+                return;
+            }
+        }
+
         if (allowedTurnPhases.Contains(turnManager.currentPhase))
         {
             bool isCardPlayed = PlayCard(card);
             if (isCardPlayed)
             {
                 PositionCardsInStable();
-                turnManager.StartNextTurnPhase();
+                Debug.Log("Hand stable is starting next turn phase");
+                turnManager.StartNextTurnPhase(card.specialActionType);
             }
         }
     }
@@ -39,7 +58,7 @@ public class HandStable : Stable
             Debug.LogWarning("player is not active");
             return false;
         }
-        
+        //TODO 12-15 : follow this trail to find how to set current pending action for card executor correctly
         return cardManager.PlayCardForCurrentPlayer(card, this);
     }
 

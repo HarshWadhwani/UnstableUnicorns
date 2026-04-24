@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ed7f736a23be8942a7beb70a61c646f, type: 3}
-  m_Name: Magic Card Data
-  m_EditorClassIdentifier: Assembly-CSharp::MagicCardData
+  m_Script: {fileID: 11500000, guid: dfe73b0f1e6594deaa024605e59b0905, type: 3}
+  m_Name: Fuck Marry Kill Card Data
+  m_EditorClassIdentifier: Assembly-CSharp::FuckMarryKillCardData
   cardNameVariations:
-  - Magic Card
+  - Fuck, Marry, Kill
   cardDescriptionText: 
-  instances: 2
+  instances: 1
   cardType: 1
   specialActionType: 0
   afterAction: 0
