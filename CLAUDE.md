@@ -44,13 +44,33 @@ Card data assets (ScriptableObjects) live in `Assets/Resources/CardDataInstances
 
 ### CardAction System
 
-Card effects are composed from serializable `CardAction` subclasses (`DiscardCardAction`, `GiveCardAction`, `DestroyCardAction`) defined on the `CardData`.
+Card effects are composed from serializable `CardAction` subclasses defined on the `CardData`. Three action types currently exist:
+
+| Action | Parameters | Effect |
+|--------|------------|--------|
+| `DiscardCardAction` | `targetPlayer` (ActivePlayer/Opponent), `selectionMode` (PlayerChooses/Random), `numberOfCards` | Forces target player to discard cards from hand to the discard pile. |
+| `GiveCardAction` | `giver` (ActivePlayer/Opponent), `numberOfCards` | Giver picks N cards from their hand and transfers them to the other player's hand. |
+| `DestroyCardAction` | `destroyer` (ActivePlayer/Opponent), `numberOfCards` | Destroyer picks N cards from any of the opposing player's stables (unicorn/upgrade/downgrade). Cards go to the discard pile. |
+
+Each action's `Execute(executor, context)` resolves which players/spaces are involved and calls a `Prompt*` method on `CardActionExecutor` to pause the queue for player input.
 
 **Execution flow:**
 1. `CardData.TriggerSpecialAction(sourceCard)` → `CardActionExecutor.ExecuteActions()`
 2. Actions run sequentially via a `Queue<CardAction>`
 3. Actions requiring player input set a `PendingActionType` on `CardActionExecutor` and temporarily reassign `turnManager.activePlayer` to the prompted player — this is how click routing works during effects
 4. The next click on the appropriate `CardSpace` calls `CardActionExecutor.ExecutePendingAction(card)`, which decrements `pendingCardsRemaining` and resumes the queue when done
+
+`pendingSourceStable` locks the source space when an action targets a single stable (e.g., discard from hand). For `DestroyCard` it is `null` — the source is derived from `card.cardSpace` at click time, allowing the destroyer to pick from any opposing stable.
+
+**Worked example — Fuck Marry Kill** (see `docs/cards/fuck-marry-kill.md` for the full trace):
+
+```
+actions[0] = DiscardCardAction { targetPlayer = Opponent,    selectionMode = PlayerChooses, numberOfCards = 1 }
+actions[1] = GiveCardAction    { giver        = ActivePlayer,                                numberOfCards = 1 }
+actions[2] = DestroyCardAction { destroyer    = ActivePlayer,                                numberOfCards = 1 }
+```
+
+The three actions queue up and pause for input between each step: opponent picks a hand card to discard → active player picks a hand card to give → active player picks any card in any of the opponent's stables to destroy.
 
 ### Adding a New Card
 
@@ -100,7 +120,6 @@ Player wins when `UnicornStable` reaches `maxCardsInStable` unicorns. Currently 
 | EVERY_TURN special phase | Partial | `ActivePlayerHasEveryTurnCards()` exists but never called |
 | Win condition UI | Partial | `CheckWinCondition()` logs only; no game-over screen or state |
 | Pass action | Not started | Player can't skip their Action phase turn |
-| `DestroyCardAction` with `TargetStable.Any` | Not implemented | Defaults to `unicornStable` with a warning log |
 | `AfterAction.PLACE_IN_ENEMY_STABLE` | Not implemented | Enum value exists, never routed in `CardManager` |
 | Hand size >8 cards | Not handled | `HandStable.PositionCardsInStable()` throws at >8 |
 | Multi-player (>2) | Not started | `CardManager` hardcodes "first non-active player" as opponent |

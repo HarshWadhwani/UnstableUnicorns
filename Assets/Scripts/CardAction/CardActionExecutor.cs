@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PendingActionType
+public enum  PendingActionType
 {
     None,
     DiscardCard,
@@ -131,15 +131,15 @@ public class CardActionExecutor : MonoBehaviour
         pendingCardsRemaining = numberOfCards;
     }
 
-    public void PromptPlayerToSelectAndDestroyCards(Player destroyingPlayer, CardSpace targetStable, CardSpace discardPile, int numberOfCards)
+    public void PromptPlayerToSelectAndDestroyCards(Player destroyingPlayer, CardSpace discardPile, int numberOfCards)
     {
         Debug.Log($"Prompting {destroyingPlayer.name} to select {numberOfCards} card(s) to destroy.");
-        
+
         originalActivePlayer = turnManager.activePlayer;
         turnManager.activePlayer = destroyingPlayer;
-        
+
         currentPendingAction = PendingActionType.DestroyCard;
-        pendingSourceStable = targetStable;
+        pendingSourceStable = null;
         pendingDestinationStable = discardPile;
         pendingCardsRemaining = numberOfCards;
     }
@@ -152,7 +152,8 @@ public class CardActionExecutor : MonoBehaviour
             return;
         }
 
-        cardManager.MoveCard(card, pendingSourceStable, pendingDestinationStable);
+        CardSpace source = pendingSourceStable ?? card.cardSpace;
+        cardManager.MoveCard(card, source, pendingDestinationStable);
         pendingCardsRemaining--;
 
         Debug.Log($"Executed {currentPendingAction} on {card.name}. {pendingCardsRemaining} card(s) remaining.");

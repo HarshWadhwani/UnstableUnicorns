@@ -24,7 +24,6 @@ public class FuckMarryKillCardData : MagicCardData
             new DestroyCardAction
             {
                 destroyer = DestroyCardAction.DestroyerPlayer.ActivePlayer,
-                targetStable = DestroyCardAction.TargetStable.Unicorn,
                 numberOfCards = 1
             }
         };

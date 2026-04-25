@@ -13,7 +13,7 @@ Tracked issues from code and design review. Work through these one by one.
 | B1 | `ShuffleDeck` doesn't shuffle draw order | ✅ Fixed |
 | B2 | `Stable.PositionCardsInStable` off-by-one | ✅ Fixed |
 | B3 | `TriggerSpecialAction` overrides suppress base | ✅ Fixed |
-| B4 | `DestroyCardAction.Any` silently falls back to Unicorn | 🔲 Open |
+| B4 | `DestroyCardAction.Any` silently falls back to Unicorn | ✅ Fixed |
 | R1 | `UpgradeStable`/`DowngradeStable` identical `HandleCardClick` | 🔲 Open |
 | R2 | `UpgradeStable`/`DowngradeStable` near-identical `PositionCardsInStable` | 🔲 Open |
 | R3 | `Card` duplicates fields from `CardData` | 🔲 Open |
@@ -52,10 +52,10 @@ Each of these overrides `TriggerSpecialAction` with only a `Debug.Log`, discardi
 ---
 
 ### B4 — `DestroyCardAction` with `TargetStable.Any` silently falls back to Unicorn stable
-**Status:** Open  
+**Status:** Fixed  
 **File:** `DestroyCardAction.cs`  
-`TargetStable.Any` is unimplemented and defaults to `unicornStable` with a warning log. Any card using `Any` will incorrectly target only unicorns.  
-**Fix:** Implement `Any` — likely requires the destroying player to choose which stable to target, which needs a new `PendingActionType`.
+`TargetStable.Any` was unimplemented and defaulted to `unicornStable` with a warning log. Any card using `Any` would have incorrectly targeted only unicorns.  
+**Fix applied:** Removed the `TargetStable` enum entirely — every `DestroyCardAction` now lets the destroyer pick any card from any of the opposing player's three stables. `CardActionExecutor.ExecutePendingAction` falls back to `card.cardSpace` when `pendingSourceStable` is null, so the source is resolved at click time. FMK's `targetStable = Unicorn` line was removed (its "Kill" step now allows targeting upgrades and downgrades).
 
 ---
 

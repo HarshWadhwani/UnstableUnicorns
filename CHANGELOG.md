@@ -4,6 +4,13 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.2] — 2026-04-25
+
+### Bugfixes
+- **B4:** `DestroyCardAction.TargetStable` enum and per-stable targeting removed. The destroying player now picks any card from any of the opponent's three stables (unicorn/upgrade/downgrade) instead of being locked to a single stable. `CardActionExecutor.ExecutePendingAction` falls back to `card.cardSpace` as the source when `pendingSourceStable` is null, so the actual stable is derived from the clicked card. FMK's "Kill" step (previously `targetStable = Unicorn`) now allows targeting upgrades and downgrades as well.
+
+---
+
 ## [v0.2.1] — 2026-04-23
 
 ### Bugfixes
