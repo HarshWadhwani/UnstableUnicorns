@@ -17,7 +17,7 @@ Tracked issues from code and design review. Work through these one by one.
 | R1 | `UpgradeStable`/`DowngradeStable` identical `HandleCardClick` | ✅ Fixed |
 | R2 | `UpgradeStable`/`DowngradeStable` near-identical `PositionCardsInStable` | ✅ Fixed |
 | R3 | `Card` duplicates fields from `CardData` | ✅ Fixed |
-| R4 | Three near-identical `PromptPlayer*` methods | 🔲 Open |
+| R4 | Three near-identical `PromptPlayer*` methods | ✅ Fixed |
 | R5 | `AfterAction` enum never read | 🔲 Open |
 | M1 | Special phase checks hand instead of stables | 🔲 Open |
 | M2 | Win condition tied to `maxCardsInStable` | 🔲 Open |
@@ -86,10 +86,10 @@ The two methods differed only in the anchor edge and overlap direction sign; all
 ---
 
 ### R4 — `CardActionExecutor` has three near-identical `PromptPlayer*` methods
-**Status:** Open  
-**File:** `CardActionExecutor.cs`  
-`PromptPlayerToSelectAndDiscardCards`, `PromptPlayerToSelectAndGiveCards`, and `PromptPlayerToSelectAndDestroyCards` are identical except for the `PendingActionType` assigned.  
-**Fix:** Collapse into one method: `PromptPlayerToSelectCards(Player, CardSpace source, CardSpace dest, int count, PendingActionType)`.
+**Status:** Fixed  
+**Files:** `CardActionExecutor.cs`, `DiscardCardAction.cs`, `GiveCardAction.cs`, `DestroyCardAction.cs`  
+`PromptPlayerToSelectAndDiscardCards`, `PromptPlayerToSelectAndGiveCards`, and `PromptPlayerToSelectAndDestroyCards` were identical except for the log string, the `PendingActionType` assigned, and (Destroy) hardcoding `pendingSourceStable = null`.  
+**Fix applied:** Collapsed into one method `PromptPlayerToSelectCards(Player, CardSpace source, CardSpace destination, int numberOfCards, PendingActionType actionType)`. Callers pass the `PendingActionType` and the source explicitly. `DestroyCardAction` passes `source = null` to defer source resolution to click time (the `??` fallback to `card.cardSpace` in `ExecutePendingAction` — the mechanism behind B4).
 
 ---
 

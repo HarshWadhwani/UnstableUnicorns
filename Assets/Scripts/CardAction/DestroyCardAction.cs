@@ -29,6 +29,6 @@ public class DestroyCardAction : CardAction
         }
 
         Debug.Log($"{destroyingPlayer.name} must choose {numberOfCards} card(s) to destroy from any of {targetPlayer.name}'s stables.");
-        executor.PromptPlayerToSelectAndDestroyCards(destroyingPlayer, context.discardPile, numberOfCards);
+        executor.PromptPlayerToSelectCards(destroyingPlayer, null, context.discardPile, numberOfCards, PendingActionType.DestroyCard);
     }
 }

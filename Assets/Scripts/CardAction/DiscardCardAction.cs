@@ -27,7 +27,7 @@ public class DiscardCardAction : CardAction
         if (selectionMode == SelectionMode.PlayerChooses)
         {
             Debug.Log($"{target.name} must choose {numberOfCards} card(s) to discard from their hand.");
-            executor.PromptPlayerToSelectAndDiscardCards(target, sourceStable, context.discardPile, numberOfCards);
+            executor.PromptPlayerToSelectCards(target, sourceStable, context.discardPile, numberOfCards, PendingActionType.DiscardCard);
         }
         else if (selectionMode == SelectionMode.Random)
         {

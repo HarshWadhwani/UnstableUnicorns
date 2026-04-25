@@ -105,42 +105,18 @@ public class CardActionExecutor : MonoBehaviour
         return null;
     }
 
-    public void PromptPlayerToSelectAndDiscardCards(Player player, CardSpace sourceStable, CardSpace discardPile, int numberOfCards)
+    // Pass source = null to defer source resolution to click time (Destroy: source is whichever
+    // stable the clicked card lives in). Otherwise source locks the "from" space for the move.
+    public void PromptPlayerToSelectCards(Player player, CardSpace source, CardSpace destination, int numberOfCards, PendingActionType actionType)
     {
-        Debug.Log($"Prompting {player.name} to select {numberOfCards} card(s) from their hand to discard.");
-        
+        Debug.Log($"Prompting {player.name} to select {numberOfCards} card(s) for {actionType}.");
+
         originalActivePlayer = turnManager.activePlayer;
         turnManager.activePlayer = player;
-        
-        currentPendingAction = PendingActionType.DiscardCard;
-        pendingSourceStable = sourceStable;
-        pendingDestinationStable = discardPile;
-        pendingCardsRemaining = numberOfCards;
-    }
 
-    public void PromptPlayerToSelectAndGiveCards(Player givingPlayer, CardSpace sourceStable, CardSpace destinationStable, int numberOfCards)
-    {
-        Debug.Log($"Prompting {givingPlayer.name} to select {numberOfCards} card(s) to give.");
-        
-        originalActivePlayer = turnManager.activePlayer;
-        turnManager.activePlayer = givingPlayer;
-        
-        currentPendingAction = PendingActionType.GiveCard;
-        pendingSourceStable = sourceStable;
-        pendingDestinationStable = destinationStable;
-        pendingCardsRemaining = numberOfCards;
-    }
-
-    public void PromptPlayerToSelectAndDestroyCards(Player destroyingPlayer, CardSpace discardPile, int numberOfCards)
-    {
-        Debug.Log($"Prompting {destroyingPlayer.name} to select {numberOfCards} card(s) to destroy.");
-
-        originalActivePlayer = turnManager.activePlayer;
-        turnManager.activePlayer = destroyingPlayer;
-
-        currentPendingAction = PendingActionType.DestroyCard;
-        pendingSourceStable = null;
-        pendingDestinationStable = discardPile;
+        currentPendingAction = actionType;
+        pendingSourceStable = source;
+        pendingDestinationStable = destination;
         pendingCardsRemaining = numberOfCards;
     }
 

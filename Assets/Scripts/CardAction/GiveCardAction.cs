@@ -28,6 +28,6 @@ public class GiveCardAction : CardAction
         }
         
         Debug.Log($"{givingPlayer.name} must choose {numberOfCards} card(s) to give to {receivingPlayer.name}.");
-        executor.PromptPlayerToSelectAndGiveCards(givingPlayer, sourceStable, destinationStable, numberOfCards);
+        executor.PromptPlayerToSelectCards(givingPlayer, sourceStable, destinationStable, numberOfCards, PendingActionType.GiveCard);
     }
 }
