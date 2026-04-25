@@ -14,8 +14,8 @@ Tracked issues from code and design review. Work through these one by one.
 | B2 | `Stable.PositionCardsInStable` off-by-one | ✅ Fixed |
 | B3 | `TriggerSpecialAction` overrides suppress base | ✅ Fixed |
 | B4 | `DestroyCardAction.Any` silently falls back to Unicorn | ✅ Fixed |
-| R1 | `UpgradeStable`/`DowngradeStable` identical `HandleCardClick` | 🔲 Open |
-| R2 | `UpgradeStable`/`DowngradeStable` near-identical `PositionCardsInStable` | 🔲 Open |
+| R1 | `UpgradeStable`/`DowngradeStable` identical `HandleCardClick` | ✅ Fixed |
+| R2 | `UpgradeStable`/`DowngradeStable` near-identical `PositionCardsInStable` | ✅ Fixed |
 | R3 | `Card` duplicates fields from `CardData` | 🔲 Open |
 | R4 | Three near-identical `PromptPlayer*` methods | 🔲 Open |
 | R5 | `AfterAction` enum never read | 🔲 Open |
@@ -62,18 +62,18 @@ Each of these overrides `TriggerSpecialAction` with only a `Debug.Log`, discardi
 ## Redundancies / Cleanup
 
 ### R1 — `UpgradeStable.HandleCardClick` and `DowngradeStable.HandleCardClick` are identical
-**Status:** Open  
-**Files:** `UpgradeStable.cs`, `DowngradeStable.cs`  
-Both have the exact same 8-line destroy-pending-action guard. Any future change must be made in two places.  
-**Fix:** Move this logic into `Stable` as a virtual or shared protected method.
+**Status:** Fixed  
+**Files:** `Stable.cs`, `UpgradeStable.cs`, `DowngradeStable.cs`, `UnicornStable.cs`  
+All three stable subclasses had the same destroy-pending-action guard (Unicorn's copy had drifted with two stray `Debug.Log` lines). Any future change to destroy-click semantics would have needed three edits.  
+**Fix applied:** Moved the destroy guard into `Stable.HandleCardClick` (previously a no-op). Removed the override from `UpgradeStable`, `DowngradeStable`, and `UnicornStable`. `HandStable` keeps its own override since hand-click semantics differ.
 
 ---
 
 ### R2 — `UpgradeStable.PositionCardsInStable` and `DowngradeStable.PositionCardsInStable` are near-identical
-**Status:** Open  
-**Files:** `UpgradeStable.cs`, `DowngradeStable.cs`  
-The only differences are the overlap direction sign and the starting X anchor. All RectTransform setup is duplicated.  
-**Fix:** Extract into a shared `Stable` method with a `bool stackFromRight` (or `int direction`) parameter.
+**Status:** Fixed  
+**Files:** `StackedStable.cs` (new), `UpgradeStable.cs`, `DowngradeStable.cs`  
+The two methods differed only in the anchor edge and overlap direction sign; all RectTransform setup was duplicated. A stale `// 20% overlap` comment in `UpgradeStable` had also drifted from the actual 50% overlap math.  
+**Fix applied:** Introduced an intermediate abstract `StackedStable : Stable` that owns the layout, exposing a `protected abstract bool FromRightEdge` for subclasses to declare their direction. `PositionCardsInStable` is `sealed override` on `StackedStable` to prevent the same drift recurring. `UpgradeStable` and `DowngradeStable` collapse to one-line declarations of their direction.
 
 ---
 

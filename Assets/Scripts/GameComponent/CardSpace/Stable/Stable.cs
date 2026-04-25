@@ -21,7 +21,17 @@ public class Stable : CardSpace
 
     public override void HandleCardClick(Card card)
     {
+        if (CardActionExecutor.Instance != null && CardActionExecutor.Instance.currentPendingAction == PendingActionType.DestroyCard)
+        {
+            if (player == turnManager.activePlayer)
+            {
+                Debug.LogWarning("Cannot destroy your own cards.");
+                return;
+            }
 
+            CardActionExecutor.Instance.ExecutePendingAction(card);
+            PositionCardsInStable();
+        }
     }
 
     public override void AddCard(Card card)
