@@ -5,11 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "CardData/UnicornCardData/BabyUnicornCardData")]
 public class BabyUnicornCardData : UnicornCardData
 {
-    public override void TriggerSpecialAction(Card sourceCard)
-    {
-        Debug.Log("No Special Action for BabyUnicornCardData");
-    }
-
     public override void OnEnable()
     {
         base.OnEnable();

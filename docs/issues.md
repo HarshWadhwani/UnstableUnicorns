@@ -12,7 +12,7 @@ Tracked issues from code and design review. Work through these one by one.
 |----|-------------|--------|
 | B1 | `ShuffleDeck` doesn't shuffle draw order | ✅ Fixed |
 | B2 | `Stable.PositionCardsInStable` off-by-one | ✅ Fixed |
-| B3 | `TriggerSpecialAction` overrides suppress base | 🔲 Open |
+| B3 | `TriggerSpecialAction` overrides suppress base | ✅ Fixed |
 | B4 | `DestroyCardAction.Any` silently falls back to Unicorn | 🔲 Open |
 | R1 | `UpgradeStable`/`DowngradeStable` identical `HandleCardClick` | 🔲 Open |
 | R2 | `UpgradeStable`/`DowngradeStable` near-identical `PositionCardsInStable` | 🔲 Open |
@@ -44,7 +44,7 @@ The shuffle reorders Unity Transform siblings but `CardSpace.spaceCards` is a se
 ---
 
 ### B3 — `TriggerSpecialAction` overrides on leaf classes suppress the base implementation
-**Status:** Open  
+**Status:** Fixed  
 **Files:** `BabyUnicornCardData.cs`, `BasicNeighCardData.cs`, `DiscardNeighCardData.cs`, `FinalNeighCardData.cs`, `UpgradeCardData.cs`, `DowngradeCardData.cs`  
 Each of these overrides `TriggerSpecialAction` with only a `Debug.Log`, discarding the base class logic that executes the `actions` list. Any actions added to these card types in the future will silently do nothing.  
 **Fix:** Remove these overrides entirely (the base class handles it), or add `base.TriggerSpecialAction(sourceCard)` calls.

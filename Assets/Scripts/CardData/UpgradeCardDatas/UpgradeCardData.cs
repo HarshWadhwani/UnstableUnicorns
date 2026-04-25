@@ -5,11 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "CardData/UpgradeCardData")]
 public class UpgradeCardData : CardData
 {
-    public override void TriggerSpecialAction(Card sourceCard)
-    {
-        Debug.Log("Triggered Special Action for UpgradeCardDataScriptableObjects");
-    }
-    
     public override void OnEnable()
     {
         cardType = CardType.UPGRADE;
