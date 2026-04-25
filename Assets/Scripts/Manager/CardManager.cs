@@ -29,12 +29,12 @@ public class CardManager : MonoBehaviour
 
     public bool PlayCardForCurrentPlayer(Card card, HandStable handStable)
     {
-        if (card.specialActionType == SpecialActionType.IMMEDIATE)
+        if (card.cardData.specialActionType == SpecialActionType.IMMEDIATE)
         {
             card.cardData.TriggerSpecialAction(card);
         }
 
-        switch (card.cardType)
+        switch (card.cardData.cardType)
         {
             case CardType.UNICORN:
                 MoveCard(card, handStable, turnManager.activePlayer.unicornStable);

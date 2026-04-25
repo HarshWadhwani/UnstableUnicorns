@@ -46,7 +46,7 @@ public class HandStable : Stable
             {
                 PositionCardsInStable();
                 Debug.Log("Hand stable is starting next turn phase");
-                turnManager.StartNextTurnPhase(card.specialActionType);
+                turnManager.StartNextTurnPhase(card.cardData.specialActionType);
             }
         }
     }

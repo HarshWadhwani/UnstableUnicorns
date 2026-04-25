@@ -16,7 +16,7 @@ Tracked issues from code and design review. Work through these one by one.
 | B4 | `DestroyCardAction.Any` silently falls back to Unicorn | ✅ Fixed |
 | R1 | `UpgradeStable`/`DowngradeStable` identical `HandleCardClick` | ✅ Fixed |
 | R2 | `UpgradeStable`/`DowngradeStable` near-identical `PositionCardsInStable` | ✅ Fixed |
-| R3 | `Card` duplicates fields from `CardData` | 🔲 Open |
+| R3 | `Card` duplicates fields from `CardData` | ✅ Fixed |
 | R4 | Three near-identical `PromptPlayer*` methods | 🔲 Open |
 | R5 | `AfterAction` enum never read | 🔲 Open |
 | M1 | Special phase checks hand instead of stables | 🔲 Open |
@@ -78,10 +78,10 @@ The two methods differed only in the anchor edge and overlap direction sign; all
 ---
 
 ### R3 — `Card` duplicates fields already on `CardData`
-**Status:** Open  
-**File:** `Card.cs`  
-`Card` stores `cardType`, `specialActionType`, and `afterAction` locally and copies them from `cardData` in `Initialize()`. This creates two sources of truth for the same value.  
-**Fix:** Remove the duplicate fields from `Card`; read from `card.cardData.*` everywhere. Update any references.
+**Status:** Fixed  
+**Files:** `Card.cs`, `CardManager.cs`, `TurnManager.cs`, `HandStable.cs`  
+`Card` stored `cardType`, `specialActionType`, and `afterAction` locally and copied them from `cardData` in `Initialize()`, creating two sources of truth.  
+**Fix applied:** Removed the three fields from `Card` and the matching copies from `Initialize()`. The four call sites (`CardManager.PlayCardForCurrentPlayer` for both `cardType` and `specialActionType`, `TurnManager.CollectEveryTurnActionsFromSpace`, and `HandStable.HandleCardClick`) now read through `card.cardData.*`. `afterAction` is no longer cached on `Card` (it was never read anywhere — see R5).
 
 ---
 

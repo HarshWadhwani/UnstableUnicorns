@@ -79,7 +79,7 @@ public class TurnManager : MonoBehaviour
     {
         foreach (Card card in cardSpace.spaceCards)
         {
-            if (card.specialActionType == SpecialActionType.EVERY_TURN)
+            if (card.cardData.specialActionType == SpecialActionType.EVERY_TURN)
             {
                 actions.AddRange(card.cardData.actions);
             }

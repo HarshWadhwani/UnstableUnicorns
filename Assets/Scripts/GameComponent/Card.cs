@@ -13,10 +13,6 @@ public class Card : MonoBehaviour, IPointerClickHandler
     public GameObject cardBack;
     public TextMeshProUGUI cardName;
     public TextMeshProUGUI cardDescription;
-    
-    public CardType cardType;
-    public SpecialActionType specialActionType;
-    public AfterAction afterAction;
 
     public CardSpace cardSpace;
 
@@ -25,9 +21,6 @@ public class Card : MonoBehaviour, IPointerClickHandler
         name = cardData.cardNameVariations[0];
         cardName.text = cardData.cardNameVariations[0];
         cardDescription.text = cardData.cardDescriptionText;
-        cardType = cardData.cardType;
-        specialActionType = cardData.specialActionType;
-        afterAction = cardData.afterAction;
         this.cardData = cardData;
     }
 
