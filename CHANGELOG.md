@@ -4,6 +4,15 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.3] — 2026-04-29
+
+### Fixes
+- **M1:** Tracker correction — `ActivePlayerHasSpecialCards` and `ActivePlayerHasEveryTurnCards` were already removed in v0.2.0. `TurnManager.AdvanceToNextPlayerTurn` calls `CollectEveryTurnActions()` which correctly queries the three stables. No code change; tracker updated.
+- **M2:** Added `public int winConditionCount = 7` to `UnicornStable`. `CheckWinCondition` now checks `spaceCards.Count >= winConditionCount` instead of `== maxCardsInStable`, decoupling the game rule from the UI layout capacity. Game-over UI not yet wired.
+- **M3 (partial):** `HandStable.PositionCardsInStable` now clamps `displayCount = Mathf.Min(spaceCards.Count, 7)` before computing the fan layout, preventing the `ArgumentOutOfRangeException` that fired on 9+ cards. Cards beyond index 6 are unpositioned; a proper overflow formula or scroll is deferred.
+
+---
+
 ## [v0.2.2] — 2026-04-25
 
 ### Bugfixes

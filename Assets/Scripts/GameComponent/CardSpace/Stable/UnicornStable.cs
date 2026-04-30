@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class UnicornStable : Stable
 {
+    public int winConditionCount = 7;
+
     void Start()
     {
 
@@ -11,14 +13,14 @@ public class UnicornStable : Stable
 
     void Update()
     {
-        
+
     }
 
     public void CheckWinCondition()
     {
-        if (spaceCards.Count == maxCardsInStable)
+        if (spaceCards.Count >= winConditionCount)
         {
-            Debug.Log("Player wins!");
+            Debug.Log($"{player.name} wins!");
         }
     }
 }

@@ -64,20 +64,20 @@ public class HandStable : Stable
 
     protected override void PositionCardsInStable()
     {
+        int displayCount = Mathf.Min(spaceCards.Count, 7);
         RectTransform stableRect = GetComponent<RectTransform>();
 
-        float cardSlotAngle = fanTotalAngle / spaceCards.Count;
+        float cardSlotAngle = fanTotalAngle / displayCount;
 
-        for (int i = 0; i < spaceCards.Count; i++)
+        for (int i = 0; i < displayCount; i++)
         {
             RectTransform cardRect = spaceCards[i].GetComponent<RectTransform>();
-            
+
             float openSlot = i * cardSlotAngle;
             float zRotation = stableRect.localEulerAngles.z + 70 - (cardSlotAngle / 2) - openSlot;
 
-            var xPosition = stableRect.anchoredPosition.x + GetXPositionOffsetValue(spaceCards.Count, i);
-
-            var yPosition = GetYPositionOffsetValue(spaceCards.Count, i);
+            var xPosition = stableRect.anchoredPosition.x + GetXPositionOffsetValue(displayCount, i);
+            var yPosition = GetYPositionOffsetValue(displayCount, i);
 
             cardRect.anchoredPosition = new Vector2(xPosition, yPosition);
             cardRect.localEulerAngles = new Vector3(stableRect.localEulerAngles.x, stableRect.localEulerAngles.y, zRotation);

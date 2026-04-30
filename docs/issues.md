@@ -19,9 +19,9 @@ Tracked issues from code and design review. Work through these one by one.
 | R3 | `Card` duplicates fields from `CardData` | ✅ Fixed |
 | R4 | Three near-identical `PromptPlayer*` methods | ✅ Fixed |
 | R5 | `AfterAction` enum never read | ✅ Fixed |
-| M1 | Special phase checks hand instead of stables | 🔲 Open |
-| M2 | Win condition tied to `maxCardsInStable` | 🔲 Open |
-| M3 | Hand size >8 throws exception | 🔲 Open |
+| M1 | Special phase checks hand instead of stables | ✅ Fixed |
+| M2 | Win condition tied to `maxCardsInStable` | ✅ Fixed |
+| M3 | Hand size >8 throws exception | ⚠️ Partial |
 
 ---
 
@@ -104,23 +104,22 @@ The two methods differed only in the anchor edge and overlap direction sign; all
 ## Missing Mechanics
 
 ### M1 — `TurnManager.ActivePlayerHasSpecialCards` checks hand instead of stables
-**Status:** Open  
+**Status:** Fixed (tracker was stale — already resolved in code)  
 **File:** `TurnManager.cs`  
-The method checks hand cards for non-`NONE` `SpecialActionType`, but the Special phase is for EVERY_TURN effects on cards **already in play** (upgrade/downgrade stables). `ActivePlayerHasEveryTurnCards()` exists and checks the right places but is never called.  
-**Fix:** Replace the `ActivePlayerHasSpecialCards` call in `StartNextTurnPhase` with `ActivePlayerHasEveryTurnCards`.
+Both `ActivePlayerHasSpecialCards` and `ActivePlayerHasEveryTurnCards` were removed during the v0.2.0 refactor. `AdvanceToNextPlayerTurn` now calls `CollectEveryTurnActions()`, which correctly queries `unicornStable`, `upgradeStable`, and `downgradeStable` — the right places for EVERY_TURN effects.
 
 ---
 
 ### M2 — Win condition tied to `maxCardsInStable` (visual capacity)
-**Status:** Open  
+**Status:** Fixed  
 **File:** `UnicornStable.cs`  
-`CheckWinCondition` wins when `spaceCards.Count == maxCardsInStable`. The win threshold is 7 unicorns in the actual game rules, which should be a separate constant independent of how many cards fit visually in the UI.  
-**Fix:** Add a `winConditionCount` field (default 7) to `UnicornStable` and check against that instead.
+`CheckWinCondition` was winning when `spaceCards.Count == maxCardsInStable`, coupling the game rule to the UI layout capacity. Also used `==` instead of `>=`, so if a card were ever added beyond max the win would never fire.  
+**Fix applied:** Added `public int winConditionCount = 7` to `UnicornStable`. `CheckWinCondition` now checks `spaceCards.Count >= winConditionCount`. `maxCardsInStable` remains the layout/cap value. Game-over UI not yet wired — `CheckWinCondition` still logs only.
 
 ---
 
 ### M3 — Hand size >8 throws `ArgumentOutOfRangeException`
-**Status:** Open  
+**Status:** Partial  
 **File:** `HandStable.cs`  
-`GetYPositionOffsetValue` only handles 1–8 cards and throws for anything beyond. There's no guard in `PositionCardsInStable`.  
-**Fix:** Add a fallback for counts >8 (either a formula or clamping to 8 visible + scroll).
+`GetYPositionOffsetValue` only handles 1–8 cards and throws for anything beyond. There was no guard in `PositionCardsInStable`.  
+**Partial fix applied:** `PositionCardsInStable` now caps `displayCount = Mathf.Min(spaceCards.Count, 7)` and loops only over those cards. Cards beyond index 6 are not positioned (they remain off-screen or wherever Unity left them). The crash is prevented, but overflow cards are not visible or accessible. A parabolic formula fallback (or proper scroll/overflow UI) is deferred.
