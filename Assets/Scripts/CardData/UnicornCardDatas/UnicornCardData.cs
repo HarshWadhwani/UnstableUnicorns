@@ -10,6 +10,5 @@ public abstract class UnicornCardData : CardData
     {
         cardType = CardType.UNICORN;
         specialActionType = SpecialActionType.NONE;
-        afterAction = AfterAction.PLACE_IN_STABLE;
     }
 }

@@ -7,7 +7,6 @@ public abstract class MagicCardData : CardData
     public override void OnEnable()
     {
         cardType = CardType.MAGIC;
-        afterAction = AfterAction.DISCARD;
         specialActionType = SpecialActionType.IMMEDIATE;
     }
 }

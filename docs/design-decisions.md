@@ -62,18 +62,6 @@ The tradeoff: adding a new card requires writing a new `CardData` subclass even 
 
 ---
 
-## `AfterAction` on `CardData` is separate from `CardAction` routing
-
-**Files:** `CardData.cs`, `CardManager.cs`, all `CardAction` subclasses
-
-`AfterAction` (DISCARD / PLACE_IN_STABLE / PLACE_IN_ENEMY_STABLE) describes where the **played card itself** goes after being played. `CardAction` instances describe the **effect the card has on other cards**.
-
-These are intentionally separate concerns. A Magic card discards itself (`afterAction = DISCARD`) while also causing the opponent to discard a card from their hand (`DiscardCardAction`). Conflating the two would make it impossible to express "this card goes to your stable AND causes an opponent effect."
-
-`AfterAction` is currently only partially used — `PLACE_IN_ENEMY_STABLE` is defined but never routed in `CardManager`. This would be the hook for cards that physically place themselves onto an opponent's board.
-
----
-
 ## `Special` is split into `ImmediateSpecial` and `EveryTurnSpecial`
 
 **Files:** `TurnPhase.cs`, `TurnManager.cs`, `CardActionExecutor.cs`

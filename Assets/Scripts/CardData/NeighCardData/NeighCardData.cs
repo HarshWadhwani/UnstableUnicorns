@@ -10,6 +10,5 @@ public abstract class NeighCardData : CardData
     {
         cardType = CardType.NEIGH;
         specialActionType = SpecialActionType.IMMEDIATE;
-        afterAction = AfterAction.DISCARD;
     }
 }

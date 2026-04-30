@@ -9,6 +9,5 @@ public class UpgradeCardData : CardData
     {
         cardType = CardType.UPGRADE;
         specialActionType = SpecialActionType.EVERY_TURN;
-        afterAction = AfterAction.PLACE_IN_STABLE;
     }
 }

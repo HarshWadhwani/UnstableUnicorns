@@ -22,7 +22,7 @@ Card data assets (ScriptableObjects) live in `Assets/Resources/CardDataInstances
 
 **`CardData` (ScriptableObject)** is the base for all card types:
 - Subclasses: `UnicornCardData`, `MagicCardData`, `UpgradeCardData`, `DowngradeCardData`, `NeighCardData`
-- Each subclass sets `cardType`, `specialActionType`, and `afterAction` in `OnEnable()`
+- Each subclass sets `cardType` and `specialActionType` in `OnEnable()`
 - Cards with effects define a `List<CardAction> actions` — these are executed sequentially by `CardActionExecutor`
 
 **`Card` (MonoBehaviour)** is the runtime instance. It holds a reference to its `CardData` and its current `CardSpace`.
@@ -75,7 +75,7 @@ The three actions queue up and pause for input between each step: opponent picks
 ### Adding a New Card
 
 1. Create a new `CardData` subclass (or use an existing one) with `[CreateAssetMenu]`
-2. Set `cardType`, `specialActionType`, `afterAction` in `OnEnable()`
+2. Set `cardType` and `specialActionType` in `OnEnable()`
 3. Populate `actions` list with `CardAction` instances (see `FuckMarryKillCardData` as reference)
 4. Create a `.asset` file in `Assets/Resources/CardDataInstances/<CardType>/`
 5. Set `instances` to control how many copies appear in the deck
@@ -84,7 +84,6 @@ The three actions queue up and pause for input between each step: opponent picks
 
 - `CardType`: `UNICORN`, `MAGIC`, `UPGRADE`, `DOWNGRADE`, `NEIGH`
 - `SpecialActionType`: `IMMEDIATE` (triggers on play), `EVERY_TURN`, `NONE`
-- `AfterAction`: `DISCARD`, `PLACE_IN_STABLE`, `PLACE_IN_ENEMY_STABLE`
 - `TurnPhase`: `Draw`, `Action`, `Special`
 - `PendingActionType`: `None`, `DiscardCard`, `GiveCard`, `DestroyCard`
 
@@ -120,7 +119,6 @@ Player wins when `UnicornStable` reaches `maxCardsInStable` unicorns. Currently 
 | EVERY_TURN special phase | Partial | `ActivePlayerHasEveryTurnCards()` exists but never called |
 | Win condition UI | Partial | `CheckWinCondition()` logs only; no game-over screen or state |
 | Pass action | Not started | Player can't skip their Action phase turn |
-| `AfterAction.PLACE_IN_ENEMY_STABLE` | Not implemented | Enum value exists, never routed in `CardManager` |
 | Hand size >8 cards | Not handled | `HandStable.PositionCardsInStable()` throws at >8 |
 | Multi-player (>2) | Not started | `CardManager` hardcodes "first non-active player" as opponent |
 
@@ -130,7 +128,7 @@ Player wins when `UnicornStable` reaches `maxCardsInStable` unicorns. Currently 
 
 Detailed reasoning and per-card notes live in `docs/` — read on demand, not needed every session.
 
-- `docs/design-decisions.md` — full reasoning behind structural choices (CardActionExecutor player reassignment, DowngradeStable ownership, layout decisions, OnEnable action pattern, AfterAction separation)
+- `docs/design-decisions.md` — full reasoning behind structural choices (CardActionExecutor player reassignment, DowngradeStable ownership, layout decisions, OnEnable action pattern)
 - `docs/cards/fuck-marry-kill.md` — implementation detail, execution trace, quirks, and test checklist for FMK
 - `docs/stable-positioning.md` — layout formula, B2 fix explanation, subclass override guide, and regression test
 - `docs/future-architecture-mvc.md` — when and how to migrate to a model-separated architecture (prerequisite for multiplayer, AI, save/load)

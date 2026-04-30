@@ -9,8 +9,5 @@ public class DowngradeCardData : CardData
     {
         cardType = CardType.DOWNGRADE;
         specialActionType = SpecialActionType.EVERY_TURN;
-        afterAction = AfterAction.PLACE_IN_STABLE;
-        
-        
     }
 }

@@ -9,7 +9,6 @@ public abstract class CardData : ScriptableObject
     public int instances;
     public CardType cardType;
     public SpecialActionType specialActionType;
-    public AfterAction afterAction;
     public List<CardAction> actions = new List<CardAction>();
 
     public abstract void OnEnable();

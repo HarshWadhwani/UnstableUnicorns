@@ -18,7 +18,7 @@ Tracked issues from code and design review. Work through these one by one.
 | R2 | `UpgradeStable`/`DowngradeStable` near-identical `PositionCardsInStable` | ✅ Fixed |
 | R3 | `Card` duplicates fields from `CardData` | ✅ Fixed |
 | R4 | Three near-identical `PromptPlayer*` methods | ✅ Fixed |
-| R5 | `AfterAction` enum never read | 🔲 Open |
+| R5 | `AfterAction` enum never read | ✅ Fixed |
 | M1 | Special phase checks hand instead of stables | 🔲 Open |
 | M2 | Win condition tied to `maxCardsInStable` | 🔲 Open |
 | M3 | Hand size >8 throws exception | 🔲 Open |
@@ -94,10 +94,10 @@ The two methods differed only in the anchor edge and overlap direction sign; all
 ---
 
 ### R5 — `AfterAction` enum is defined but never read
-**Status:** Open  
-**Files:** `CardData.cs`, `CardManager.cs`  
-`AfterAction` values are set on every card but `CardManager.PlayCardForCurrentPlayer` uses a `CardType` switch to route cards — `afterAction` is never consulted. The enum is redundant with the switch.  
-**Fix:** Either route using `afterAction` in `CardManager` (replacing the switch), or remove the enum and keep the switch. Pick one source of truth.
+**Status:** Fixed  
+**Files:** `AfterAction.cs` (deleted), `CardData.cs`, `MagicCardData.cs`, `NeighCardData.cs`, `UnicornCardData.cs`, `UpgradeCardData.cs`, `DowngradeCardData.cs`, `CLAUDE.md`, `docs/design-decisions.md`, `docs/cards/fuck-marry-kill.md`  
+`AfterAction` values were set on every card but `CardManager.PlayCardForCurrentPlayer` routes purely on `cardType` — the enum was never consulted. The dead state had also drifted: `DowngradeCardData` was marked `PLACE_IN_STABLE` despite routing to the opponent's stable, and `PLACE_IN_ENEMY_STABLE` was defined but never assigned to any card.  
+**Fix applied:** Deleted `AfterAction.cs` and `.meta`, the `afterAction` field on `CardData`, and the five `OnEnable` assignments. Removed the design-decisions section justifying the (now nonexistent) separation, the CLAUDE.md "Known Gaps" entry for `PLACE_IN_ENEMY_STABLE`, and stale enum/`afterAction` references in CLAUDE.md and `fuck-marry-kill.md`. `cardType` is now the sole driver of post-play routing.
 
 ---
 

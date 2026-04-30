@@ -22,7 +22,6 @@ The digital implementation reads the effect as a fixed sequence targeting the op
 `FuckMarryKillCardData` extends `MagicCardData`, which sets:
 - `cardType = MAGIC`
 - `specialActionType = IMMEDIATE`
-- `afterAction = DISCARD`
 
 `OnEnable()` populates `actions` with three `CardAction` instances in sequence:
 
