@@ -20,6 +20,7 @@ public class DeckManager : MonoBehaviour
         SetupGameDecks();
         ShuffleDecks();
         ForceFmkToTop();
+        ForceBreakingAndEnteringToTop();
 
         foreach (var player in turnManager.players)
         {
@@ -27,22 +28,28 @@ public class DeckManager : MonoBehaviour
         }
     }
 
+    // DEBUG: stack the play deck so the next draw is a Breaking and Entering card.
+    void ForceBreakingAndEnteringToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is BreakingAndEnteringCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceBreakingAndEnteringToTop: no BreakingAndEnteringCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
     // DEBUG: stack the play deck so the next draw is a Fuck Marry Kill card.
     void ForceFmkToTop()
     {
-        int fmkIndex = playDeck.spaceCards.FindIndex(c => c.cardData is FuckMarryKillCardData);
-        if (fmkIndex < 0)
+        Card fmkCard = playDeck.spaceCards.Find(c => c.cardData is FuckMarryKillCardData);
+        if (fmkCard == null)
         {
             Debug.LogWarning("ForceFmkToTop: no FuckMarryKillCardData found in play deck.");
             return;
         }
-
-        Card fmkCard = playDeck.spaceCards[fmkIndex];
-        playDeck.spaceCards.RemoveAt(fmkIndex);
-        playDeck.spaceCards.Add(fmkCard);
-
-        for (int i = 0; i < playDeck.spaceCards.Count; i++)
-            playDeck.spaceCards[i].transform.SetSiblingIndex(i);
+        playDeck.MoveToTop(fmkCard);
     }
 
     void LoadAllCardData()

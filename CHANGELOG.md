@@ -4,6 +4,25 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.4] — 2026-05-30
+
+### Cards
+- **Unicorn Enema** — Magic/IMMEDIATE. Sacrifices all Downgrade cards in the active player's stable. Uses `SacrificeCardAction { targetStable=Downgrade, sacrificeAll=true }`.
+- **Breaking and Entering** — Magic/IMMEDIATE. Pulls 2 cards at random from the opponent's hand into the active player's hand. Uses `PullCardAction { numberOfCards=2 }`.
+
+### New Action Types
+- **`SacrificeCardAction`** — moves cards from the active player's own stables (Unicorn/Upgrade/Downgrade/Any) to the discard pile. `sacrificeAll=true` moves all cards automatically with no player prompt; `PlayerChooses` mode is deferred.
+- **`PullCardAction`** — randomly moves N cards from the opponent's hand to the active player's hand. Fully automatic. Capped at opponent's hand size to handle edge cases gracefully.
+
+### Deck Utility
+- **`Deck.MoveToTop(Card)`** — single method that moves any card to the top of a deck, keeping `spaceCards` and the Transform sibling hierarchy in sync. Eliminates the previous two-step manual process (edit list in Inspector + move GameObject in scene). `ForceFmkToTop` and the new `ForceBreakingAndEnteringToTop` debug helpers both use it.
+
+### Tooling
+- **`/add-card` skill** — slash command that takes a card description and walks through the implementation decision tree: CardType → SpecialActionType → action mapping → C# class → Unity asset instructions.
+- **`docs/cards/card-implementation-guide.md`** — full reference for implementing any card: decision tables, action-type parameter reference, class template, and worked examples.
+
+---
+
 ## [v0.2.3] — 2026-04-29
 
 ### Fixes
