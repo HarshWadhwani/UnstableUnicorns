@@ -19,11 +19,30 @@ public class DeckManager : MonoBehaviour
         LoadAllCardData();
         SetupGameDecks();
         ShuffleDecks();
+        ForceFmkToTop();
 
         foreach (var player in turnManager.players)
         {
             cardManager.DrawCard(nursery.spaceCards[0], nursery, player);
         }
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Fuck Marry Kill card.
+    void ForceFmkToTop()
+    {
+        int fmkIndex = playDeck.spaceCards.FindIndex(c => c.cardData is FuckMarryKillCardData);
+        if (fmkIndex < 0)
+        {
+            Debug.LogWarning("ForceFmkToTop: no FuckMarryKillCardData found in play deck.");
+            return;
+        }
+
+        Card fmkCard = playDeck.spaceCards[fmkIndex];
+        playDeck.spaceCards.RemoveAt(fmkIndex);
+        playDeck.spaceCards.Add(fmkCard);
+
+        for (int i = 0; i < playDeck.spaceCards.Count; i++)
+            playDeck.spaceCards[i].transform.SetSiblingIndex(i);
     }
 
     void LoadAllCardData()

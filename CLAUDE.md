@@ -50,7 +50,9 @@ Card effects are composed from serializable `CardAction` subclasses defined on t
 |--------|------------|--------|
 | `DiscardCardAction` | `targetPlayer` (ActivePlayer/Opponent), `selectionMode` (PlayerChooses/Random), `numberOfCards` | Forces target player to discard cards from hand to the discard pile. |
 | `GiveCardAction` | `giver` (ActivePlayer/Opponent), `numberOfCards` | Giver picks N cards from their hand and transfers them to the other player's hand. |
-| `DestroyCardAction` | `destroyer` (ActivePlayer/Opponent), `numberOfCards` | Destroyer picks N cards from any of the opposing player's stables (unicorn/upgrade/downgrade). Cards go to the discard pile. |
+| `DestroyCardAction` | `destroyer` (ActivePlayer/Opponent), `numberOfCards` | Destroyer picks N cards from any of the **opposing** player's stables (unicorn/upgrade/downgrade). Cards go to the discard pile. |
+| `PullCardAction` | `numberOfCards` | Randomly moves N cards from the **opponent's** hand to the **active player's** hand. Capped at opponent's hand size. |
+| `SacrificeCardAction` | `targetStable` (Unicorn/Upgrade/Downgrade/Any), `sacrificeAll` (bool) | Moves cards from the **active player's own** stables to the discard pile. `sacrificeAll=true` auto-moves all; PlayerChooses not yet implemented. |
 
 Each action's `Execute(executor, context)` resolves which players/spaces are involved and calls a `Prompt*` method on `CardActionExecutor` to pause the queue for player input.
 
@@ -74,11 +76,9 @@ The three actions queue up and pause for input between each step: opponent picks
 
 ### Adding a New Card
 
-1. Create a new `CardData` subclass (or use an existing one) with `[CreateAssetMenu]`
-2. Set `cardType` and `specialActionType` in `OnEnable()`
-3. Populate `actions` list with `CardAction` instances (see `FuckMarryKillCardData` as reference)
-4. Create a `.asset` file in `Assets/Resources/CardDataInstances/<CardType>/`
-5. Set `instances` to control how many copies appear in the deck
+Use the `/add-card` skill: `/add-card "<card description>"` — Claude will walk through the decision tree, write the C# class if needed, and tell you what to create in Unity.
+
+Full decision tree, action-type reference, and worked examples: `docs/cards/card-implementation-guide.md`
 
 ### Key Enums
 
@@ -129,6 +129,7 @@ Player wins when `UnicornStable` reaches `maxCardsInStable` unicorns. Currently 
 Detailed reasoning and per-card notes live in `docs/` — read on demand, not needed every session.
 
 - `docs/design-decisions.md` — full reasoning behind structural choices (CardActionExecutor player reassignment, DowngradeStable ownership, layout decisions, OnEnable action pattern)
+- `docs/cards/card-implementation-guide.md` — decision tree, action-type reference, and template for implementing any card
 - `docs/cards/fuck-marry-kill.md` — implementation detail, execution trace, quirks, and test checklist for FMK
 - `docs/stable-positioning.md` — layout formula, B2 fix explanation, subclass override guide, and regression test
 - `docs/future-architecture-mvc.md` — when and how to migrate to a model-separated architecture (prerequisite for multiplayer, AI, save/load)

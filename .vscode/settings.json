@@ -66,5 +66,6 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj",
     },
-    "dotnet.defaultSolution": "UnstableUnicorns.sln"
+    "dotnet.defaultSolution": "UnstableUnicorns.sln",
+    "dotnet.preferCSharpExtension": true
 }
