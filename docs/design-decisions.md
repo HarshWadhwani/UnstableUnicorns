@@ -101,15 +101,34 @@ The chosen order is: switch player → check for EVERY_TURN actions → `EveryTu
 
 ---
 
-## `EveryTurnSpecial` entry is gated on collected actions, not on card count
+## `EveryTurnSpecial` entry is gated on collected cards, not on action count
 
 **Files:** `TurnManager.cs`
 
-`AdvanceToNextPlayerTurn()` collects the full list of EVERY_TURN actions from the new active player's stables before deciding whether to enter `EveryTurnSpecial`. The phase only activates if `everyTurnActions.Count > 0`.
+`AdvanceToNextPlayerTurn()` collects the full list of EVERY_TURN cards from the new active player's stables into `everyTurnCardsPending` before deciding whether to enter `EveryTurnSpecial`. The phase only activates if any cards with non-empty action lists are found.
 
-An earlier version checked `ActivePlayerHasEveryTurnCards()` (card existence) first, then collected actions separately in `TriggerEveryTurnActions()`. This created a gap: a card with `specialActionType = EVERY_TURN` but an empty `actions` list would set the phase to `EveryTurnSpecial` but never start the executor — leaving the turn stuck permanently.
+An earlier version auto-executed actions immediately on phase entry. The current model is player-driven: cards sit in `everyTurnCardsPending` and the player activates each one by clicking it in their stable. Cards not clicked before the player presses Skip are skipped for that turn.
 
-Collecting actions first and using the count as the gate eliminates the gap in one pass.
+A card is removed from `everyTurnCardsPending` the moment it is activated. When the executor finishes that card's actions (`StartNextTurnPhase(EveryTurnSpecial)` is called), it checks if any pending cards remain — if none, it advances to `Draw` automatically.
+
+---
+
+## Planned: EVERY_TURN overlay for optional effect activation (Option B)
+
+**Files:** TBD — new overlay UI, `TurnManager.cs`
+
+When `EveryTurnSpecial` is active, the intended UX is a dedicated overlay screen showing all the active player's EVERY_TURN cards spread out evenly. The player taps individual cards to activate their effects and taps a Skip/Done button when finished.
+
+**Why Option B over a per-card prompt (Option A):**  
+Option A (yes/no prompt before each card) generates one forced interaction per card per turn even when the player always wants to trigger every effect — it slows turns down with multiple EVERY_TURN cards. Option B gives the player all choices at once and requires only one interaction (Done/Skip) when they want everything or nothing.
+
+**Current interim behaviour:** No overlay exists yet. The player activates an EVERY_TURN card by clicking it directly in their stable during `EveryTurnSpecial` phase. A Skip button on the main HUD ends the phase early. The `everyTurnCardsPending` list in `TurnManager` is the source of truth for which cards are still available to activate.
+
+**Prerequisites for the full overlay:**
+- A new scene overlay Canvas that reads `turnManager.everyTurnCardsPending` and renders card thumbnails
+- Card thumbnails need click handlers that call `turnManager.TryActivateEveryTurnCard(card)`
+- A "Done / Skip All" button on the overlay that calls `turnManager.SkipEveryTurnPhase()`
+- The overlay activates/deactivates based on `turnManager.currentPhase == EveryTurnSpecial`
 
 ---
 

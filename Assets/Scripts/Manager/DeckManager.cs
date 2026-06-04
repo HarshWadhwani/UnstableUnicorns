@@ -22,11 +22,24 @@ public class DeckManager : MonoBehaviour
         ForceFmkToTop();
         ForceBreakingAndEnteringToTop();
         ForceDumpsterDivingUnicornToTop();
+        ForcePolyamorousUnicornToTop();
 
         foreach (var player in turnManager.players)
         {
             cardManager.DrawCard(nursery.spaceCards[0], nursery, player);
         }
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Polyamorous Unicorn card.
+    void ForcePolyamorousUnicornToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is PolyamorousUnicornCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForcePolyamorousUnicornToTop: no PolyamorousUnicornCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
     }
 
     // DEBUG: stack the play deck so the next draw is a Dumpster Diving Unicorn card.

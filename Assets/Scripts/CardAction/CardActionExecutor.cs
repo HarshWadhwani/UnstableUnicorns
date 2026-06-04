@@ -6,7 +6,8 @@ public enum  PendingActionType
     None,
     DiscardCard,
     GiveCard,
-    DestroyCard
+    DestroyCard,
+    StealCard
 }
 
 public class CardActionExecutor : MonoBehaviour
@@ -76,6 +77,12 @@ public class CardActionExecutor : MonoBehaviour
 
         CardAction nextAction = actionQueue.Dequeue();
         nextAction.Execute(this, currentContext);
+
+        // Synchronous actions don't set a pending action — chain immediately to the next.
+        if (currentPendingAction == PendingActionType.None)
+        {
+            ExecuteNextAction();
+        }
     }
 
     private CardActionContext CreateContext(Card sourceCard)

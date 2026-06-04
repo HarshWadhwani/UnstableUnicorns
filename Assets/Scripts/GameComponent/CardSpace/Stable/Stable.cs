@@ -21,7 +21,9 @@ public class Stable : CardSpace
 
     public override void HandleCardClick(Card card)
     {
-        if (CardActionExecutor.Instance != null && CardActionExecutor.Instance.currentPendingAction == PendingActionType.DestroyCard)
+        if (CardActionExecutor.Instance == null) return;
+
+        if (CardActionExecutor.Instance.currentPendingAction == PendingActionType.DestroyCard)
         {
             if (player == turnManager.activePlayer)
             {
@@ -31,6 +33,27 @@ public class Stable : CardSpace
 
             CardActionExecutor.Instance.ExecutePendingAction(card);
             PositionCardsInStable();
+            return;
+        }
+
+        if (CardActionExecutor.Instance.currentPendingAction == PendingActionType.StealCard)
+        {
+            if (player == turnManager.activePlayer)
+            {
+                Debug.LogWarning("Cannot steal from your own stable.");
+                return;
+            }
+
+            CardActionExecutor.Instance.ExecutePendingAction(card);
+            PositionCardsInStable();
+            return;
+        }
+
+        if (turnManager.currentPhase == TurnPhase.EveryTurnSpecial
+            && CardActionExecutor.Instance.currentPendingAction == PendingActionType.None
+            && player == turnManager.activePlayer)
+        {
+            turnManager.TryActivateEveryTurnCard(card);
         }
     }
 

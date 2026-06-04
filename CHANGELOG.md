@@ -4,6 +4,32 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.6] — 2026-06-04
+
+### Feature: EVERY_TURN phase mechanism
+- `EveryTurnSpecial` phase is now fully functional. At the start of each player's turn, cards with `specialActionType = EVERY_TURN` in any of their stables are collected into `everyTurnCardsPending`.
+- Player activates cards individually by clicking them in their stable during `EveryTurnSpecial`. Clicking a pending card calls `TurnManager.TryActivateEveryTurnCard()`, which removes it from the list and fires its action queue.
+- `TurnManager.SkipEveryTurnPhase()` is a public method for wiring to a UI Skip button — clears all pending cards and jumps directly to Draw.
+- Phase auto-advances to Draw once the pending list is empty (no extra click needed when all cards are resolved).
+
+### Cards
+- **Polyamorous Unicorn** — Magical Unicorn / `EVERY_TURN`. At the start of your turn, click the card to move it into the opponent's stable, then steal a unicorn from that stable.
+
+### New Action Types
+- **`MoveSelfToOpponentStableAction`** — synchronously moves `sourceCard` from the active player's unicorn stable to the opponent's unicorn stable. No player input required.
+- **`StealUnicornAction`** — prompts the active player to click a card in the opponent's stable; moves the selected card to the active player's unicorn stable. Uses new `PendingActionType.StealCard`, handled in `Stable.HandleCardClick`.
+
+### Fixes
+- **Sync action chaining:** `CardActionExecutor.ExecuteNextAction()` now automatically chains to the next queued action when a synchronous action completes (i.e. `Execute()` returned without setting a `PendingActionType`). Previously, only the first sync action in a multi-step sequence would fire; subsequent actions were silently dropped.
+
+### UI
+- **`PhaseIndicator`** — new `MonoBehaviour` that drives a `TMP_Text` label with the current phase and active card name. Assign `TurnManager` and a `TMP_Text` in the Inspector.
+
+### Docs
+- `design-decisions.md`: EVERY_TURN gating section updated to reflect the player-driven activation model; new section documents the planned Option B full-screen overlay UI for `EveryTurnSpecial` (future work).
+
+---
+
 ## [v0.2.5] — 2026-06-03
 
 ### Cards

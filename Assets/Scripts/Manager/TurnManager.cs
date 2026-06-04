@@ -7,11 +7,12 @@ public class TurnManager : MonoBehaviour
     public List<Player> players;
     public Player activePlayer;
     public TurnPhase currentPhase;
+    public Card currentEveryTurnCard;
 
-    // Start is called before the first frame update
+    private List<Card> everyTurnCardsPending = new List<Card>();
+
     void Start()
     {
-        
         foreach (Player player in players)
         {
             player.handStable.turnManager = this;
@@ -46,19 +47,43 @@ public class TurnManager : MonoBehaviour
                 break;
 
             case TurnPhase.EveryTurnSpecial:
-                currentPhase = TurnPhase.Draw;
+                currentEveryTurnCard = null;
+                if (everyTurnCardsPending.Count == 0)
+                {
+                    currentPhase = TurnPhase.Draw;
+                }
+                // else: stay in EveryTurnSpecial — player must click remaining cards or press Skip
                 break;
         }
+    }
+
+    public bool TryActivateEveryTurnCard(Card card)
+    {
+        if (!everyTurnCardsPending.Contains(card)) return false;
+        everyTurnCardsPending.Remove(card);
+        currentEveryTurnCard = card;
+        CardActionExecutor.Instance.ExecuteActions(card.cardData.actions, card);
+        return true;
+    }
+
+    public void SkipEveryTurnPhase()
+    {
+        everyTurnCardsPending.Clear();
+        currentEveryTurnCard = null;
+        currentPhase = TurnPhase.Draw;
     }
 
     private void AdvanceToNextPlayerTurn()
     {
         SwitchToNextPlayer();
-        List<CardAction> everyTurnActions = CollectEveryTurnActions();
-        if (everyTurnActions.Count > 0)
+        everyTurnCardsPending.Clear();
+        CollectEveryTurnCards(activePlayer.unicornStable);
+        CollectEveryTurnCards(activePlayer.upgradeStable);
+        CollectEveryTurnCards(activePlayer.downgradeStable);
+
+        if (everyTurnCardsPending.Count > 0)
         {
             currentPhase = TurnPhase.EveryTurnSpecial;
-            CardActionExecutor.Instance.ExecuteActions(everyTurnActions, null);
         }
         else
         {
@@ -66,22 +91,15 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    private List<CardAction> CollectEveryTurnActions()
-    {
-        List<CardAction> actions = new List<CardAction>();
-        CollectEveryTurnActionsFromSpace(activePlayer.unicornStable, actions);
-        CollectEveryTurnActionsFromSpace(activePlayer.upgradeStable, actions);
-        CollectEveryTurnActionsFromSpace(activePlayer.downgradeStable, actions);
-        return actions;
-    }
-
-    private void CollectEveryTurnActionsFromSpace(CardSpace cardSpace, List<CardAction> actions)
+    private void CollectEveryTurnCards(CardSpace cardSpace)
     {
         foreach (Card card in cardSpace.spaceCards)
         {
-            if (card.cardData.specialActionType == SpecialActionType.EVERY_TURN)
+            if (card.cardData.specialActionType == SpecialActionType.EVERY_TURN
+                && card.cardData.actions != null
+                && card.cardData.actions.Count > 0)
             {
-                actions.AddRange(card.cardData.actions);
+                everyTurnCardsPending.Add(card);
             }
         }
     }
