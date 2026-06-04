@@ -22,6 +22,7 @@ Tracked issues from code and design review. Work through these one by one.
 | M1 | Special phase checks hand instead of stables | ✅ Fixed |
 | M2 | Win condition tied to `maxCardsInStable` | ✅ Fixed |
 | M3 | Hand size >8 throws exception | ⚠️ Partial |
+| M4 | Dumpster Diving Unicorn draws top of discard only; should let player pick any card | Open |
 
 ---
 
@@ -115,6 +116,14 @@ Both `ActivePlayerHasSpecialCards` and `ActivePlayerHasEveryTurnCards` were remo
 **File:** `UnicornStable.cs`  
 `CheckWinCondition` was winning when `spaceCards.Count == maxCardsInStable`, coupling the game rule to the UI layout capacity. Also used `==` instead of `>=`, so if a card were ever added beyond max the win would never fire.  
 **Fix applied:** Added `public int winConditionCount = 7` to `UnicornStable`. `CheckWinCondition` now checks `spaceCards.Count >= winConditionCount`. `maxCardsInStable` remains the layout/cap value. Game-over UI not yet wired — `CheckWinCondition` still logs only.
+
+---
+
+### M4 — Dumpster Diving Unicorn draws top of discard only
+**Status:** Open  
+**File:** `TakeFromDiscardAction.cs`  
+The card text says "you may add a card from the discard pile to your hand", implying free choice. Currently `TakeFromDiscardAction` always takes the top card automatically — no player selection, no visibility into the pile.  
+**Fix direction:** Reveal discard pile contents (scrollable list or card-picker UI), prompt the active player to click a card, then use `PromptPlayerToSelectCards` with a new `PendingActionType.TakeFromDiscard` wired through `DiscardPile.HandleCardClick`.
 
 ---
 

@@ -4,6 +4,24 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.5] — 2026-06-03
+
+### Cards
+- **Dumpster Diving Unicorn** — Magical Unicorn/IMMEDIATE. When played, draws the top card of the discard pile into the active player's hand (skipped if discard pile is empty). Uses the new `TakeFromDiscardAction`. `unicornType = SPECIAL`.
+
+### New Action Types
+- **`TakeFromDiscardAction`** — synchronously moves the top card of the discard pile to the active player's hand. Calls `RevealCard()` on the taken card. No player input required. Skips silently if the discard pile is empty.
+
+### Fixes
+- **Sync IMMEDIATE action stuck-turn bug:** `HandStable.HandleCardClick` now checks whether a pending action is still active after `PlayCard` returns. If the action chain completed synchronously (no pending action set), it passes `SpecialActionType.NONE` to `StartNextTurnPhase` instead of `IMMEDIATE`, preventing the game from parking in `ImmediateSpecial` with no way to advance. Previously affected Unicorn Enema and any future card with a fully-synchronous IMMEDIATE action.
+
+### Tooling
+- **`/add-card` skill** updated to include a `Force<CardName>ToTop()` debug stacking step in `DeckManager` as part of every new card implementation.
+- **`ForceDumpsterDivingUnicornToTop()`** added to `DeckManager.Start()` so the card is always on top of the draw pile in Play mode.
+- **M4 tracked** in `docs/issues.md`: Dumpster Diving Unicorn currently takes only the top card; a card-picker UI for choosing any card from the discard pile is deferred.
+
+---
+
 ## [v0.2.4] — 2026-05-30
 
 ### Cards

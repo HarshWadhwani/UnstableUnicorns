@@ -46,7 +46,14 @@ public class HandStable : Stable
             {
                 PositionCardsInStable();
                 Debug.Log("Hand stable is starting next turn phase");
-                turnManager.StartNextTurnPhase(card.cardData.specialActionType);
+                // Synchronous IMMEDIATE actions complete before we get here, leaving no pending
+                // action. In that case, treat as NONE so we don't park in ImmediateSpecial.
+                bool hasPendingAction = CardActionExecutor.Instance != null &&
+                                        CardActionExecutor.Instance.currentPendingAction != PendingActionType.None;
+                SpecialActionType effectiveType = hasPendingAction
+                    ? card.cardData.specialActionType
+                    : SpecialActionType.NONE;
+                turnManager.StartNextTurnPhase(effectiveType);
             }
         }
     }

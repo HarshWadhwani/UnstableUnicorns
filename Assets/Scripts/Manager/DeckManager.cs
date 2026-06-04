@@ -21,11 +21,24 @@ public class DeckManager : MonoBehaviour
         ShuffleDecks();
         ForceFmkToTop();
         ForceBreakingAndEnteringToTop();
+        ForceDumpsterDivingUnicornToTop();
 
         foreach (var player in turnManager.players)
         {
             cardManager.DrawCard(nursery.spaceCards[0], nursery, player);
         }
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Dumpster Diving Unicorn card.
+    void ForceDumpsterDivingUnicornToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is DumpsterDivingUnicornCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceDumpsterDivingUnicornToTop: no DumpsterDivingUnicornCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
     }
 
     // DEBUG: stack the play deck so the next draw is a Breaking and Entering card.
