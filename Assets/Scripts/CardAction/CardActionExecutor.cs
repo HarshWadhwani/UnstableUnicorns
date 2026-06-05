@@ -7,6 +7,7 @@ public enum  PendingActionType
     DiscardCard,
     GiveCard,
     DestroyCard,
+    DestroyUnicornCard,
     StealCard
 }
 
@@ -22,6 +23,7 @@ public class CardActionExecutor : MonoBehaviour
     public CardSpace pendingSourceStable;
     public CardSpace pendingDestinationStable;
     public int pendingCardsRemaining;
+    public Player pendingDestroyTargetPlayer;
     
     private Player originalActivePlayer;
     private Queue<CardAction> actionQueue = new Queue<CardAction>();
@@ -156,6 +158,7 @@ public class CardActionExecutor : MonoBehaviour
         pendingSourceStable = null;
         pendingDestinationStable = null;
         pendingCardsRemaining = 0;
+        pendingDestroyTargetPlayer = null;
         originalActivePlayer = null;
 
         ExecuteNextAction();

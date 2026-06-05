@@ -55,13 +55,14 @@ numberOfCards:  int                           — how many
 The receiver is always the other player.
 
 ### DestroyCardAction
-A player picks cards from any of the opposing player's stables (unicorn, upgrade, or downgrade) and sends them to the discard pile.
+A player picks cards from the opposing player's stables and sends them to the discard pile.
 
 ```
 destroyer:      ActivePlayer | Opponent       — who picks what to destroy
+targetStable:   Any | Unicorn                 — which stables are valid targets (default: Any)
 numberOfCards:  int                           — how many
 ```
-Source is resolved at click time — no stable needs to be specified.
+`targetStable=Any` allows clicking unicorn, upgrade, or downgrade stables. `targetStable=Unicorn` restricts to the opponent's unicorn stable only. Source is resolved at click time — no stable needs to be specified.
 
 ### PullCardAction
 Randomly takes cards from the **opponent's** hand and moves them to the **active player's** hand. Always random — no player prompt.
@@ -89,11 +90,25 @@ When `sacrificeAll = true`, no player input is required — cards are moved imme
 | "Discard a random card from your hand" | `DiscardCardAction { targetPlayer=ActivePlayer, selectionMode=Random, numberOfCards=1 }` |
 | "Give 2 cards from your hand to your opponent" | `GiveCardAction { giver=ActivePlayer, numberOfCards=2 }` |
 | "Destroy 1 card in any opponent stable" | `DestroyCardAction { destroyer=ActivePlayer, numberOfCards=1 }` |
+| "Destroy 1 unicorn card in opponent's stable" | `DestroyCardAction { destroyer=ActivePlayer, targetStable=Unicorn, numberOfCards=1 }` |
 | "Pull 2 random cards from opponent's hand" | `PullCardAction { numberOfCards=2 }` |
 | "Sacrifice all downgrade cards in your stable" | `SacrificeCardAction { targetStable=Downgrade, sacrificeAll=true }` |
 | "Sacrifice all cards in your stable" | `SacrificeCardAction { targetStable=Any, sacrificeAll=true }` |
 
 If a step has no matching action type (e.g., draw a card, steal from stable), a new `CardAction` subclass is needed.
+
+### Play conditions (CanPlay)
+
+If the card cannot be played under certain game states, override `CanPlay` on the card's `CardData` subclass:
+
+```csharp
+public override bool CanPlay(Player activePlayer, Player opponentPlayer)
+{
+    return opponentPlayer.unicornStable.spaceCards.Count > 0;
+}
+```
+
+`CardManager.PlayCardForCurrentPlayer` calls `CanPlay` before triggering any action. Returning `false` keeps the card in the player's hand and cancels the play. The default implementation always returns `true`, so existing cards are unaffected.
 
 ---
 

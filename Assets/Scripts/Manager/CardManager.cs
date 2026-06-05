@@ -29,6 +29,13 @@ public class CardManager : MonoBehaviour
 
     public bool PlayCardForCurrentPlayer(Card card, HandStable handStable)
     {
+        Player opponent = turnManager.players.FirstOrDefault(p => p != turnManager.activePlayer);
+        if (!card.cardData.CanPlay(turnManager.activePlayer, opponent))
+        {
+            Debug.LogWarning($"Cannot play {card.cardData.cardNameVariations[0]}: play conditions not met.");
+            return false;
+        }
+
         if (card.cardData.specialActionType == SpecialActionType.IMMEDIATE)
         {
             card.cardData.TriggerSpecialAction(card);
@@ -44,15 +51,12 @@ public class CardManager : MonoBehaviour
                 MoveCard(card, handStable, turnManager.activePlayer.upgradeStable);
                 return true;
             case CardType.DOWNGRADE:
-                var opponent = turnManager.players
-                    .FirstOrDefault(player => player != turnManager.activePlayer);
-                
                 if (opponent == null)
                 {
                     Debug.Log($"Player {turnManager.activePlayer.name} has no opponent");
                     return false;
                 }
-                
+
                 MoveCard(card, handStable, opponent.downgradeStable);
                 return true;
             case CardType.MAGIC:

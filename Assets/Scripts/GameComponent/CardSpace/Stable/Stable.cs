@@ -25,9 +25,28 @@ public class Stable : CardSpace
 
         if (CardActionExecutor.Instance.currentPendingAction == PendingActionType.DestroyCard)
         {
-            if (player == turnManager.activePlayer)
+            if (player != CardActionExecutor.Instance.pendingDestroyTargetPlayer)
             {
-                Debug.LogWarning("Cannot destroy your own cards.");
+                Debug.LogWarning("Must target the opponent's stable.");
+                return;
+            }
+
+            CardActionExecutor.Instance.ExecutePendingAction(card);
+            PositionCardsInStable();
+            return;
+        }
+
+        if (CardActionExecutor.Instance.currentPendingAction == PendingActionType.DestroyUnicornCard)
+        {
+            if (player != CardActionExecutor.Instance.pendingDestroyTargetPlayer)
+            {
+                Debug.LogWarning("Must target the opponent's stable.");
+                return;
+            }
+
+            if (!(this is UnicornStable))
+            {
+                Debug.LogWarning("Must target a unicorn card.");
                 return;
             }
 

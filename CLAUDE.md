@@ -48,9 +48,9 @@ Card effects are composed from serializable `CardAction` subclasses defined on t
 
 | Action | Parameters | Effect |
 |--------|------------|--------|
-| `DiscardCardAction` | `targetPlayer` (ActivePlayer/Opponent), `selectionMode` (PlayerChooses/Random), `numberOfCards` | Forces target player to discard cards from hand to the discard pile. |
+| `DiscardCardAction` | `targetPlayer` (ActivePlayer/Opponent), `selectionMode` (PlayerChooses/Random), `numberOfCards` | Forces target player to discard cards from hand to the discard pile. Skips silently if the target's hand is empty. |
 | `GiveCardAction` | `giver` (ActivePlayer/Opponent), `numberOfCards` | Giver picks N cards from their hand and transfers them to the other player's hand. |
-| `DestroyCardAction` | `destroyer` (ActivePlayer/Opponent), `numberOfCards` | Destroyer picks N cards from any of the **opposing** player's stables (unicorn/upgrade/downgrade). Cards go to the discard pile. |
+| `DestroyCardAction` | `destroyer` (ActivePlayer/Opponent), `targetStable` (Any/Unicorn), `numberOfCards` | Destroyer picks N cards from the opposing player's stables and sends them to the discard pile. `targetStable=Any` allows unicorn/upgrade/downgrade; `targetStable=Unicorn` restricts to unicorn cards only (uses `PendingActionType.DestroyUnicornCard`). |
 | `PullCardAction` | `numberOfCards`, `skipDrawPhaseOnSuccess` (bool) | Randomly moves N cards from the **opponent's** hand to the **active player's** hand. Capped at opponent's hand size. If `skipDrawPhaseOnSuccess=true` and ≥1 card was pulled, sets `TurnManager.skipNextDrawPhase` to skip the Draw phase. |
 | `SacrificeCardAction` | `targetStable` (Unicorn/Upgrade/Downgrade/Any), `sacrificeAll` (bool) | Moves cards from the **active player's own** stables to the discard pile. `sacrificeAll=true` auto-moves all; PlayerChooses not yet implemented. |
 
@@ -63,6 +63,10 @@ Each action's `Execute(executor, context)` resolves which players/spaces are inv
 4. The next click on the appropriate `CardSpace` calls `CardActionExecutor.ExecutePendingAction(card)`, which decrements `pendingCardsRemaining` and resumes the queue when done
 
 `pendingSourceStable` locks the source space when an action targets a single stable (e.g., discard from hand). For `DestroyCard` it is `null` — the source is derived from `card.cardSpace` at click time, allowing the destroyer to pick from any opposing stable.
+
+`pendingDestroyTargetPlayer` is set by `DestroyCardAction` before prompting and records exactly which player's stable cards may be selected from. `Stable.HandleCardClick` checks `player == pendingDestroyTargetPlayer` to accept or reject a click — this is more reliable than comparing against `turnManager.activePlayer`, which can be temporarily reassigned during multi-step action sequences.
+
+Cards that cannot always be played (e.g., require a non-empty opponent stable) override `CardData.CanPlay(activePlayer, opponentPlayer)`. `CardManager.PlayCardForCurrentPlayer` calls this before triggering any action; returning `false` keeps the card in hand and cancels the play.
 
 **Worked example — Fuck Marry Kill** (see `docs/cards/fuck-marry-kill.md` for the full trace):
 

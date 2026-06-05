@@ -13,6 +13,8 @@ public abstract class CardData : ScriptableObject
 
     public abstract void OnEnable();
 
+    public virtual bool CanPlay(Player activePlayer, Player opponentPlayer) => true;
+
     public virtual void TriggerSpecialAction(Card sourceCard)
     {
         if (actions.Count > 0 && CardActionExecutor.Instance != null)

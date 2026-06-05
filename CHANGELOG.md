@@ -4,6 +4,29 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.8] — 2026-06-05
+
+### Cards
+- **Horrifying Impaling** — Magic / `IMMEDIATE`. DESTROY a unicorn card from the opponent's stable. Each player (including you) must then DISCARD a card. Cannot be played if the opponent has no unicorns. Both discard steps skip silently if the relevant player's hand is empty.
+
+### New Mechanism: Play Conditions
+- `CardData` gains a virtual `CanPlay(activePlayer, opponentPlayer)` method (default returns `true`).
+- `CardManager.PlayCardForCurrentPlayer` calls `CanPlay` before triggering any action or moving the card. Returning `false` keeps the card in hand and cancels the play.
+- `HorrifyingImpalingCardData` overrides `CanPlay` to require at least one unicorn in the opponent's stable.
+
+### Extended Action Type
+- **`DestroyCardAction`** gains an optional `targetStable` field (`Any` / `Unicorn`, default `Any`). `Any` preserves existing behaviour (unicorn/upgrade/downgrade). `Unicorn` restricts the target to the opponent's unicorn stable and uses the new `PendingActionType.DestroyUnicornCard` to route stable clicks correctly.
+
+### Fixes
+- **Destroy target tracking:** `CardActionExecutor` gains a `pendingDestroyTargetPlayer` field. `DestroyCardAction` sets it before prompting, and `Stable.HandleCardClick` now checks `player == pendingDestroyTargetPlayer` to accept or reject a click for both `DestroyCard` and `DestroyUnicornCard`. Previously the guard compared `player == turnManager.activePlayer`, which could misfire if the active-player reference was temporarily reassigned during a multi-step sequence.
+- **Duplicate variable in `CardManager`:** removed the redundant `var opponent` declaration inside the `DOWNGRADE` switch case (shadowed the outer `opponent` resolved at the top of `PlayCardForCurrentPlayer`).
+
+### Docs
+- `CLAUDE.md`: updated `DestroyCardAction` table row to include `targetStable`; added `pendingDestroyTargetPlayer` and `CanPlay` to the executor description.
+- `docs/cards/card-implementation-guide.md`: updated `DestroyCardAction` parameter reference; added mapping example for unicorn-only destroy; added `CanPlay` override section.
+
+---
+
 ## [v0.2.7] — 2026-06-05
 
 ### Cards
