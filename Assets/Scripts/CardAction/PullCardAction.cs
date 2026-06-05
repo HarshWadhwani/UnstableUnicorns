@@ -4,6 +4,7 @@ using UnityEngine;
 public class PullCardAction : CardAction
 {
     public int numberOfCards = 1;
+    public bool skipDrawPhaseOnSuccess = false;
 
     public override void Execute(CardActionExecutor executor, CardActionContext context)
     {
@@ -23,6 +24,11 @@ public class PullCardAction : CardAction
             Card card = opponentHand.spaceCards[randomIndex];
             context.cardManager.MoveCard(card, opponentHand, activeHand);
             Debug.Log($"Pulled {card.name} from {context.opponentPlayer.name}'s hand.");
+        }
+
+        if (skipDrawPhaseOnSuccess && cardsToPull > 0)
+        {
+            context.turnManager.skipNextDrawPhase = true;
         }
     }
 }

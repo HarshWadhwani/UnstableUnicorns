@@ -67,9 +67,10 @@ Source is resolved at click time — no stable needs to be specified.
 Randomly takes cards from the **opponent's** hand and moves them to the **active player's** hand. Always random — no player prompt.
 
 ```
-numberOfCards:  int   — how many to pull (capped at opponent's hand size)
+numberOfCards:           int    — how many to pull (capped at opponent's hand size)
+skipDrawPhaseOnSuccess:  bool   — if true and ≥1 card was pulled, skips the active player's Draw phase
 ```
-If the opponent has fewer cards than `numberOfCards`, all remaining cards are pulled.
+If the opponent has fewer cards than `numberOfCards`, all remaining cards are pulled. `skipDrawPhaseOnSuccess` defaults to `false` and is backward compatible — existing cards are unaffected.
 
 ### SacrificeCardAction
 Moves cards from the **active player's own** stables to the discard pile. Contrast with Destroy, which always targets the opponent.

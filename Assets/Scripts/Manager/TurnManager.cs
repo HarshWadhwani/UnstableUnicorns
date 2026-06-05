@@ -8,6 +8,7 @@ public class TurnManager : MonoBehaviour
     public Player activePlayer;
     public TurnPhase currentPhase;
     public Card currentEveryTurnCard;
+    public bool skipNextDrawPhase = false;
 
     private List<Card> everyTurnCardsPending = new List<Card>();
 
@@ -50,7 +51,9 @@ public class TurnManager : MonoBehaviour
                 currentEveryTurnCard = null;
                 if (everyTurnCardsPending.Count == 0)
                 {
-                    currentPhase = TurnPhase.Draw;
+                    bool skip = skipNextDrawPhase;
+                    skipNextDrawPhase = false;
+                    currentPhase = skip ? TurnPhase.Action : TurnPhase.Draw;
                 }
                 // else: stay in EveryTurnSpecial — player must click remaining cards or press Skip
                 break;
@@ -70,7 +73,9 @@ public class TurnManager : MonoBehaviour
     {
         everyTurnCardsPending.Clear();
         currentEveryTurnCard = null;
-        currentPhase = TurnPhase.Draw;
+        bool skip = skipNextDrawPhase;
+        skipNextDrawPhase = false;
+        currentPhase = skip ? TurnPhase.Action : TurnPhase.Draw;
     }
 
     private void AdvanceToNextPlayerTurn()

@@ -4,6 +4,20 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.7] — 2026-06-05
+
+### Cards
+- **Pony Play** — Upgrade / `EVERY_TURN`. At the beginning of your turn, you may pull a card at random from another player's hand. If you do, skip your Draw phase.
+
+### New Mechanism: Skip Draw Phase
+- `TurnManager` gains a `bool skipNextDrawPhase` flag. When set, `StartNextTurnPhase` and `SkipEveryTurnPhase` advance to `Action` instead of `Draw` at the end of `EveryTurnSpecial`.
+- The flag is always cleared on use, so it applies to the current turn only.
+
+### Extended Action Type
+- **`PullCardAction`** — new optional `bool skipDrawPhaseOnSuccess` field (default `false`). When `true` and at least one card was actually pulled, sets `turnManager.skipNextDrawPhase = true`. Backward compatible — existing cards unaffected.
+
+---
+
 ## [v0.2.6] — 2026-06-04
 
 ### Feature: EVERY_TURN phase mechanism

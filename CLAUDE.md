@@ -51,7 +51,7 @@ Card effects are composed from serializable `CardAction` subclasses defined on t
 | `DiscardCardAction` | `targetPlayer` (ActivePlayer/Opponent), `selectionMode` (PlayerChooses/Random), `numberOfCards` | Forces target player to discard cards from hand to the discard pile. |
 | `GiveCardAction` | `giver` (ActivePlayer/Opponent), `numberOfCards` | Giver picks N cards from their hand and transfers them to the other player's hand. |
 | `DestroyCardAction` | `destroyer` (ActivePlayer/Opponent), `numberOfCards` | Destroyer picks N cards from any of the **opposing** player's stables (unicorn/upgrade/downgrade). Cards go to the discard pile. |
-| `PullCardAction` | `numberOfCards` | Randomly moves N cards from the **opponent's** hand to the **active player's** hand. Capped at opponent's hand size. |
+| `PullCardAction` | `numberOfCards`, `skipDrawPhaseOnSuccess` (bool) | Randomly moves N cards from the **opponent's** hand to the **active player's** hand. Capped at opponent's hand size. If `skipDrawPhaseOnSuccess=true` and ≥1 card was pulled, sets `TurnManager.skipNextDrawPhase` to skip the Draw phase. |
 | `SacrificeCardAction` | `targetStable` (Unicorn/Upgrade/Downgrade/Any), `sacrificeAll` (bool) | Moves cards from the **active player's own** stables to the discard pile. `sacrificeAll=true` auto-moves all; PlayerChooses not yet implemented. |
 
 Each action's `Execute(executor, context)` resolves which players/spaces are involved and calls a `Prompt*` method on `CardActionExecutor` to pause the queue for player input.
