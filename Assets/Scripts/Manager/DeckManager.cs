@@ -23,7 +23,8 @@ public class DeckManager : MonoBehaviour
         ForceBreakingAndEnteringToTop();
         ForceDumpsterDivingUnicornToTop();
         ForcePolyamorousUnicornToTop();
-        ForceHorrifyingImpalingToTop();
+        ForceHorrifyingImpalingToTop(); // pushed to 2nd by Hentaicorn below
+        ForceHentaicornToTop();         // Hentaicorn drawn 1st — play to stable, then opponent draws HorrifyingImpaling to test shield
 
         foreach (var player in turnManager.players)
         {
@@ -62,6 +63,18 @@ public class DeckManager : MonoBehaviour
         if (card == null)
         {
             Debug.LogWarning("ForceBreakingAndEnteringToTop: no BreakingAndEnteringCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Hentaicorn card.
+    void ForceHentaicornToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is HentaicornCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceHentaicornToTop: no HentaicornCardData found in play deck.");
             return;
         }
         playDeck.MoveToTop(card);

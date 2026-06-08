@@ -4,6 +4,17 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.9] — 2026-06-07
+
+### Cards
+- **Hentaicorn** — Magical Unicorn / no automatic trigger. Passively intercepts any destroy action targeting the player's stable: the first matching `ISacrificeShield` card auto-sacrifices itself before the destroyer is ever prompted to pick a target. Implements `ISacrificeShield.CanInterceptDestroy` returning `true` for all destroy scopes.
+
+### New Mechanism: Sacrifice Shield
+- **`ISacrificeShield`** interface (`Assets/Scripts/CardData/CardAbilities/ISacrificeShield.cs`) — any `CardData` can implement this to intercept incoming destroy actions. Method: `bool CanInterceptDestroy(DestroyCardAction.TargetStable targetStable)`.
+- **`DestroyCardAction`** now calls `FindSacrificeShieldCard(targetPlayer)` before prompting the destroyer. If a shield card is found, it is immediately moved to the discard pile and the action returns — the destroyer never selects a target. First matching card in unicorn → upgrade → downgrade stable order intercepts.
+
+---
+
 ## [v0.2.8] — 2026-06-05
 
 ### Cards

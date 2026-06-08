@@ -42,8 +42,32 @@ public class DestroyCardAction : CardAction
             return;
         }
 
+        // Check if target player has a sacrifice shield card (e.g. Hentaicorn).
+        // First matching card auto-sacrifices itself instead of letting the destroyer choose.
+        Card shieldCard = FindSacrificeShieldCard(targetPlayer);
+        if (shieldCard != null)
+        {
+            Debug.Log($"[SacrificeShield] {shieldCard.cardData.cardNameVariations[0]} intercepts the destroy — sacrificed automatically.");
+            context.cardManager.MoveCard(shieldCard, shieldCard.cardSpace, context.discardPile);
+            return;
+        }
+
         Debug.Log($"{destroyingPlayer.name} must choose {numberOfCards} card(s) to destroy from {targetPlayer.name}'s stable.");
         executor.pendingDestroyTargetPlayer = targetPlayer;
         executor.PromptPlayerToSelectCards(destroyingPlayer, null, context.discardPile, numberOfCards, actionType);
+    }
+
+    private Card FindSacrificeShieldCard(Player targetPlayer)
+    {
+        CardSpace[] stables = { targetPlayer.unicornStable, targetPlayer.upgradeStable, targetPlayer.downgradeStable };
+        foreach (CardSpace stable in stables)
+        {
+            foreach (Card card in stable.spaceCards)
+            {
+                if (card.cardData is ISacrificeShield shield && shield.CanInterceptDestroy(targetStable))
+                    return card;
+            }
+        }
+        return null;
     }
 }
