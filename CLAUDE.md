@@ -68,6 +68,14 @@ Each action's `Execute(executor, context)` resolves which players/spaces are inv
 
 Cards that cannot always be played (e.g., require a non-empty opponent stable) override `CardData.CanPlay(activePlayer, opponentPlayer)`. `CardManager.PlayCardForCurrentPlayer` calls this before triggering any action; returning `false` keeps the card in hand and cancels the play.
 
+### Card Ability Interfaces
+
+Passive card abilities that react to game events (rather than firing actions on play) are modelled as C# interfaces in `Assets/Scripts/CardData/CardAbilities/`. A `CardData` subclass implements the interface; game systems check for it at runtime.
+
+| Interface | Method | Checked by | Effect |
+|-----------|--------|------------|--------|
+| `ISacrificeShield` | `bool CanInterceptDestroy(DestroyCardAction.TargetStable)` | `DestroyCardAction.Execute` | If any card in the target player's stables implements this and `CanInterceptDestroy` returns `true`, that card is automatically moved to the discard pile and the destroyer is never prompted to select a target. First match in unicorn → upgrade → downgrade order wins. |
+
 **Worked example — Fuck Marry Kill** (see `docs/cards/fuck-marry-kill.md` for the full trace):
 
 ```

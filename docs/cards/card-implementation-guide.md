@@ -97,6 +97,25 @@ When `sacrificeAll = true`, no player input is required — cards are moved imme
 
 If a step has no matching action type (e.g., draw a card, steal from stable), a new `CardAction` subclass is needed.
 
+### Passive ability interfaces (react to events, no actions)
+
+Some card effects don't trigger on play — they intercept game events passively while the card is in a stable. These are implemented as C# interfaces in `Assets/Scripts/CardData/CardAbilities/`. The `CardData` subclass implements the interface; the relevant game system checks for it at runtime.
+
+| Interface | When to use |
+|-----------|-------------|
+| `ISacrificeShield` | Card auto-sacrifices itself to absorb an incoming destroy. Implement `CanInterceptDestroy(DestroyCardAction.TargetStable)` — return `true` if this card should intercept for the given destroy scope. |
+
+**Example — Hentaicorn:**
+
+```csharp
+public class HentaicornCardData : UnicornCardData, ISacrificeShield
+{
+    public bool CanInterceptDestroy(DestroyCardAction.TargetStable targetStable) => true;
+}
+```
+
+When a destroy is about to prompt the destroyer, `DestroyCardAction` first calls `FindSacrificeShieldCard` on the target player's stables. If a shield card is found it is moved to discard automatically — the destroyer is never prompted.
+
 ### Play conditions (CanPlay)
 
 If the card cannot be played under certain game states, override `CanPlay` on the card's `CardData` subclass:
