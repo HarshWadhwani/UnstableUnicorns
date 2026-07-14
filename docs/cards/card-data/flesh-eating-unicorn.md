@@ -8,8 +8,8 @@
 | copies | 1 |
 | trigger | IMMEDIATE |
 | can_play | always |
-| impl_status | not_started |
-| impl_class | — |
+| impl_status | done |
+| impl_class | FleshEatingUnicornCardData.cs |
 
 ## Effect (2nd Edition)
 > "When this card enters your Stable, you may choose any player. That player must DISCARD 2 cards."
@@ -22,3 +22,5 @@ None
 
 ## Implementation Notes
 "Choose any player" — in 2-player this is always the opponent. Multi-player would need a player-selection step.
+
+First card to use `specialActionType = IMMEDIATE` on a `UnicornCardData` subclass rather than `MagicCardData` — confirmed `CardManager.PlayCardForCurrentPlayer` checks `specialActionType` independent of `cardType`, so this needed no framework change, just overriding it in `OnEnable()` after `base.OnEnable()`.

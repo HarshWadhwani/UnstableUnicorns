@@ -4,6 +4,19 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.15] — 2026-07-14
+
+### Cards
+- **Flesh-Eating Unicorn** — Magical Unicorn / `IMMEDIATE`. When played, the opponent must discard 2 cards.
+
+### Notes
+- First card to use `specialActionType = IMMEDIATE` on a `UnicornCardData` subclass instead of `MagicCardData`. `CardManager.PlayCardForCurrentPlayer` already checks `specialActionType` independent of `cardType`, so this needed no framework change — just overriding `specialActionType` in `OnEnable()` after `base.OnEnable()`.
+
+### Docs
+- `docs/cards/card-data/flesh-eating-unicorn.md`, `_checklist.md`: marked implemented.
+
+---
+
 ## [v0.2.14] — 2026-07-14
 
 ### Fixes

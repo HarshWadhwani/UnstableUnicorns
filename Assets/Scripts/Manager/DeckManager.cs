@@ -29,12 +29,25 @@ public class DeckManager : MonoBehaviour
         ForceAutoeroticAsphyxiationToTop();
         ForceHorrifyingImpalingToTop(); // drawn 2nd — Hentaicorn below is drawn 1st and played first to test the shield
         ForceHentaicornToTop();         // drawn 1st unless bumped by a newer Force call below
-        ForceBabyTrapToTop();           // drawn 1st (currently under test) — needs a Baby Unicorn already played to a stable
+        ForceBabyTrapToTop();           // needs a Baby Unicorn already played to a stable
+        ForceFleshEatingUnicornToTop(); // drawn 1st (currently under test)
 
         foreach (var player in turnManager.players)
         {
             cardManager.DrawCard(nursery.spaceCards[0], nursery, player);
         }
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Flesh-Eating Unicorn card.
+    void ForceFleshEatingUnicornToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is FleshEatingUnicornCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceFleshEatingUnicornToTop: no FleshEatingUnicornCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
     }
 
     // DEBUG: stack the play deck so the next draw is a Baby Trap card.

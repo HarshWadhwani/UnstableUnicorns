@@ -28,7 +28,7 @@
 | [Entitled Unicorn](entitled-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Eunuchorn](eunuchorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Faceless Baby Unicorn](faceless-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ⬜ |
-| [Flesh-Eating Unicorn](flesh-eating-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
+| [Flesh-Eating Unicorn](flesh-eating-unicorn.md) | Magical Unicorn | 1 | ✅ | ✅ |
 | [Free Candy Unicorn](free-candy-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Fuck. Marry. Kill](fuck-marry-kill.md) | Magic | 2 | ✅ | ✅ |
 | [Fucking Cute Baby Unicorn](fucking-cute-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ⬜ |
@@ -103,6 +103,6 @@
 ## Summary
 - Total cards: 91
 - Extracted: 91 / 91
-- Implemented: 17 / 91 (Autoerotic Asphyxiation, Baby Trap, Breaking and Entering, Dumpster Diving Unicorn, Fuck. Marry. Kill, Fuckboi Unicorn, Hentaicorn, Horrifying Impaling, Horse With A Dildo, Polyamorous Unicorn, Pony Play, Single Unicorn, Stoner Unicorn, Unicorn Enema, Unicorn on the Street Corner, Vanillacorn, Wasted White Unicorn)
+- Implemented: 18 / 91 (Autoerotic Asphyxiation, Baby Trap, Breaking and Entering, Dumpster Diving Unicorn, Flesh-Eating Unicorn, Fuck. Marry. Kill, Fuckboi Unicorn, Hentaicorn, Horrifying Impaling, Horse With A Dildo, Polyamorous Unicorn, Pony Play, Single Unicorn, Stoner Unicorn, Unicorn Enema, Unicorn on the Street Corner, Vanillacorn, Wasted White Unicorn)
 
 *Update this table as cards are extracted and implemented. Mark Extracted ✅ when a card file exists in this directory with effect text filled in.*
