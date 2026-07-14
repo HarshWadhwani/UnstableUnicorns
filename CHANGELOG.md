@@ -4,6 +4,26 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.14] — 2026-07-14
+
+### Fixes
+- **4 implemented cards had the wrong `instances` count in their Unity assets** — found during a docs-vs-code consistency audit, not previously caught because nothing cross-checks `.asset` `instances` against the documented `copies` count in `docs/cards/card-data/`. Fixed directly:
+  - Pony Play: `instances: 1` → `2`
+  - Fuck Marry Kill: `instances: 1` → `2`
+  - Horrifying Impaling: `instances: 1` → `2`
+  - Breaking and Entering: `instances: 1` → `2`
+  
+  All four were silently shipping with half the intended copies in the play deck.
+
+### Docs
+- `CLAUDE.md`: fixed several stale references accumulated across recent sessions — `TurnPhase` and `PendingActionType` enum listings (were missing `ImmediateSpecial`/`EveryTurnSpecial` and `DestroyUnicornCard`/`StealCard` respectively), Win Condition section (still said `maxCardsInStable` instead of `winConditionCount`), Known Gaps table (`Hand size >8` said "Not handled" instead of "Partial"; added the still-open Dumpster Diving Unicorn gap), and the CardAction table (`TakeFromDiscardAction` was implemented but never documented; "Three action types currently exist" was stale at 8 actions).
+- `docs/design-decisions.md`: fixed two entries left stale by earlier fixes — the hand-size->8 entry said `PositionCardsInStable()` still throws (it's been capped since M3), and the `StartNextTurnPhase` entry referenced a `card.specialActionType` field removed in the R3 cleanup.
+- `docs/cards/fuck-marry-kill.md`: the worked-example execution trace still called three separate `PromptPlayerToSelectAndDiscardCards`/`...GiveCards`/`...DestroyCards` methods that were collapsed into one `PromptPlayerToSelectCards` back in the R4 refactor — updated to the current signature and added a note on the `HandStable` pending-action check added since.
+- `docs/cards/card-implementation-guide.md`: FMK worked-example table said `instances | 1`, should be `2`.
+- `CLAUDE.md`: added a **Working Instructions** entry — a user confirming a card/feature is tested and working is now a standing trigger to verify the asset, update card docs/checklist/CHANGELOG, and commit+push in the same response, without needing to be asked each time.
+
+---
+
 ## [v0.2.13] — 2026-07-14
 
 ### Fixes

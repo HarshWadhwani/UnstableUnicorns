@@ -15,7 +15,7 @@ MonoBehaviour:
   cardNameVariations:
   - Fuck, Marry, Kill
   cardDescriptionText: 
-  instances: 1
+  instances: 2
   cardType: 1
   specialActionType: 0
   afterAction: 0

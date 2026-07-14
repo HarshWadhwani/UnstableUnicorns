@@ -38,11 +38,13 @@ actions[2] = DestroyCardAction  { destroyer = ActivePlayer, numberOfCards = 1 }
 3. `TriggerSpecialAction` → `CardActionExecutor.ExecuteActions(actions, sourceCard)`
 4. Executor creates a `CardActionContext` (captures activePlayer, opponentPlayer, sourceCard, managers), enqueues all 3 actions, calls `ExecuteNextAction()`
 
+All three steps below go through the same unified `CardActionExecutor.PromptPlayerToSelectCards(Player player, CardSpace source, CardSpace destination, int numberOfCards, PendingActionType actionType)` (introduced in the R4 refactor, replacing three near-identical `PromptPlayerToSelectAndDiscardCards`/`...GiveCards`/`...DestroyCards` methods this doc originally described).
+
 **Step 1 — DiscardCardAction (opponent chooses):**
 - `DiscardCardAction.Execute()` identifies `opponentPlayer.handStable` as the source
-- `selectionMode == PlayerChooses` → calls `executor.PromptPlayerToSelectAndDiscardCards(opponentPlayer, handStable, discardPile, 1)`
+- `selectionMode == PlayerChooses` → calls `executor.PromptPlayerToSelectCards(opponentPlayer, handStable, discardPile, 1, PendingActionType.DiscardCard)`
 - Executor saves `originalActivePlayer`, reassigns `turnManager.activePlayer = opponentPlayer`
-- Sets `currentPendingAction = DiscardCard`, `pendingCardsRemaining = 1`
+- Sets `currentPendingAction = DiscardCard`, `pendingSourceStable = handStable`, `pendingCardsRemaining = 1`
 - Queue is paused — waiting for the opponent to click a card
 
 - Opponent clicks a card in their hand → `HandStable.HandleCardClick()` detects `currentPendingAction == DiscardCard`
@@ -51,7 +53,7 @@ actions[2] = DestroyCardAction  { destroyer = ActivePlayer, numberOfCards = 1 }
 
 **Step 2 — GiveCardAction (active player chooses what to give):**
 - `GiveCardAction.Execute()` identifies `activePlayer.handStable` as source, `opponentPlayer.handStable` as destination
-- Calls `executor.PromptPlayerToSelectAndGiveCards(activePlayer, handStable, opponentHandStable, 1)`
+- Calls `executor.PromptPlayerToSelectCards(activePlayer, handStable, opponentHandStable, 1, PendingActionType.GiveCard)`
 - `turnManager.activePlayer` is reassigned to `activePlayer` (same player, no change in this case)
 - Active player clicks a card in their hand → same `HandStable.HandleCardClick()` path with `GiveCard` pending type
 - `MoveCard` moves the card to the opponent's hand
@@ -60,12 +62,13 @@ actions[2] = DestroyCardAction  { destroyer = ActivePlayer, numberOfCards = 1 }
 - `DestroyCardAction.Execute()` with `destroyer = ActivePlayer`
 - Determines target player = opponent (destroyer is active, so target is opponent)
 - Counts cards across all three opponent stables; if all are empty, logs and skips
-- Calls `executor.PromptPlayerToSelectAndDestroyCards(activePlayer, discardPile, 1)` — note no source stable is passed; `pendingSourceStable` is set to `null`
+- Calls `executor.PromptPlayerToSelectCards(activePlayer, null, discardPile, 1, PendingActionType.DestroyCard)` — source is `null`; `pendingSourceStable` stays `null`, deferring source resolution to click time
+- Sets `executor.pendingDestroyTargetPlayer = opponentPlayer` before prompting
 - Active player clicks a card in any of the opponent's stables (`UnicornStable`, `UpgradeStable`, or `DowngradeStable`) → that stable's `HandleCardClick()` detects `DestroyCard` pending
-- Guards: if `player == turnManager.activePlayer` → warns and returns (can't destroy own cards)
-- Otherwise: `executor.ExecutePendingAction(card)` resolves the source via `card.cardSpace ?? pendingSourceStable` and moves the card to the discardPile
+- Guard: `Stable.HandleCardClick` checks `player == pendingDestroyTargetPlayer` → warns and returns if it doesn't match (can't destroy own cards, and more reliable than comparing against `turnManager.activePlayer`, which is reassigned mid-sequence)
+- Otherwise: `executor.ExecutePendingAction(card)` resolves the source via `pendingSourceStable ?? card.cardSpace` and moves the card to the discardPile
 
-After all 3 steps, `CardActionExecutor` queue is empty. `HandStable` then calls `turnManager.StartNextTurnPhase()` to advance the turn (this call is made in `HandStable.HandleCardClick` after `PlayCard()` returns successfully — before any pending action completes, but only once per card play).
+After all 3 steps, `CardActionExecutor` queue is empty. `HandStable` then calls `turnManager.StartNextTurnPhase()` to advance the turn (this call is made in `HandStable.HandleCardClick` after `PlayCard()` returns successfully — before any pending action completes, but only once per card play). As of the EVERY_TURN mandatory/optional split, `HandStable.HandleCardClick` also checks whether a pending action is still open at that point and passes `SpecialActionType.NONE` instead of the card's real type if so, to avoid parking the turn in `ImmediateSpecial` when the effect hasn't actually finished synchronously — see `HandStable.cs` for the current logic.
 
 ---
 

@@ -15,6 +15,6 @@ MonoBehaviour:
   cardNameVariations:
   - Horrifying Impaling
   cardDescriptionText: 
-  instances: 1
+  instances: 2
   cardType: 1
   specialActionType: 0

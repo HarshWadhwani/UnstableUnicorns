@@ -5,6 +5,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Working Instructions
 
 - When the user declares an issue complete, update its **Status** line in `docs/issues.md` and mark it ✅ in the tracker table — do this in the same response.
+- When the user confirms a card or feature has been tested and works (in Play mode or otherwise), treat that confirmation as a standing instruction to, in the same response, without being asked again each time:
+  1. Verify the underlying Unity `.asset`(s) are actually correct — read them directly and check `cardNameVariations` and `instances` are non-empty/non-zero (a recurring gap on nearly every card added so far; see `.claude/commands/add-card.md`'s "Known recurring gotcha").
+  2. Update the card's file in `docs/cards/card-data/` (`impl_status`, `impl_class`) and `_checklist.md` (✅ + Summary count) if not already done.
+  3. Update `CLAUDE.md` if the change touched architecture (new action type, new enum value, changed table/enum documented above) — check the relevant section isn't now stale.
+  4. Add a `CHANGELOG.md` entry.
+  5. `git add` the specific changed files, commit, and push to `origin/master`.
+  Skip only the steps that don't apply (e.g. no CLAUDE.md change needed for a vanilla no-effect card). Don't wait for a separate "commit and push" prompt — the test-confirmation itself is the trigger.
 
 ## Project Overview
 
@@ -44,7 +51,7 @@ Card data assets (ScriptableObjects) live in `Assets/Resources/CardDataInstances
 
 ### CardAction System
 
-Card effects are composed from serializable `CardAction` subclasses defined on the `CardData`. Three action types currently exist:
+Card effects are composed from serializable `CardAction` subclasses defined on the `CardData`:
 
 | Action | Parameters | Effect |
 |--------|------------|--------|
@@ -55,6 +62,7 @@ Card effects are composed from serializable `CardAction` subclasses defined on t
 | `SacrificeCardAction` | `targetStable` (Unicorn/Upgrade/Downgrade/Any), `sacrificeAll` (bool) | Moves cards from the **active player's own** stables to the discard pile. `sacrificeAll=true` auto-moves all; PlayerChooses not yet implemented. |
 | `StealUnicornAction` | `targetSubtype` (`UnicornType?`, default `null` = any) | Active player picks a unicorn from the **opponent's** unicorn stable to move into their own. If `targetSubtype` is set, only unicorns of that `UnicornType` are eligible — skips silently if none match. The filter is carried through the click-prompt via `CardActionExecutor.pendingStealSubtypeFilter`; `Stable.HandleCardClick`'s `StealCard` branch enforces both `this is UnicornStable` and the subtype match. |
 | `MoveSelfToOpponentStableAction` | none | Moves the source card itself from the active player's unicorn stable into the opponent's unicorn stable. Used by Polyamorous Unicorn to hop stables each turn. |
+| `TakeFromDiscardAction` | none | Moves the top card of the discard pile into the active player's hand. Skips silently if the discard pile is empty. Currently always takes the top card — no player choice yet (see `docs/issues.md` M4). |
 
 Each action's `Execute(executor, context)` resolves which players/spaces are involved and calls a `Prompt*` method on `CardActionExecutor` to pause the queue for player input.
 
@@ -98,8 +106,8 @@ Full decision tree, action-type reference, and worked examples: `docs/cards/card
 
 - `CardType`: `UNICORN`, `MAGIC`, `UPGRADE`, `DOWNGRADE`, `NEIGH`
 - `SpecialActionType`: `IMMEDIATE` (triggers on play), `EVERY_TURN`, `NONE`
-- `TurnPhase`: `Draw`, `Action`, `Special`
-- `PendingActionType`: `None`, `DiscardCard`, `GiveCard`, `DestroyCard`
+- `TurnPhase`: `Draw`, `Action`, `ImmediateSpecial`, `EveryTurnSpecial`
+- `PendingActionType`: `None`, `DiscardCard`, `GiveCard`, `DestroyCard`, `DestroyUnicornCard`, `StealCard`
 
 ---
 
@@ -113,7 +121,7 @@ Full decision tree, action-type reference, and worked examples: `docs/cards/card
 - **EveryTurnSpecial:** Runs at the start of each turn if the active player has any `EVERY_TURN` cards in their stables. Downgrade cards fire automatically (mandatory); Unicorn/Upgrade cards wait for a click or the Skip button (optional). See `TurnManager` in Manager Layer above.
 
 ### Win Condition
-Player wins when `UnicornStable` reaches `maxCardsInStable` unicorns. Currently logs only — no game-over state.
+Player wins when `UnicornStable` reaches `winConditionCount` unicorns (default 7 — separate from `maxCardsInStable`, the layout/cap value). Currently logs only — no game-over state.
 
 ### Card Routing on Play
 | CardType   | Destination                                         |
@@ -133,8 +141,9 @@ Player wins when `UnicornStable` reaches `maxCardsInStable` unicorns. Currently 
 | Neigh card interrupts | Not started | Requires playing a card outside your turn; no interrupt mechanic exists |
 | Win condition UI | Partial | `CheckWinCondition()` logs only; no game-over screen or state |
 | Pass action | Not started | Player can't skip their Action phase turn |
-| Hand size >8 cards | Not handled | `HandStable.PositionCardsInStable()` throws at >8 |
+| Hand size >8 cards | Partial | Crash fixed (capped display at 7), but overflow cards aren't visible/selectable — see `docs/issues.md` M3 |
 | Multi-player (>2) | Not started | `CardManager` hardcodes "first non-active player" as opponent |
+| Dumpster Diving Unicorn discard-pile picker | Open | Always takes the top discard card automatically; card text implies free choice — see `docs/issues.md` M4 |
 
 ---
 

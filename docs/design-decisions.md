@@ -46,7 +46,7 @@ Y positions for each card in the fan layout are stored as hardcoded arrays per c
 
 A pure arc formula (y = r × sin(θ)) produces visually unnatural fans at low card counts (1–3 cards) where the arc is too subtle to read clearly. The hardcoded values were tuned manually per count.
 
-**Current limit:** `PositionCardsInStable()` throws `ArgumentOutOfRangeException` for >8 cards. This is an intentional soft cap for the 2-player game (hand size rarely exceeds 7–8 in practice). If player count or hand limits change, this will need revisiting — either extend the arrays or switch to a formula for counts >8.
+**Current limit:** the hardcoded arrays only cover 1–7 cards. `PositionCardsInStable()` now caps `displayCount = Mathf.Min(spaceCards.Count, 7)` and only positions that many (see `docs/issues.md` M3) — it no longer throws, but cards beyond index 6 aren't visible or clickable. This is an intentional soft cap for the 2-player game (hand size rarely exceeds 7–8 in practice). If player count or hand limits change, this will need revisiting — either extend the arrays, switch to a formula for counts >7, or add scroll/overflow UI.
 
 ---
 
@@ -85,7 +85,7 @@ Keeping them separate means the `StartNextTurnPhase` switch can route each case 
 When deciding whether to enter `ImmediateSpecial` after the Action phase, `TurnManager` needs to know the `SpecialActionType` of the card that was just played. Two approaches were considered:
 
 - **`lastPlayedCard` field on `TurnManager`** — `CardManager` sets it after a card is played; `TurnManager` reads it when advancing. This adds a field that exists solely to bridge one method call, creating a second source of truth for information that is already available at the call site.
-- **Parameter on `StartNextTurnPhase`** — `HandStable` passes `card.specialActionType` directly. The information flows through the call stack without any intermediate state.
+- **Parameter on `StartNextTurnPhase`** — `HandStable` passes `card.cardData.specialActionType` directly (the field lived on `Card` itself before the R3 cleanup removed the duplicate; see `docs/issues.md` R3). The information flows through the call stack without any intermediate state.
 
 The parameter approach was chosen. The default value `SpecialActionType.NONE` means callers that don't care (e.g. the Deck advancing from Draw to Action) don't need to pass anything.
 

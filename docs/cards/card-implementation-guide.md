@@ -214,7 +214,7 @@ After Unity compiles the script:
 | SpecialActionType | `IMMEDIATE` — set by `MagicCardData` |
 | Actions | Three, in sequence (see below) |
 | New class needed? | Yes — unique combination of three actions |
-| instances | 1 |
+| instances | 2 |
 
 ```csharp
 actions = new List<CardAction>
