@@ -20,15 +20,16 @@ public class DeckManager : MonoBehaviour
         SetupGameDecks();
         ShuffleDecks();
         // Call order is reversed by MoveToTop (each call bumps its card above the previous one),
-        // so the LAST call here is drawn FIRST. Listed in call order (= reverse draw order):
-        ForceBabyTrapToTop();           // drawn last — needs a Baby Unicorn already played to a stable to test
+        // so the LAST call here is drawn FIRST. Listed in call order (= reverse draw order).
+        // New cards under active development go last so they're the first thing drawn.
         ForceFmkToTop();
         ForceBreakingAndEnteringToTop();
         ForceDumpsterDivingUnicornToTop();
         ForcePolyamorousUnicornToTop();
         ForceAutoeroticAsphyxiationToTop();
-        ForceHorrifyingImpalingToTop(); // pushed to 2nd by Hentaicorn below
-        ForceHentaicornToTop();         // Hentaicorn drawn 1st — play to stable, then opponent draws HorrifyingImpaling to test shield
+        ForceHorrifyingImpalingToTop(); // drawn 2nd — Hentaicorn below is drawn 1st and played first to test the shield
+        ForceHentaicornToTop();         // drawn 1st unless bumped by a newer Force call below
+        ForceBabyTrapToTop();           // drawn 1st (currently under test) — needs a Baby Unicorn already played to a stable
 
         foreach (var player in turnManager.players)
         {

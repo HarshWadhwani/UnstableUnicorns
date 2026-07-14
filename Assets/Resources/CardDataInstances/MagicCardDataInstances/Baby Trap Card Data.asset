@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9ef25174224f4c189f198498e7158ed, type: 3}
+  m_Name: Baby Trap Card Data
+  m_EditorClassIdentifier: Assembly-CSharp::BabyTrapCardData
+  cardNameVariations:
+  - Baby Trap
+  cardDescriptionText:
+  instances: 2
+  cardType: 1
+  specialActionType: 0
