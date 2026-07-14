@@ -4,6 +4,19 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.13] — 2026-07-14
+
+### Fixes
+- **Baby Trap never actually reached the top of the deck**, from two compounding bugs:
+  1. `DeckManager.Start()` called `ForceBabyTrapToTop()` **first** instead of last. `Deck.MoveToTop` appends to the end of `spaceCards` and each call bumps its own card above the one before it, so the Force calls are in *reverse* draw order — calling one first buries its card deepest among the forced set rather than putting it on top.
+  2. `Baby Trap Card Data.asset` had `cardNameVariations: []` and `instances: 0` left at their Unity defaults, so `DeckManager.GenerateCards` created zero copies of the card — the Force method had nothing to find.
+- Both fixed directly (asset now has `cardNameVariations: [Baby Trap]`, `instances: 2`; the Force call moved to the end of the block).
+
+### Docs
+- `.claude/commands/add-card.md`: documented the `MoveToTop` call-ordering semantics (new card's Force call goes last; carve-out for the Hentaicorn/Horrifying-Impaling shield-test dependency) and called out the recurring empty-`cardNameVariations`/`instances: 0` asset gotcha explicitly, since it has now hit nearly every card added this project — the skill now says to read the `.asset` file directly and verify both fields before treating a card as ready to test.
+
+---
+
 ## [v0.2.12] — 2026-07-14
 
 ### Cards
