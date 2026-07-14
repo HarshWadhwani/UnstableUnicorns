@@ -10,7 +10,16 @@ public class TurnManager : MonoBehaviour
     public Card currentEveryTurnCard;
     public bool skipNextDrawPhase = false;
 
-    private List<Card> everyTurnCardsPending = new List<Card>();
+    // Downgrade EVERY_TURN cards — forced on the active player, auto-fire in order, cannot be skipped.
+    private List<Card> pendingMandatoryCards = new List<Card>();
+    // Unicorn/Upgrade EVERY_TURN cards — player clicks to activate, or presses Skip to bypass the rest.
+    private List<Card> pendingChoiceCards = new List<Card>();
+
+    // UI hook (e.g. PhaseIndicator) — whether the Skip button should be interactable right now.
+    public bool CanSkipEveryTurnPhase =>
+        currentPhase == TurnPhase.EveryTurnSpecial
+        && pendingMandatoryCards.Count == 0
+        && (CardActionExecutor.Instance == null || CardActionExecutor.Instance.currentPendingAction == PendingActionType.None);
 
     void Start()
     {
@@ -49,21 +58,46 @@ public class TurnManager : MonoBehaviour
 
             case TurnPhase.EveryTurnSpecial:
                 currentEveryTurnCard = null;
-                if (everyTurnCardsPending.Count == 0)
-                {
-                    bool skip = skipNextDrawPhase;
-                    skipNextDrawPhase = false;
-                    currentPhase = skip ? TurnPhase.Action : TurnPhase.Draw;
-                }
-                // else: stay in EveryTurnSpecial — player must click remaining cards or press Skip
+                AdvanceEveryTurnSpecial();
                 break;
         }
     }
 
+    // Called both to kick off the phase and to chain to the next card once the current one's
+    // action queue finishes (via CardActionExecutor.ExecuteNextAction -> StartNextTurnPhase).
+    private void AdvanceEveryTurnSpecial()
+    {
+        if (pendingMandatoryCards.Count > 0)
+        {
+            ActivateNextMandatoryCard();
+            return;
+        }
+
+        if (pendingChoiceCards.Count == 0)
+        {
+            bool skip = skipNextDrawPhase;
+            skipNextDrawPhase = false;
+            currentPhase = skip ? TurnPhase.Action : TurnPhase.Draw;
+        }
+        // else: stay in EveryTurnSpecial — player must click remaining choice cards or press Skip
+    }
+
+    private void ActivateNextMandatoryCard()
+    {
+        Card card = pendingMandatoryCards[0];
+        pendingMandatoryCards.RemoveAt(0);
+        currentEveryTurnCard = card;
+        // Actions are responsible for skipping themselves silently when impossible
+        // (e.g. DiscardCardAction with an empty hand) — no guard needed here.
+        CardActionExecutor.Instance.ExecuteActions(card.cardData.actions, card);
+    }
+
     public bool TryActivateEveryTurnCard(Card card)
     {
-        if (!everyTurnCardsPending.Contains(card)) return false;
-        everyTurnCardsPending.Remove(card);
+        // Mandatory Downgrade effects must resolve before any optional card can be triggered.
+        if (pendingMandatoryCards.Count > 0) return false;
+        if (!pendingChoiceCards.Contains(card)) return false;
+        pendingChoiceCards.Remove(card);
         currentEveryTurnCard = card;
         CardActionExecutor.Instance.ExecuteActions(card.cardData.actions, card);
         return true;
@@ -71,7 +105,20 @@ public class TurnManager : MonoBehaviour
 
     public void SkipEveryTurnPhase()
     {
-        everyTurnCardsPending.Clear();
+        if (pendingMandatoryCards.Count > 0)
+        {
+            Debug.LogWarning("Cannot skip: mandatory Downgrade effects must resolve first.");
+            return;
+        }
+
+        if (CardActionExecutor.Instance != null
+            && CardActionExecutor.Instance.currentPendingAction != PendingActionType.None)
+        {
+            Debug.LogWarning("Cannot skip while a card action is awaiting input.");
+            return;
+        }
+
+        pendingChoiceCards.Clear();
         currentEveryTurnCard = null;
         bool skip = skipNextDrawPhase;
         skipNextDrawPhase = false;
@@ -81,12 +128,18 @@ public class TurnManager : MonoBehaviour
     private void AdvanceToNextPlayerTurn()
     {
         SwitchToNextPlayer();
-        everyTurnCardsPending.Clear();
-        CollectEveryTurnCards(activePlayer.unicornStable);
-        CollectEveryTurnCards(activePlayer.upgradeStable);
-        CollectEveryTurnCards(activePlayer.downgradeStable);
+        pendingMandatoryCards.Clear();
+        pendingChoiceCards.Clear();
+        CollectEveryTurnCards(activePlayer.downgradeStable, pendingMandatoryCards);
+        CollectEveryTurnCards(activePlayer.unicornStable, pendingChoiceCards);
+        CollectEveryTurnCards(activePlayer.upgradeStable, pendingChoiceCards);
 
-        if (everyTurnCardsPending.Count > 0)
+        if (pendingMandatoryCards.Count > 0)
+        {
+            currentPhase = TurnPhase.EveryTurnSpecial;
+            ActivateNextMandatoryCard();
+        }
+        else if (pendingChoiceCards.Count > 0)
         {
             currentPhase = TurnPhase.EveryTurnSpecial;
         }
@@ -96,7 +149,7 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    private void CollectEveryTurnCards(CardSpace cardSpace)
+    private void CollectEveryTurnCards(CardSpace cardSpace, List<Card> destination)
     {
         foreach (Card card in cardSpace.spaceCards)
         {
@@ -104,7 +157,7 @@ public class TurnManager : MonoBehaviour
                 && card.cardData.actions != null
                 && card.cardData.actions.Count > 0)
             {
-                everyTurnCardsPending.Add(card);
+                destination.Add(card);
             }
         }
     }

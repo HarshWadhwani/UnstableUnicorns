@@ -38,7 +38,7 @@ Card data assets (ScriptableObjects) live in `Assets/Resources/CardDataInstances
 
 ### Manager Layer
 
-- **`TurnManager`** — owns the player list, active player, and turn phase (`Draw → Action → Special → Draw`). Call `StartNextTurnPhase()` to advance.
+- **`TurnManager`** — owns the player list, active player, and turn phase (`Draw → Action → (ImmediateSpecial) → (EveryTurnSpecial) → Draw`). Call `StartNextTurnPhase()` to advance. In `EveryTurnSpecial`, `EVERY_TURN` cards in the active player's stables split into two queues: Downgrade cards are **mandatory** — `AdvanceToNextPlayerTurn` auto-fires them in order via `ActivateNextMandatoryCard`, no click required, and the Skip button (`SkipEveryTurnPhase`) no-ops while any remain (`TurnManager.CanSkipEveryTurnPhase` drives the button's `interactable` state). Unicorn/Upgrade cards are **choice** — the player clicks the card in its stable (`TryActivateEveryTurnCard`, routed through `Stable.HandleCardClick`) or presses Skip to bypass the rest. A `CardAction` that can't run (e.g. `DiscardCardAction` on an empty hand) returns without setting a pending action, so `CardActionExecutor` silently chains to the next one — this is what makes mandatory effects skip cleanly when impossible, with no extra guard needed.
 - **`CardManager`** — handles all card movement (`MoveCard`, `DrawCard`, `PlayCardForCurrentPlayer`). Routes played cards to the correct destination based on `CardType`.
 - **`DeckManager`** — loads all `CardData` from Resources on `Start()`, instantiates `Card` prefabs, shuffles, and deals baby unicorns.
 
@@ -104,10 +104,11 @@ Full decision tree, action-type reference, and worked examples: `docs/cards/card
 ## Gameplay Rules
 
 ### Turn Structure
-`Draw → Action → Special → (next player's Draw)`
+`Draw → Action → (ImmediateSpecial) → (EveryTurnSpecial) → (next player's Draw)`
 - **Draw:** Active player clicks the top card of the play deck.
 - **Action:** Active player plays one card from hand (pass not yet implemented).
-- **Special:** EVERY_TURN effects trigger. Not yet wired — phase exists but does nothing.
+- **ImmediateSpecial:** Runs when a `MAGIC` card's actions fire on play.
+- **EveryTurnSpecial:** Runs at the start of each turn if the active player has any `EVERY_TURN` cards in their stables. Downgrade cards fire automatically (mandatory); Unicorn/Upgrade cards wait for a click or the Skip button (optional). See `TurnManager` in Manager Layer above.
 
 ### Win Condition
 Player wins when `UnicornStable` reaches `maxCardsInStable` unicorns. Currently logs only — no game-over state.
@@ -128,7 +129,6 @@ Player wins when `UnicornStable` reaches `maxCardsInStable` unicorns. Currently 
 | Area | Status | Notes |
 |------|--------|-------|
 | Neigh card interrupts | Not started | Requires playing a card outside your turn; no interrupt mechanic exists |
-| EVERY_TURN special phase | Partial | `ActivePlayerHasEveryTurnCards()` exists but never called |
 | Win condition UI | Partial | `CheckWinCondition()` logs only; no game-over screen or state |
 | Pass action | Not started | Player can't skip their Action phase turn |
 | Hand size >8 cards | Not handled | `HandStable.PositionCardsInStable()` throws at >8 |

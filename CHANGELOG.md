@@ -4,6 +4,25 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.11] — 2026-07-13
+
+### Cards
+- **Autoerotic Asphyxiation** — Downgrade / `EVERY_TURN`. Forces the active player to discard 1 card each turn while it sits in their stable. Skips silently if their hand is empty.
+
+### New Mechanism: Mandatory vs. Choice EVERY_TURN Effects
+- `TurnManager` splits `EVERY_TURN` cards into two queues: `pendingMandatoryCards` (Downgrade — matches the "you must" rule text) and `pendingChoiceCards` (Unicorn/Upgrade — matches "you may"). Previously all EVERY_TURN cards shared one list and the player had to click each one, meaning a Downgrade's forced effect could be dodged entirely via the Skip button — a rules violation.
+- `ActivateNextMandatoryCard` auto-fires the next mandatory card with no click required to start it (though the underlying `CardAction` may still prompt the player to choose *which* card, e.g. which one to discard — that's independent of whether triggering the effect itself was optional).
+- `TryActivateEveryTurnCard` and `SkipEveryTurnPhase` both refuse to run while any mandatory card is pending, so a Downgrade can't be skipped or jumped by a choice card.
+- `TurnManager.CanSkipEveryTurnPhase` (new public bool) drives the Skip button's `Interactable` state via `PhaseIndicator`, so the button is visibly disabled during mandatory resolution, not just a silent no-op.
+- No new "skip if impossible" logic was needed — `DiscardCardAction` (and any future action) already returns without setting a pending action when its target can't act, so `CardActionExecutor` chains past it automatically.
+
+### Docs
+- `CLAUDE.md`: updated `TurnManager` description and Turn Structure to reflect the actual current phase machinery (was stale — described EVERY_TURN as unwired). Removed the resolved "EVERY_TURN special phase" row from Known Gaps.
+- `docs/design-decisions.md`: added the mandatory/optional split rationale; corrected stale `everyTurnCardsPending` references in the existing EVERY_TURN entries to the new field names.
+- `docs/cards/card-data/autoerotic-asphyxiation.md`, `_checklist.md`: marked implemented.
+
+---
+
 ## [v0.2.10] — 2026-07-13
 
 ### Cards

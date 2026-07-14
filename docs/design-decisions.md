@@ -105,11 +105,25 @@ The chosen order is: switch player → check for EVERY_TURN actions → `EveryTu
 
 **Files:** `TurnManager.cs`
 
-`AdvanceToNextPlayerTurn()` collects the full list of EVERY_TURN cards from the new active player's stables into `everyTurnCardsPending` before deciding whether to enter `EveryTurnSpecial`. The phase only activates if any cards with non-empty action lists are found.
+`AdvanceToNextPlayerTurn()` collects the full list of EVERY_TURN cards from the new active player's stables before deciding whether to enter `EveryTurnSpecial`. The phase only activates if any cards with non-empty action lists are found.
 
-An earlier version auto-executed actions immediately on phase entry. The current model is player-driven: cards sit in `everyTurnCardsPending` and the player activates each one by clicking it in their stable. Cards not clicked before the player presses Skip are skipped for that turn.
+An earlier version auto-executed actions immediately on phase entry. The current model is player-driven: cards sit in a pending list and the player activates each one by clicking it in their stable. Cards not clicked before the player presses Skip are skipped for that turn.
 
-A card is removed from `everyTurnCardsPending` the moment it is activated. When the executor finishes that card's actions (`StartNextTurnPhase(EveryTurnSpecial)` is called), it checks if any pending cards remain — if none, it advances to `Draw` automatically.
+**Update:** this description now applies only to the `pendingChoiceCards` queue (Unicorn/Upgrade cards). Downgrade cards were split into a separate `pendingMandatoryCards` queue that auto-executes without a click and ignores Skip — see the entry below.
+
+A card is removed from `pendingChoiceCards` the moment it is activated. When the executor finishes that card's actions (`StartNextTurnPhase(EveryTurnSpecial)` is called), it checks if any pending cards remain — if none, it advances to `Draw` automatically.
+
+---
+
+## Downgrade `EVERY_TURN` effects are mandatory; Unicorn/Upgrade `EVERY_TURN` effects are optional
+
+**Files:** `TurnManager.cs`, `PhaseIndicator.cs`
+
+The physical game's rule text distinguishes the two: Downgrade cards read "DISCARD a card" (an order), while Magical Unicorn/Upgrade `EVERY_TURN` cards typically read "you may..." (a choice). The original single `everyTurnCardsPending` list treated both the same way — the player had to click every EVERY_TURN card individually, and could press Skip to bypass a Downgrade's forced effect entirely, which is a rules violation.
+
+**Fix:** `TurnManager` now collects Downgrade `EVERY_TURN` cards into `pendingMandatoryCards` and Unicorn/Upgrade `EVERY_TURN` cards into `pendingChoiceCards`, gathered separately in `AdvanceToNextPlayerTurn`. Whenever `pendingMandatoryCards` is non-empty, `ActivateNextMandatoryCard` fires the next one directly (no player click needed to *start* it — the underlying `CardAction`, e.g. `DiscardCardAction`, may still prompt the player to *choose which card*, that's unrelated to whether the effect itself is optional). `TryActivateEveryTurnCard` and `SkipEveryTurnPhase` both refuse to run while `pendingMandatoryCards` is non-empty, so a Unicorn/Upgrade choice card can't jump the queue and Skip can't be used to dodge a forced Downgrade. `TurnManager.CanSkipEveryTurnPhase` exposes this as a bool so `PhaseIndicator` can disable the Skip button in the UI rather than merely no-op the click.
+
+**Silent skip when impossible:** no new code was needed for "skip if the player has 0 cards to discard" — `DiscardCardAction.Execute` already returns without setting a pending action when the target's hand is empty, and `CardActionExecutor.ExecuteNextAction` chains straight to the next action when nothing is pending. This applies to any current or future action used on a mandatory Downgrade, not just discard.
 
 ---
 
@@ -122,10 +136,10 @@ When `EveryTurnSpecial` is active, the intended UX is a dedicated overlay screen
 **Why Option B over a per-card prompt (Option A):**  
 Option A (yes/no prompt before each card) generates one forced interaction per card per turn even when the player always wants to trigger every effect — it slows turns down with multiple EVERY_TURN cards. Option B gives the player all choices at once and requires only one interaction (Done/Skip) when they want everything or nothing.
 
-**Current interim behaviour:** No overlay exists yet. The player activates an EVERY_TURN card by clicking it directly in their stable during `EveryTurnSpecial` phase. A Skip button on the main HUD ends the phase early. The `everyTurnCardsPending` list in `TurnManager` is the source of truth for which cards are still available to activate.
+**Current interim behaviour:** No overlay exists yet. The player activates an EVERY_TURN card by clicking it directly in their stable during `EveryTurnSpecial` phase. A Skip button on the main HUD ends the phase early (now disabled while any mandatory Downgrade card is pending — see the mandatory/optional split entry above). The `pendingChoiceCards` list in `TurnManager` (private; this note predates its rename from `everyTurnCardsPending` and its split from the mandatory Downgrade queue) is the source of truth for which optional cards are still available to activate.
 
 **Prerequisites for the full overlay:**
-- A new scene overlay Canvas that reads `turnManager.everyTurnCardsPending` and renders card thumbnails
+- A new scene overlay Canvas that reads `pendingChoiceCards` (would need a public accessor) and renders card thumbnails
 - Card thumbnails need click handlers that call `turnManager.TryActivateEveryTurnCard(card)`
 - A "Done / Skip All" button on the overlay that calls `turnManager.SkipEveryTurnPhase()`
 - The overlay activates/deactivates based on `turnManager.currentPhase == EveryTurnSpecial`

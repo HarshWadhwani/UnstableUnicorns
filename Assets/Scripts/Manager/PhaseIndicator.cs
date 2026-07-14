@@ -1,10 +1,12 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PhaseIndicator : MonoBehaviour
 {
     public TurnManager turnManager;
     public TMP_Text phaseLabel;
+    public Button skipButton;
 
     void Update()
     {
@@ -20,5 +22,10 @@ public class PhaseIndicator : MonoBehaviour
                                             : $"{turnManager.activePlayer.name}: Resolving effects",
             _                          => string.Empty
         };
+
+        if (skipButton != null)
+        {
+            skipButton.interactable = turnManager.CanSkipEveryTurnPhase;
+        }
     }
 }

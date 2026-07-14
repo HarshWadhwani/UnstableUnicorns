@@ -25,11 +25,24 @@ public class DeckManager : MonoBehaviour
         ForcePolyamorousUnicornToTop();
         ForceHorrifyingImpalingToTop(); // pushed to 2nd by Hentaicorn below
         ForceHentaicornToTop();         // Hentaicorn drawn 1st — play to stable, then opponent draws HorrifyingImpaling to test shield
+        ForceAutoeroticAsphyxiationToTop();
 
         foreach (var player in turnManager.players)
         {
             cardManager.DrawCard(nursery.spaceCards[0], nursery, player);
         }
+    }
+
+    // DEBUG: stack the play deck so the next draw is an Autoerotic Asphyxiation card.
+    void ForceAutoeroticAsphyxiationToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is AutoeroticAsphyxiationCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceAutoeroticAsphyxiationToTop: no AutoeroticAsphyxiationCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
     }
 
     // DEBUG: stack the play deck so the next draw is a Polyamorous Unicorn card.
