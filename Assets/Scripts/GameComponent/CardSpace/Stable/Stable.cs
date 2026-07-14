@@ -63,6 +63,20 @@ public class Stable : CardSpace
                 return;
             }
 
+            if (!(this is UnicornStable))
+            {
+                Debug.LogWarning("Must target a unicorn card.");
+                return;
+            }
+
+            UnicornType? subtypeFilter = CardActionExecutor.Instance.pendingStealSubtypeFilter;
+            if (subtypeFilter.HasValue
+                && (!(card.cardData is UnicornCardData u) || u.unicornType != subtypeFilter.Value))
+            {
+                Debug.LogWarning($"Must target a {subtypeFilter.Value} unicorn.");
+                return;
+            }
+
             CardActionExecutor.Instance.ExecutePendingAction(card);
             PositionCardsInStable();
             return;

@@ -19,18 +19,33 @@ public class DeckManager : MonoBehaviour
         LoadAllCardData();
         SetupGameDecks();
         ShuffleDecks();
+        // Call order is reversed by MoveToTop (each call bumps its card above the previous one),
+        // so the LAST call here is drawn FIRST. Listed in call order (= reverse draw order):
+        ForceBabyTrapToTop();           // drawn last — needs a Baby Unicorn already played to a stable to test
         ForceFmkToTop();
         ForceBreakingAndEnteringToTop();
         ForceDumpsterDivingUnicornToTop();
         ForcePolyamorousUnicornToTop();
+        ForceAutoeroticAsphyxiationToTop();
         ForceHorrifyingImpalingToTop(); // pushed to 2nd by Hentaicorn below
         ForceHentaicornToTop();         // Hentaicorn drawn 1st — play to stable, then opponent draws HorrifyingImpaling to test shield
-        ForceAutoeroticAsphyxiationToTop();
 
         foreach (var player in turnManager.players)
         {
             cardManager.DrawCard(nursery.spaceCards[0], nursery, player);
         }
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Baby Trap card.
+    void ForceBabyTrapToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is BabyTrapCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceBabyTrapToTop: no BabyTrapCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
     }
 
     // DEBUG: stack the play deck so the next draw is an Autoerotic Asphyxiation card.

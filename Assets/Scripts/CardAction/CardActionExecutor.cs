@@ -24,7 +24,8 @@ public class CardActionExecutor : MonoBehaviour
     public CardSpace pendingDestinationStable;
     public int pendingCardsRemaining;
     public Player pendingDestroyTargetPlayer;
-    
+    public UnicornType? pendingStealSubtypeFilter;
+
     private Player originalActivePlayer;
     private Queue<CardAction> actionQueue = new Queue<CardAction>();
     private CardActionContext currentContext;
@@ -159,6 +160,7 @@ public class CardActionExecutor : MonoBehaviour
         pendingDestinationStable = null;
         pendingCardsRemaining = 0;
         pendingDestroyTargetPlayer = null;
+        pendingStealSubtypeFilter = null;
         originalActivePlayer = null;
 
         ExecuteNextAction();

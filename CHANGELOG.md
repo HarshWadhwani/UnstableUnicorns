@@ -4,6 +4,24 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.12] — 2026-07-14
+
+### Cards
+- **Baby Trap** — Magic / `IMMEDIATE`. Steal a Baby Unicorn from the opponent's stable. Cannot be played if the opponent has no Baby Unicorns.
+
+### Extended Action Type
+- **`StealUnicornAction`** gains an optional `targetSubtype` field (`UnicornType?`, default `null` = any unicorn, preserving Polyamorous Unicorn's existing behavior). When set, only unicorns of that subtype are eligible to steal — skips silently if none match, mirroring the existing empty-hand-skip pattern on `DiscardCardAction`.
+- `CardActionExecutor` gains `pendingStealSubtypeFilter`, set before prompting and cleared in `ClearPendingAction`, so the filter survives the click-prompt round-trip.
+
+### Fixes
+- **Latent steal-target bug:** `Stable.HandleCardClick`'s `StealCard` branch only checked that the clicked stable belonged to the non-active player — it didn't check the stable was actually a `UnicornStable`, so a steal prompt could previously accept a click on the opponent's Upgrade or Downgrade stable and move that card into the stealer's unicorn stable. Now requires `this is UnicornStable`, matching the existing `DestroyUnicornCard` guard pattern.
+
+### Docs
+- `CLAUDE.md`: added `StealUnicornAction` and `MoveSelfToOpponentStableAction` to the CardAction reference table (previously undocumented despite being in use by Polyamorous Unicorn).
+- `docs/cards/card-data/baby-trap.md`, `_checklist.md`: marked implemented.
+
+---
+
 ## [v0.2.11] — 2026-07-13
 
 ### Cards
