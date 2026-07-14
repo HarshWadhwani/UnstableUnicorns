@@ -47,7 +47,7 @@ public class DestroyCardAction : CardAction
         Card shieldCard = FindSacrificeShieldCard(targetPlayer);
         if (shieldCard != null)
         {
-            Debug.Log($"[SacrificeShield] {shieldCard.cardData.cardNameVariations[0]} intercepts the destroy — sacrificed automatically.");
+            Debug.Log($"[SacrificeShield] {shieldCard.name} intercepts the destroy — sacrificed automatically.");
             context.cardManager.MoveCard(shieldCard, shieldCard.cardSpace, context.discardPile);
             return;
         }

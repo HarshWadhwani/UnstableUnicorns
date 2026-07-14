@@ -140,6 +140,15 @@ Existing base classes with `[CreateAssetMenu]`:
 - `UpgradeCardData` — `CardData/UpgradeCardData`
 - `DowngradeCardData` — `CardData/DowngradeCardData`
 
+### Multiple no-effect cards that only differ by flavor name
+Some groups of cards (e.g. the 7 "Basic Unicorn" vanillas — Fuckboi Unicorn, Vanillacorn, etc.) are mechanically identical: no effect, same `CanPlay`, same everything except the printed name. Rather than one asset per name, use a single shared asset:
+
+1. Create one concrete subclass (e.g. `BasicUnicornCardData : UnicornCardData`) if the base class is abstract.
+2. Override `CardData.NextCardName()` to cycle through `cardNameVariations` round-robin (see `BasicUnicornCardData.cs` for the reference implementation — a `nextNameIndex` field, incremented and wrapped with `% cardNameVariations.Count`, reset to `0` in `OnEnable`).
+3. On the one shared `.asset`, list every distinct name in `cardNameVariations` (order matters — it's the draw order within each cycle) and set `instances` to `(number of distinct names) × (copies per name)` so the cycle completes evenly.
+
+`Card.Initialize` calls `cardData.NextCardName()` (not `cardNameVariations[0]` directly) specifically so this override takes effect — every other card's default `NextCardName()` just returns `cardNameVariations[0]`, unaffected.
+
 ### Create a new subclass (has effect)
 If the card has a non-empty `actions` list, create a new C# file:
 

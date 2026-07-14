@@ -4,6 +4,31 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.10] — 2026-07-13
+
+### Cards
+- **7 Basic Unicorns** — Fuckboi Unicorn, Horse With A Dildo, Single Unicorn, Stoner Unicorn, Unicorn on the Street Corner, Vanillacorn, Wasted White Unicorn. No effect, 3 copies each (21 total). Share one `BasicUnicornCardData` class and one Unity asset (`Basic Unicorn Card Data.asset`) instead of 7 separate assets, since they're mechanically identical and differ only by printed name.
+
+### New Mechanism: Round-Robin Card Naming
+- `CardData` gains a virtual `NextCardName()` (default: `cardNameVariations[0]`, unchanged behavior for every existing card).
+- `BasicUnicornCardData` overrides it to cycle through `cardNameVariations` in order, wrapping with `% cardNameVariations.Count`, reset each `OnEnable()`. Lets one asset with `instances = 21` and 7 names in `cardNameVariations` produce exactly 3 of each name in a stable draw order.
+- `Card.Initialize` now calls `cardData.NextCardName()` instead of hardcoding `cardNameVariations[0]`.
+- Debug logs that referenced `cardData.cardNameVariations[0]` directly (`CardManager.PlayCardForCurrentPlayer`, `DestroyCardAction`'s sacrifice-shield log, `CardData.TriggerSpecialAction`) now read the already-resolved `Card.name` instead, so logs report the actual drawn name rather than always the first variation.
+- Documented as a reusable pattern in `docs/cards/card-implementation-guide.md` for any future group of no-effect, flavor-only-variant cards.
+
+### UI
+- Added a **Skip** button to `GameScene`, wired to `TurnManager.SkipEveryTurnPhase()` — lets the active player bail out of the `EveryTurnSpecial` phase without resolving remaining `EVERY_TURN` cards. (The method existed since v0.2.6; this is the first UI wiring for it.)
+- Added `PhaseIndicatorText` UI element to `GameScene`.
+
+### Fixes
+- Fixed 7 card assets that had empty `cardNameVariations` and `instances: 0` — a latent bug that meant `Resources.LoadAll` picked them up but they'd never actually enter the deck (0 instances) or display a name if they somehow did: Breaking and Entering, Horrifying Impaling, Unicorn Enema, Dumpster Diving Unicorn, Hentaicorn, Polyamorous Unicorn, Pony Play. All now have their name and `instances: 1` set correctly.
+
+### Docs
+- `docs/cards/card-implementation-guide.md`: added "Multiple no-effect cards that only differ by flavor name" section documenting the round-robin shared-asset pattern.
+- `docs/cards/card-data/_checklist.md` and the 7 basic-unicorn card data files: marked implemented, noted the shared asset.
+
+---
+
 ## [v0.2.9] — 2026-06-07
 
 ### Cards

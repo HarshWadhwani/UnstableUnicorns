@@ -32,7 +32,7 @@ public class CardManager : MonoBehaviour
         Player opponent = turnManager.players.FirstOrDefault(p => p != turnManager.activePlayer);
         if (!card.cardData.CanPlay(turnManager.activePlayer, opponent))
         {
-            Debug.LogWarning($"Cannot play {card.cardData.cardNameVariations[0]}: play conditions not met.");
+            Debug.LogWarning($"Cannot play {card.name}: play conditions not met.");
             return false;
         }
 

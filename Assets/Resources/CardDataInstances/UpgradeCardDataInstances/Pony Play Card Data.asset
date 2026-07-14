@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1be885ac0481448ca84e9f506a6d87b, type: 3}
   m_Name: Pony Play Card Data
   m_EditorClassIdentifier: Assembly-CSharp::PonyPlayCardData
-  cardNameVariations: []
+  cardNameVariations:
+  - Pony Play
   cardDescriptionText: 
-  instances: 0
+  instances: 1
   cardType: 2
   specialActionType: 1

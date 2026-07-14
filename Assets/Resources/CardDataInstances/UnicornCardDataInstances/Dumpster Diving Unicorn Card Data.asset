@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2623d793ebd04c9a9c94dacaaf50dfb, type: 3}
   m_Name: Dumpster Diving Unicorn Card Data
   m_EditorClassIdentifier: Assembly-CSharp::DumpsterDivingUnicornCardData
-  cardNameVariations: []
+  cardNameVariations:
+  - Dumpster Diving Unicorn Card
   cardDescriptionText: 
-  instances: 0
+  instances: 1
   cardType: 0
   specialActionType: 0
-  unicornType: 1
+  unicornType: 3

@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 443572863357e49cb9b6ef60fce7901c, type: 3}
   m_Name: New Horrifying Impaling Card Data
   m_EditorClassIdentifier: Assembly-CSharp::HorrifyingImpalingCardData
-  cardNameVariations: []
+  cardNameVariations:
+  - Horrifying Impaling
   cardDescriptionText: 
-  instances: 0
+  instances: 1
   cardType: 1
   specialActionType: 0

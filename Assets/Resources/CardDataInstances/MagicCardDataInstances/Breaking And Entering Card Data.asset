@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7c6e47a4d23345fd96f418d843cc90a, type: 3}
   m_Name: Breaking And Entering Card Data
   m_EditorClassIdentifier: Assembly-CSharp::BreakingAndEnteringCardData
-  cardNameVariations: []
+  cardNameVariations:
+  - Breaking and Entering
   cardDescriptionText: 
-  instances: 0
+  instances: 1
   cardType: 1
   specialActionType: 0

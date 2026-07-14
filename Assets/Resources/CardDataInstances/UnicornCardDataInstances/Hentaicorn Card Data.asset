@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc804c1db7d774079a7654ef4dfb3c27, type: 3}
   m_Name: Hentaicorn Card Data
   m_EditorClassIdentifier: Assembly-CSharp::HentaicornCardData
-  cardNameVariations: []
+  cardNameVariations:
+  - Hentaicorn
   cardDescriptionText: 
-  instances: 0
+  instances: 1
   cardType: 0
   specialActionType: 2
   unicornType: 1

@@ -33,7 +33,7 @@
 | [Fuck. Marry. Kill](fuck-marry-kill.md) | Magic | 2 | ✅ | ✅ |
 | [Fucking Cute Baby Unicorn](fucking-cute-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ⬜ |
 | [Fucking Ugly Baby Unicorn](fucking-ugly-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ⬜ |
-| [Fuckboi Unicorn](fuckboi-unicorn.md) | Basic Unicorn | 3 | ✅ | ⬜ |
+| [Fuckboi Unicorn](fuckboi-unicorn.md) | Basic Unicorn | 3 | ✅ | ✅ |
 | [Fuzzy Hoofcuffs](fuzzy-hoofcuffs.md) | Upgrade | 1 | ✅ | ⬜ |
 | [Giant Horned Cock](giant-horned-cock.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Hell Neigh!](hell-neigh.md) | Instant | 3 | ✅ | ⬜ |
@@ -42,7 +42,7 @@
 | [Hoof Job](hoof-job.md) | Magic | 2 | ✅ | ⬜ |
 | [Horrifying Impaling](horrifying-impaling.md) | Magic | 2 | ✅ | ✅ |
 | [Horse Shit](horse-shit.md) | Downgrade | 1 | ✅ | ⬜ |
-| [Horse With A Dildo](horse-with-a-dildo.md) | Basic Unicorn | 3 | ✅ | ⬜ |
+| [Horse With A Dildo](horse-with-a-dildo.md) | Basic Unicorn | 3 | ✅ | ✅ |
 | [Horny Flying Unicorn](horny-flying-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Kink Shame](kink-shame.md) | Magic | 3 | ✅ | ⬜ |
 | [Kittencorn in Heat](kittencorn-in-heat.md) | Magical Unicorn | 1 | ✅ | ⬜ |
@@ -69,10 +69,10 @@
 | [Sex, Drugs, and Unicorns](sex-drugs-and-unicorns.md) | Magic | 1 | ✅ | ⬜ |
 | [Sextra-Terrestrial Unicorn](sextra-terrestrial-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Shotgun Baby Unicorn](shotgun-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ⬜ |
-| [Single Unicorn](single-unicorn.md) | Basic Unicorn | 3 | ✅ | ⬜ |
+| [Single Unicorn](single-unicorn.md) | Basic Unicorn | 3 | ✅ | ✅ |
 | [Someone Else's Baby Unicorn](someone-elses-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ⬜ |
 | [Sticky Situation](sticky-situation.md) | Downgrade | 1 | ✅ | ⬜ |
-| [Stoner Unicorn](stoner-unicorn.md) | Basic Unicorn | 3 | ✅ | ⬜ |
+| [Stoner Unicorn](stoner-unicorn.md) | Basic Unicorn | 3 | ✅ | ✅ |
 | [Straight But Curious Unicorn](straight-but-curious-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Tasty Baby Unicorn](tasty-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ⬜ |
 | [The Bitchiest Unicorn](the-bitchiest-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
@@ -90,19 +90,19 @@
 | [Unicorn Enema](unicorn-enema.md) | Magic | 1 | ✅ | ✅ |
 | [Unicorn Flatulence](unicorn-flatulence.md) | Downgrade | 1 | ✅ | ⬜ |
 | [Unicorn Hangover](unicorn-hangover.md) | Magic | 1 | ✅ | ⬜ |
-| [Unicorn on the Street Corner](unicorn-on-the-street-corner.md) | Basic Unicorn | 3 | ✅ | ⬜ |
+| [Unicorn on the Street Corner](unicorn-on-the-street-corner.md) | Basic Unicorn | 3 | ✅ | ✅ |
 | [Unicorn Speed](unicorn-speed.md) | Upgrade | 2 | ✅ | ⬜ |
 | [Unicorn with Benefits](unicorn-with-benefits.md) | Upgrade | 1 | ✅ | ⬜ |
 | [Unicorgy](unicorgy.md) | Magic | 2 | ✅ | ⬜ |
 | [Upside Down Baby Unicorn](upside-down-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ⬜ |
-| [Vanillacorn](vanillacorn.md) | Basic Unicorn | 3 | ✅ | ⬜ |
-| [Wasted White Unicorn](wasted-white-unicorn.md) | Basic Unicorn | 3 | ✅ | ⬜ |
+| [Vanillacorn](vanillacorn.md) | Basic Unicorn | 3 | ✅ | ✅ |
+| [Wasted White Unicorn](wasted-white-unicorn.md) | Basic Unicorn | 3 | ✅ | ✅ |
 
 ---
 
 ## Summary
 - Total cards: 91
 - Extracted: 91 / 91
-- Implemented: 8 / 91 (Breaking and Entering, Dumpster Diving Unicorn, Fuck. Marry. Kill, Hentaicorn, Horrifying Impaling, Polyamorous Unicorn, Pony Play, Unicorn Enema)
+- Implemented: 15 / 91 (Breaking and Entering, Dumpster Diving Unicorn, Fuck. Marry. Kill, Fuckboi Unicorn, Hentaicorn, Horrifying Impaling, Horse With A Dildo, Polyamorous Unicorn, Pony Play, Single Unicorn, Stoner Unicorn, Unicorn Enema, Unicorn on the Street Corner, Vanillacorn, Wasted White Unicorn)
 
 *Update this table as cards are extracted and implemented. Mark Extracted ✅ when a card file exists in this directory with effect text filled in.*

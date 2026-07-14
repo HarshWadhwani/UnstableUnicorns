@@ -13,18 +13,20 @@ public abstract class CardData : ScriptableObject
 
     public abstract void OnEnable();
 
+    public virtual string NextCardName() => cardNameVariations[0];
+
     public virtual bool CanPlay(Player activePlayer, Player opponentPlayer) => true;
 
     public virtual void TriggerSpecialAction(Card sourceCard)
     {
         if (actions.Count > 0 && CardActionExecutor.Instance != null)
         {
-            Debug.Log($"Executing {actions.Count} actions for card: {cardNameVariations[0]}");
+            Debug.Log($"Executing {actions.Count} actions for card: {sourceCard.name}");
             CardActionExecutor.Instance.ExecuteActions(actions, sourceCard);
         }
         else
         {
-            Debug.Log($"No actions configured for card: {cardNameVariations[0]}");
+            Debug.Log($"No actions configured for card: {sourceCard.name}");
         }
     }
 }

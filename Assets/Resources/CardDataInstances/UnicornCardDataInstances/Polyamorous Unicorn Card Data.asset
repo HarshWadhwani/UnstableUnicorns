@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25506c020b2c94843b78d3c07d6e7cd5, type: 3}
   m_Name: Polyamorous Unicorn Card Data
   m_EditorClassIdentifier: Assembly-CSharp::PolyamorousUnicornCardData
-  cardNameVariations: []
+  cardNameVariations:
+  - Polyamourous Unicorn Card
   cardDescriptionText: 
-  instances: 0
+  instances: 1
   cardType: 0
   specialActionType: 1
   unicornType: 1

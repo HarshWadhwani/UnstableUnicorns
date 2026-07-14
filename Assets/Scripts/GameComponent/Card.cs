@@ -18,8 +18,9 @@ public class Card : MonoBehaviour, IPointerClickHandler
 
     public void Initialize(CardData cardData)
     {
-        name = cardData.cardNameVariations[0];
-        cardName.text = cardData.cardNameVariations[0];
+        string cardDisplayName = cardData.NextCardName();
+        name = cardDisplayName;
+        cardName.text = cardDisplayName;
         cardDescription.text = cardData.cardDescriptionText;
         this.cardData = cardData;
     }
