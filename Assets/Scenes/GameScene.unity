@@ -321,7 +321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PhaseIndicator
   turnManager: {fileID: 1218204562}
   phaseLabel: {fileID: 770030818}
-  skipButton: {fileID: 0}
+  skipButton: {fileID: 1506191241}
 --- !u!114 &770030818
 MonoBehaviour:
   m_ObjectHideFlags: 0
