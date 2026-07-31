@@ -8,9 +8,12 @@ public class CardActionContext
     public TurnManager turnManager;
     public CardManager cardManager;
     public DiscardPile discardPile;
+    public Deck playDeck;
+    public DeckManager deckManager;
 
-    public CardActionContext(Player activePlayer, Player opponentPlayer, Card sourceCard, 
-                            TurnManager turnManager, CardManager cardManager, DiscardPile discardPile)
+    public CardActionContext(Player activePlayer, Player opponentPlayer, Card sourceCard,
+                            TurnManager turnManager, CardManager cardManager, DiscardPile discardPile,
+                            Deck playDeck, DeckManager deckManager)
     {
         this.activePlayer = activePlayer;
         this.opponentPlayer = opponentPlayer;
@@ -18,5 +21,7 @@ public class CardActionContext
         this.turnManager = turnManager;
         this.cardManager = cardManager;
         this.discardPile = discardPile;
+        this.playDeck = playDeck;
+        this.deckManager = deckManager;
     }
 }

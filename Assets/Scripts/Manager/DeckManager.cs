@@ -30,7 +30,8 @@ public class DeckManager : MonoBehaviour
         ForceHorrifyingImpalingToTop(); // drawn 2nd — Hentaicorn below is drawn 1st and played first to test the shield
         ForceHentaicornToTop();         // drawn 1st unless bumped by a newer Force call below
         ForceBabyTrapToTop();           // needs a Baby Unicorn already played to a stable
-        ForceFleshEatingUnicornToTop(); // drawn 1st (currently under test)
+        ForceFleshEatingUnicornToTop();
+        ForceBearDaddyUnicornToTop();   // drawn 1st (currently under test) — needs Twinkicorn also in the deck
 
         foreach (var player in turnManager.players)
         {
@@ -144,6 +145,18 @@ public class DeckManager : MonoBehaviour
             return;
         }
         playDeck.MoveToTop(fmkCard);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Bear Daddy Unicorn card.
+    void ForceBearDaddyUnicornToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is BearDaddyUnicornCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceBearDaddyUnicornToTop: no BearDaddyUnicornCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
     }
 
     void LoadAllCardData()

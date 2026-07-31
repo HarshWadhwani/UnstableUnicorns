@@ -4,6 +4,23 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.16] — 2026-07-30
+
+### Cards
+- **Bear Daddy Unicorn** — Magical Unicorn / `IMMEDIATE`. When played, searches the play deck for a Twinkicorn card, moves it to hand, then shuffles the deck.
+- **Twinkicorn** — Magical Unicorn / `IMMEDIATE`. Mirror of Bear Daddy Unicorn — searches the deck for a Bear Daddy Unicorn card instead.
+
+### New action type
+- **`SearchDeckForCardAction`** — searches `playDeck.spaceCards` only (not hand/discard/stables) for a card matching a given `CardData` subclass, reveals it, moves it to the active player's hand, then shuffles the deck. Skips silently (still shuffles) if the target isn't in the deck — per ruling, a copy sitting in the discard pile, a hand, or a stable does not count as found. No player prompt.
+- `CardActionContext` and `CardActionExecutor` gained `playDeck`/`deckManager` references so actions can reach and reshuffle the deck. Required a manual scene wire-up of `CardActionExecutor.deckManager` in `GameScene`.
+
+### Docs
+- `docs/cards/card-data/bear-daddy-unicorn.md`, `twinkicorn.md`, `_checklist.md`: marked implemented.
+- `docs/cards/card-implementation-guide.md`: documented `SearchDeckForCardAction`.
+- `CLAUDE.md`: added `SearchDeckForCardAction` to the CardAction table; noted `DeckManager` reference on `CardActionExecutor`.
+
+---
+
 ## [v0.2.15] — 2026-07-14
 
 ### Cards

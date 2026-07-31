@@ -82,6 +82,13 @@ sacrificeAll:   bool                                   — true = take all cards
 ```
 When `sacrificeAll = true`, no player input is required — cards are moved immediately.
 
+### SearchDeckForCardAction
+Searches the play deck (only the deck — not hand, discard, or stables) for a card of a specific `CardData` subclass, moves it to the active player's hand, then shuffles the deck. Skips silently (but still shuffles) if no matching card is in the deck.
+
+```
+targetCardDataType:  System.Type   — the CardData subclass to search for, e.g. typeof(TwinkicornCardData)
+```
+
 ### Mapping examples
 
 | Card text | Action |

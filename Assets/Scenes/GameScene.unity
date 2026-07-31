@@ -1374,6 +1374,7 @@ MonoBehaviour:
   turnManager: {fileID: 1218204562}
   cardManager: {fileID: 941346929}
   discardPile: {fileID: 786892826}
+  deckManager: {fileID: 1333643176}
   currentPendingAction: 0
   pendingSourceStable: {fileID: 0}
   pendingDestinationStable: {fileID: 0}

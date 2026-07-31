@@ -18,6 +18,7 @@ public class CardActionExecutor : MonoBehaviour
     public TurnManager turnManager;
     public CardManager cardManager;
     public DiscardPile discardPile;
+    public DeckManager deckManager;
 
     public PendingActionType currentPendingAction = PendingActionType.None;
     public CardSpace pendingSourceStable;
@@ -99,7 +100,9 @@ public class CardActionExecutor : MonoBehaviour
             sourceCard,
             turnManager,
             cardManager,
-            discardPile
+            discardPile,
+            deckManager.playDeck,
+            deckManager
         );
     }
 

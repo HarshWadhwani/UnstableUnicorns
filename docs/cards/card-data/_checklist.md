@@ -10,7 +10,7 @@
 | [Autoerotic Asphyxiation](autoerotic-asphyxiation.md) | Downgrade | 1 | ✅ | ✅ |
 | [Baby Trap](baby-trap.md) | Magic | 2 | ✅ | ✅ |
 | [Baby Unicorn of Incest](baby-unicorn-of-incest.md) | Baby Unicorn | 1 | ✅ | ⬜ |
-| [Bear Daddy Unicorn](bear-daddy-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
+| [Bear Daddy Unicorn](bear-daddy-unicorn.md) | Magical Unicorn | 1 | ✅ | ✅ |
 | [Black Market Baby Unicorn](black-market-baby-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Blaze and Graze](blaze-and-graze.md) | Magic | 1 | ✅ | ⬜ |
 | [Blow Up Unicorn](blow-up-unicorn.md) | Upgrade | 2 | ✅ | ⬜ |
@@ -78,7 +78,7 @@
 | [The Bitchiest Unicorn](the-bitchiest-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [The Safeword is Neigh](the-safeword-is-neigh.md) | Instant | 5 | ✅ | ⬜ |
 | [Total Stud Unicorn](total-stud-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
-| [Twinkicorn](twinkicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
+| [Twinkicorn](twinkicorn.md) | Magical Unicorn | 1 | ✅ | ✅ |
 | [Uncut Unicorn](uncut-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Unexpected Miracle Unicorn](unexpected-miracle-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Unicorn Acid Trip](unicorn-acid-trip.md) | Magic | 1 | ✅ | ⬜ |
@@ -103,6 +103,6 @@
 ## Summary
 - Total cards: 91
 - Extracted: 91 / 91
-- Implemented: 18 / 91 (Autoerotic Asphyxiation, Baby Trap, Breaking and Entering, Dumpster Diving Unicorn, Flesh-Eating Unicorn, Fuck. Marry. Kill, Fuckboi Unicorn, Hentaicorn, Horrifying Impaling, Horse With A Dildo, Polyamorous Unicorn, Pony Play, Single Unicorn, Stoner Unicorn, Unicorn Enema, Unicorn on the Street Corner, Vanillacorn, Wasted White Unicorn)
+- Implemented: 20 / 91 (Autoerotic Asphyxiation, Baby Trap, Bear Daddy Unicorn, Breaking and Entering, Dumpster Diving Unicorn, Flesh-Eating Unicorn, Fuck. Marry. Kill, Fuckboi Unicorn, Hentaicorn, Horrifying Impaling, Horse With A Dildo, Polyamorous Unicorn, Pony Play, Single Unicorn, Stoner Unicorn, Twinkicorn, Unicorn Enema, Unicorn on the Street Corner, Vanillacorn, Wasted White Unicorn)
 
 *Update this table as cards are extracted and implemented. Mark Extracted ✅ when a card file exists in this directory with effect text filled in.*
