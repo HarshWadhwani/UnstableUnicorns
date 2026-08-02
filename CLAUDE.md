@@ -45,7 +45,7 @@ Card data assets (ScriptableObjects) live in `Assets/Resources/CardDataInstances
 
 ### Manager Layer
 
-- **`TurnManager`** — owns the player list, active player, and turn phase (`Draw → Action → (ImmediateSpecial) → (EveryTurnSpecial) → Draw`). Call `StartNextTurnPhase()` to advance. In `EveryTurnSpecial`, `EVERY_TURN` cards in the active player's stables split into two queues: Downgrade cards are **mandatory** — `AdvanceToNextPlayerTurn` auto-fires them in order via `ActivateNextMandatoryCard`, no click required, and the Skip button (`SkipEveryTurnPhase`) no-ops while any remain (`TurnManager.CanSkipEveryTurnPhase` drives the button's `interactable` state). Unicorn/Upgrade cards are **choice** — the player clicks the card in its stable (`TryActivateEveryTurnCard`, routed through `Stable.HandleCardClick`) or presses Skip to bypass the rest. A `CardAction` that can't run (e.g. `DiscardCardAction` on an empty hand) returns without setting a pending action, so `CardActionExecutor` silently chains to the next one — this is what makes mandatory effects skip cleanly when impossible, with no extra guard needed.
+- **`TurnManager`** — owns the player list, active player, and turn phase (`Draw → Action → (ImmediateSpecial) → (EveryTurnSpecial) → Draw`). Call `StartNextTurnPhase()` to advance. In `EveryTurnSpecial`, `EVERY_TURN` cards in the active player's stables split into two queues: Downgrade cards are **mandatory** — `AdvanceToNextPlayerTurn` auto-fires them in order via `ActivateNextMandatoryCard`, no click required, and the Skip button (`SkipEveryTurnPhase`) no-ops while any remain (`TurnManager.CanSkipEveryTurnPhase` drives the button's `interactable` state). Unicorn/Upgrade cards are **choice** — the player clicks the card in its stable (`TryActivateEveryTurnCard`, routed through `Stable.HandleCardClick`) or presses Skip to bypass the rest. Both queues are snapshotted once, in `AdvanceToNextPlayerTurn`, from the state of the active player's stables at the moment their turn starts — a card brought into a stable mid-phase (e.g. via A Little Side Hustle) does not retroactively join that turn's queue even if it's itself an EVERY_TURN card; it becomes eligible starting next turn. A `CardAction` that can't run (e.g. `DiscardCardAction` on an empty hand) returns without setting a pending action, so `CardActionExecutor` silently chains to the next one — this is what makes mandatory effects skip cleanly when impossible, with no extra guard needed.
 - **`CardManager`** — handles all card movement (`MoveCard`, `DrawCard`, `PlayCardForCurrentPlayer`). Routes played cards to the correct destination based on `CardType`.
 - **`DeckManager`** — loads all `CardData` from Resources on `Start()`, instantiates `Card` prefabs, shuffles, and deals baby unicorns. `CardActionExecutor` holds a reference to it (wired in the scene) so actions like `SearchDeckForCardAction` can reach `playDeck` and call `ShuffleDeck`.
 
@@ -64,6 +64,7 @@ Card effects are composed from serializable `CardAction` subclasses defined on t
 | `MoveSelfToOpponentStableAction` | none | Moves the source card itself from the active player's unicorn stable into the opponent's unicorn stable. Used by Polyamorous Unicorn to hop stables each turn. |
 | `TakeFromDiscardAction` | none | Moves the top card of the discard pile into the active player's hand. Skips silently if the discard pile is empty. Currently always takes the top card — no player choice yet (see `docs/issues.md` M4). |
 | `SearchDeckForCardAction` | `targetCardDataType` (`System.Type`) | Searches the **play deck only** (not hand/discard/stables) for a card whose `CardData` matches the given type, reveals it, moves it to the active player's hand, then shuffles the deck. Skips silently (but still shuffles) if no match is in the deck. No player prompt. Used by Bear Daddy Unicorn / Twinkicorn to fetch each other. |
+| `PlayCardFromHandAction` | `cardType` (`CardType`) | Prompts the active player to click a card of the given `CardType` in their **own hand**; the click routes through `CardManager.PlayCardForCurrentPlayer` (not a raw move), so it respects that card's own `CanPlay` and any `IMMEDIATE` trigger. Skips silently if the hand has no card of that type. `HandStable.HandleCardClick` enforces the type filter via `CardActionExecutor.pendingPlayCardTypeFilter`, rejecting clicks on the wrong type without clearing the prompt. Used by A Little Side Hustle to bring an Upgrade card from hand into the Stable outside the Action phase. Only exercised with `UPGRADE` so far — reusing it for `IMMEDIATE`-triggering types (`MAGIC`/`UNICORN`) would re-enter `CardActionExecutor.ExecuteActions` while the outer queue is still in flight; untested. |
 
 Each action's `Execute(executor, context)` resolves which players/spaces are involved and calls a `Prompt*` method on `CardActionExecutor` to pause the queue for player input.
 
@@ -108,7 +109,7 @@ Full decision tree, action-type reference, and worked examples: `docs/cards/card
 - `CardType`: `UNICORN`, `MAGIC`, `UPGRADE`, `DOWNGRADE`, `NEIGH`
 - `SpecialActionType`: `IMMEDIATE` (triggers on play), `EVERY_TURN`, `NONE`
 - `TurnPhase`: `Draw`, `Action`, `ImmediateSpecial`, `EveryTurnSpecial`
-- `PendingActionType`: `None`, `DiscardCard`, `GiveCard`, `DestroyCard`, `DestroyUnicornCard`, `StealCard`
+- `PendingActionType`: `None`, `DiscardCard`, `GiveCard`, `DestroyCard`, `DestroyUnicornCard`, `StealCard`, `PlayCardFromHand`
 
 ---
 
@@ -123,6 +124,8 @@ Full decision tree, action-type reference, and worked examples: `docs/cards/card
 
 ### Win Condition
 Player wins when `UnicornStable` reaches `winConditionCount` unicorns (default 7 — separate from `maxCardsInStable`, the layout/cap value). Currently logs only — no game-over state.
+
+`maxCardsInStable <= 0` means uncapped (`Stable.AddCard` skips the full-stable check). The Upgrade stable is set to `0` — no printed limit in the real game. Only relevant to `UnicornStable` (base `Stable.PositionCardsInStable` divides layout width by it) and `HandStable`; `UpgradeStable`/`DowngradeStable` use `StackedStable`'s overlapping-stack layout, which ignores it entirely.
 
 ### Card Routing on Play
 | CardType   | Destination                                         |

@@ -8,7 +8,8 @@ public enum  PendingActionType
     GiveCard,
     DestroyCard,
     DestroyUnicornCard,
-    StealCard
+    StealCard,
+    PlayCardFromHand
 }
 
 public class CardActionExecutor : MonoBehaviour
@@ -26,6 +27,7 @@ public class CardActionExecutor : MonoBehaviour
     public int pendingCardsRemaining;
     public Player pendingDestroyTargetPlayer;
     public UnicornType? pendingStealSubtypeFilter;
+    public CardType? pendingPlayCardTypeFilter;
 
     private Player originalActivePlayer;
     private Queue<CardAction> actionQueue = new Queue<CardAction>();
@@ -141,8 +143,21 @@ public class CardActionExecutor : MonoBehaviour
             return;
         }
 
-        CardSpace source = pendingSourceStable ?? card.cardSpace;
-        cardManager.MoveCard(card, source, pendingDestinationStable);
+        if (currentPendingAction == PendingActionType.PlayCardFromHand)
+        {
+            bool played = cardManager.PlayCardForCurrentPlayer(card, (HandStable)card.cardSpace);
+            if (!played)
+            {
+                Debug.LogWarning($"{card.name} cannot be played right now.");
+                return;
+            }
+        }
+        else
+        {
+            CardSpace source = pendingSourceStable ?? card.cardSpace;
+            cardManager.MoveCard(card, source, pendingDestinationStable);
+        }
+
         pendingCardsRemaining--;
 
         Debug.Log($"Executed {currentPendingAction} on {card.name}. {pendingCardsRemaining} card(s) remaining.");
@@ -164,6 +179,7 @@ public class CardActionExecutor : MonoBehaviour
         pendingCardsRemaining = 0;
         pendingDestroyTargetPlayer = null;
         pendingStealSubtypeFilter = null;
+        pendingPlayCardTypeFilter = null;
         originalActivePlayer = null;
 
         ExecuteNextAction();

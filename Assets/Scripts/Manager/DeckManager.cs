@@ -31,7 +31,9 @@ public class DeckManager : MonoBehaviour
         ForceHentaicornToTop();         // drawn 1st unless bumped by a newer Force call below
         ForceBabyTrapToTop();           // needs a Baby Unicorn already played to a stable
         ForceFleshEatingUnicornToTop();
-        ForceBearDaddyUnicornToTop();   // drawn 1st (currently under test) — needs Twinkicorn also in the deck
+        ForceBearDaddyUnicornToTop();   // needs Twinkicorn also in the deck
+        ForcePonyPlayToTop();           // drawn 2nd — a known Upgrade card kept in hand to test A Little Side Hustle's "bring in" branch
+        ForceALittleSideHustleToTop();  // drawn 1st (currently under test)
 
         foreach (var player in turnManager.players)
         {
@@ -154,6 +156,30 @@ public class DeckManager : MonoBehaviour
         if (card == null)
         {
             Debug.LogWarning("ForceBearDaddyUnicornToTop: no BearDaddyUnicornCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is an A Little Side Hustle card.
+    void ForceALittleSideHustleToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is ALittleSideHustleCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceALittleSideHustleToTop: no ALittleSideHustleCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Pony Play card.
+    void ForcePonyPlayToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is PonyPlayCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForcePonyPlayToTop: no PonyPlayCardData found in play deck.");
             return;
         }
         playDeck.MoveToTop(card);

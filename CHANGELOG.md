@@ -4,6 +4,24 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.17] — 2026-08-01
+
+### Cards
+- **A Little Side Hustle** — Upgrade / `EVERY_TURN`. If in your Stable at the start of your turn, you may bring an Upgrade card from your hand into your Stable.
+
+### New action type
+- **`PlayCardFromHandAction`** — prompts the active player to click a card of a given `CardType` in their own hand and plays it through the existing `CardManager.PlayCardForCurrentPlayer` (respects `CanPlay`/routing) rather than a raw move. Skips silently if the hand has no matching card. New `PendingActionType.PlayCardFromHand` and `CardActionExecutor.pendingPlayCardTypeFilter` support the type-filtered click routing in `HandStable.HandleCardClick`.
+
+### Fixes
+- **Upgrade stable had an artificial 100-card cap.** `Stable.AddCard` now treats `maxCardsInStable <= 0` as uncapped; the Upgrade stable prefab component is set to `0`. Prevents a card silently vanishing (removed from hand, never added to stable) if the cap were ever hit — the printed card has no such limit.
+
+### Docs
+- `docs/cards/card-data/a-little-side-hustle.md`, `_checklist.md`: marked implemented.
+- `docs/cards/card-implementation-guide.md`: documented `PlayCardFromHandAction`.
+- `CLAUDE.md`: added `PlayCardFromHandAction` to the CardAction table and `PlayCardFromHand` to `PendingActionType`; documented the `maxCardsInStable <= 0` = uncapped convention; noted the EVERY_TURN choice queue is snapshotted once per turn (a card brought in mid-phase doesn't retroactively join that turn's queue).
+
+---
+
 ## [v0.2.16] — 2026-07-30
 
 ### Cards

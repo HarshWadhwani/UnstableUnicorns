@@ -92,7 +92,8 @@ public class Stable : CardSpace
 
     public override void AddCard(Card card)
     {
-        if (spaceCards.Count >= maxCardsInStable)
+        // maxCardsInStable <= 0 means uncapped (e.g. UpgradeStable, which has no printed limit).
+        if (maxCardsInStable > 0 && spaceCards.Count >= maxCardsInStable)
         {
             Debug.LogWarning("Stable is full. Cannot add more cards.");
             return;

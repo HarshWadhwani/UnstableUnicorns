@@ -6,7 +6,7 @@
 
 | Card | Type | Copies | Extracted | Implemented |
 |------|------|--------|-----------|-------------|
-| [A Little Side Hustle](a-little-side-hustle.md) | Upgrade | 2 | ✅ | ⬜ |
+| [A Little Side Hustle](a-little-side-hustle.md) | Upgrade | 2 | ✅ | ✅ |
 | [Autoerotic Asphyxiation](autoerotic-asphyxiation.md) | Downgrade | 1 | ✅ | ✅ |
 | [Baby Trap](baby-trap.md) | Magic | 2 | ✅ | ✅ |
 | [Baby Unicorn of Incest](baby-unicorn-of-incest.md) | Baby Unicorn | 1 | ✅ | ⬜ |
@@ -103,6 +103,6 @@
 ## Summary
 - Total cards: 91
 - Extracted: 91 / 91
-- Implemented: 20 / 91 (Autoerotic Asphyxiation, Baby Trap, Bear Daddy Unicorn, Breaking and Entering, Dumpster Diving Unicorn, Flesh-Eating Unicorn, Fuck. Marry. Kill, Fuckboi Unicorn, Hentaicorn, Horrifying Impaling, Horse With A Dildo, Polyamorous Unicorn, Pony Play, Single Unicorn, Stoner Unicorn, Twinkicorn, Unicorn Enema, Unicorn on the Street Corner, Vanillacorn, Wasted White Unicorn)
+- Implemented: 21 / 91 (A Little Side Hustle, Autoerotic Asphyxiation, Baby Trap, Bear Daddy Unicorn, Breaking and Entering, Dumpster Diving Unicorn, Flesh-Eating Unicorn, Fuck. Marry. Kill, Fuckboi Unicorn, Hentaicorn, Horrifying Impaling, Horse With A Dildo, Polyamorous Unicorn, Pony Play, Single Unicorn, Stoner Unicorn, Twinkicorn, Unicorn Enema, Unicorn on the Street Corner, Vanillacorn, Wasted White Unicorn)
 
 *Update this table as cards are extracted and implemented. Mark Extracted ✅ when a card file exists in this directory with effect text filled in.*

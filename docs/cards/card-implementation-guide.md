@@ -89,6 +89,15 @@ Searches the play deck (only the deck — not hand, discard, or stables) for a c
 targetCardDataType:  System.Type   — the CardData subclass to search for, e.g. typeof(TwinkicornCardData)
 ```
 
+### PlayCardFromHandAction
+Prompts the active player to click a card of a specific `CardType` in their **own hand** and plays it exactly like a normal play — routed through `CardManager.PlayCardForCurrentPlayer`, so it respects that card's own `CanPlay` and any `IMMEDIATE` trigger. Skips silently if the hand has no card of that type. Used for "bring a card from your hand into your Stable" effects outside the normal Action phase.
+
+```
+cardType:  CardType   — which CardType is selectable in hand, e.g. CardType.UPGRADE
+```
+
+Only clicks matching `cardType` are accepted while this is pending (`HandStable.HandleCardClick` checks `CardActionExecutor.pendingPlayCardTypeFilter`) — clicking a card of the wrong type just logs a warning and leaves the prompt open. Caution if reusing this for `CardType.MAGIC`/`UNICORN` (`IMMEDIATE`): `PlayCardForCurrentPlayer` will call `TriggerSpecialAction`, which re-enters `CardActionExecutor.ExecuteActions` and clears the in-flight action queue — untested nesting, only exercised so far with `UPGRADE` (never `IMMEDIATE`).
+
 ### Mapping examples
 
 | Card text | Action |

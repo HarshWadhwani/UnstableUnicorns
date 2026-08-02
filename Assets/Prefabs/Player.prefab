@@ -163,7 +163,7 @@ MonoBehaviour:
   turnManager: {fileID: 0}
   cardManager: {fileID: 0}
   allowedTurnPhases: 
-  maxCardsInStable: 100
+  maxCardsInStable: 0
   player: {fileID: 1168632485362962641}
 --- !u!1 &8655843030583308325
 GameObject:

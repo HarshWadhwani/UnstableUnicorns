@@ -37,6 +37,21 @@ public class HandStable : Stable
                 Debug.Log("Hand stable is not starting next turn phase");
                 return;
             }
+
+            if (CardActionExecutor.Instance.currentPendingAction == PendingActionType.PlayCardFromHand)
+            {
+                CardType? typeFilter = CardActionExecutor.Instance.pendingPlayCardTypeFilter;
+                if (typeFilter.HasValue && card.cardData.cardType != typeFilter.Value)
+                {
+                    Debug.LogWarning($"Must select a {typeFilter.Value} card.");
+                    return;
+                }
+
+                CardActionExecutor.Instance.ExecutePendingAction(card);
+                PositionCardsInStable();
+                Debug.Log("Hand stable is not starting next turn phase");
+                return;
+            }
         }
 
         if (allowedTurnPhases.Contains(turnManager.currentPhase))
