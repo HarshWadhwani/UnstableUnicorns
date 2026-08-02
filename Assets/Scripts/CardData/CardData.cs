@@ -17,6 +17,12 @@ public abstract class CardData : ScriptableObject
 
     public virtual bool CanPlay(Player activePlayer, Player opponentPlayer) => true;
 
+    // Gate for EVERY_TURN choice cards: checked when the player clicks the card in its stable
+    // to activate it (TurnManager.TryActivateEveryTurnCard), before its actions run at all.
+    // Unlike an individual CardAction skipping itself (e.g. DiscardCardAction on an empty hand),
+    // this prevents a partial effect (e.g. discarding fewer than intended, then still stealing).
+    public virtual bool CanActivateEveryTurn(Player activePlayer, Player opponentPlayer) => true;
+
     public virtual void TriggerSpecialAction(Card sourceCard)
     {
         if (actions.Count > 0 && CardActionExecutor.Instance != null)

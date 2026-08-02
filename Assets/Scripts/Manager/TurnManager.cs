@@ -98,9 +98,25 @@ public class TurnManager : MonoBehaviour
         if (pendingMandatoryCards.Count > 0) return false;
         if (!pendingChoiceCards.Contains(card)) return false;
         pendingChoiceCards.Remove(card);
+
+        if (!card.cardData.CanActivateEveryTurn(activePlayer, GetOpponentPlayer(activePlayer)))
+        {
+            Debug.Log($"{card.name}'s EVERY_TURN effect cannot activate right now — skipping silently.");
+            return true;
+        }
+
         currentEveryTurnCard = card;
         CardActionExecutor.Instance.ExecuteActions(card.cardData.actions, card);
         return true;
+    }
+
+    private Player GetOpponentPlayer(Player player)
+    {
+        foreach (Player p in players)
+        {
+            if (p != player) return p;
+        }
+        return null;
     }
 
     public void SkipEveryTurnPhase()

@@ -145,6 +145,19 @@ public override bool CanPlay(Player activePlayer, Player opponentPlayer)
 
 `CardManager.PlayCardForCurrentPlayer` calls `CanPlay` before triggering any action. Returning `false` keeps the card in the player's hand and cancels the play. The default implementation always returns `true`, so existing cards are unaffected.
 
+### EVERY_TURN activation conditions (CanActivateEveryTurn)
+
+For an EVERY_TURN **choice** card (Unicorn/Upgrade), if activating its effect could partially execute and get stuck — e.g. a multi-step effect where an early step can't fully complete but a later step still would run — override `CanActivateEveryTurn` instead of relying on each `CardAction` to skip itself individually:
+
+```csharp
+public override bool CanActivateEveryTurn(Player activePlayer, Player opponentPlayer)
+{
+    return opponentPlayer.unicornStable.spaceCards.Count >= 1 && activePlayer.handStable.spaceCards.Count >= 3;
+}
+```
+
+`TurnManager.TryActivateEveryTurnCard` checks this before running the card's action queue at all — an all-or-nothing gate. This is different from an individual action skipping itself when impossible (e.g. `DiscardCardAction` on an empty hand, or `StealUnicornAction` with no eligible target): those still let *other* actions in the sequence run, which is fine when each step is independently optional, but not when a partial run (e.g. discarding fewer cards than intended) would be wrong. The card is still removed from the turn's choice queue either way — this only skips firing its actions, not the click itself. Default implementation always returns `true`, so existing cards are unaffected. Only wired into the choice-card path (`TryActivateEveryTurnCard`); mandatory Downgrade cards (`ActivateNextMandatoryCard`) don't check it, since none currently need it.
+
 ---
 
 ## Step 4 — Choose or create a C# class

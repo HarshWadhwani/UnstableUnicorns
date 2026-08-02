@@ -32,8 +32,9 @@ public class DeckManager : MonoBehaviour
         ForceBabyTrapToTop();           // needs a Baby Unicorn already played to a stable
         ForceFleshEatingUnicornToTop();
         ForceBearDaddyUnicornToTop();   // needs Twinkicorn also in the deck
-        ForcePonyPlayToTop();           // drawn 2nd — a known Upgrade card kept in hand to test A Little Side Hustle's "bring in" branch
-        ForceALittleSideHustleToTop();  // drawn 1st (currently under test)
+        ForcePonyPlayToTop();           // a known Upgrade card kept in hand to test A Little Side Hustle's "bring in" branch
+        ForceALittleSideHustleToTop();
+        ForceBukkakecornToTop();        // drawn 1st (currently under test) — needs a hand of 3+ cards (Discard 3) and an opponent unicorn (Steal) to fully exercise
 
         foreach (var player in turnManager.players)
         {
@@ -180,6 +181,18 @@ public class DeckManager : MonoBehaviour
         if (card == null)
         {
             Debug.LogWarning("ForcePonyPlayToTop: no PonyPlayCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Bukkakecorn card.
+    void ForceBukkakecornToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is BukkakecornCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceBukkakecornToTop: no BukkakecornCardData found in play deck.");
             return;
         }
         playDeck.MoveToTop(card);

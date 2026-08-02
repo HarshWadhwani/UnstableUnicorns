@@ -4,6 +4,25 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.18] — 2026-08-02
+
+### Cards
+- **Bukkakecorn** — Magical Unicorn / `EVERY_TURN`. If in your Stable at the start of your turn, you may discard 3 cards then steal a Unicorn card.
+
+### New hook
+- **`CardData.CanActivateEveryTurn(activePlayer, opponentPlayer)`** — sibling to `CanPlay`, but gates an EVERY_TURN choice card's *stable* activation instead of being played from hand. `TurnManager.TryActivateEveryTurnCard` checks it before running the action queue at all, so a multi-step effect (like Bukkakecorn's discard-then-steal) can't run partially — e.g. discarding fewer than 3 cards and still stealing. Default implementation returns `true`; only wired into the choice-card path, not mandatory Downgrades.
+
+### Process
+- `/add-card` now authors the `.asset`/`.asset.meta`/`.cs.meta` files directly (hand-generated GUIDs, verified unique against the project) instead of asking the user to create them in the Unity Inspector — closes the recurring `cardNameVariations: []` / `instances: 0` gotcha for good, since the fields are set correctly by construction. First proven end-to-end on Bukkakecorn.
+
+### Docs
+- `docs/cards/card-data/bukkakecorn.md`, `_checklist.md` (22/91): marked implemented.
+- `docs/cards/card-implementation-guide.md`: documented `CanActivateEveryTurn`.
+- `CLAUDE.md`: documented `CanActivateEveryTurn` and the EVERY_TURN queue-snapshot/guard interaction.
+- `.claude/commands/add-card.md`: rewrote the asset-creation step to have Claude author the files directly; reframed the "known recurring gotcha" as historical/closed.
+
+---
+
 ## [v0.2.17] — 2026-08-01
 
 ### Cards
