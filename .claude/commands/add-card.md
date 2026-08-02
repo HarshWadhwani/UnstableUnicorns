@@ -5,7 +5,7 @@ Read `docs/cards/card-implementation-guide.md` first.
 Check `docs/cards/card-data/_checklist.md` for the card named in $ARGUMENTS.
 
 If a matching row exists (Extracted ✅), read its card data file (e.g. `docs/cards/card-data/hentaicorn.md`).
-The file contains: canonical effect text, copy count, trigger type, action mapping, CanPlay conditions, passive interfaces, and rulings.
+The file contains: canonical effect text, copy count, trigger type, action mapping, CanPlay conditions, CanActivateEveryTurn conditions (for EVERY_TURN choice cards whose effect could otherwise run partially), passive interfaces, and rulings.
 Use this as your primary source — it saves re-deriving everything from scratch and ensures 2nd Edition wording is used.
 
 If the card is not in the checklist, derive everything from the description in $ARGUMENTS as usual.
@@ -18,8 +18,9 @@ Work through the guide's decisions in order:
 3. Map each effect step to a CardAction — the data file's **Action Mapping** section has this pre-done; use it directly
 4. Check the **Passive Interfaces** section — implement any listed interface (e.g. `ISacrificeShield`)
 5. Check the **CanPlay Override** section — add `CanPlay()` if listed
-6. Decide whether a new C# subclass is needed or an existing base class suffices
-7. Set `instances` from the data file's `copies` field
+6. Check the **CanActivateEveryTurn Override** section — add `CanActivateEveryTurn()` if listed. Only needed for EVERY_TURN choice cards (Unicorn/Upgrade) with a multi-step effect where an early step failing shouldn't let a later step still run (e.g. Bukkakecorn: discard 3 then steal — a hand of 1-2 cards shouldn't discard-then-nothing). Most cards don't need this; per-action self-skipping (like `DiscardCardAction` on an empty hand) is the default and is usually enough.
+7. Decide whether a new C# subclass is needed or an existing base class suffices
+8. Set `instances` from the data file's `copies` field
 
 If a new C# class is needed, write it following the template in the guide.
 
