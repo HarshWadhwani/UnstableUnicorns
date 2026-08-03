@@ -35,7 +35,13 @@ public class DeckManager : MonoBehaviour
         ForcePonyPlayToTop();           // a known Upgrade card kept in hand to test A Little Side Hustle's "bring in" branch
         ForceALittleSideHustleToTop();
         ForceBukkakecornToTop();        // needs a hand of 3+ cards (Discard 3) and an opponent unicorn (Steal) to fully exercise
-        ForceBlazeAndGrazeToTop();      // drawn 1st (currently under test) — Bukkakecorn (a Unicorn) is now the next card, so playing this reveals a Unicorn and exercises the "bring to Stable" branch; only 1 copy exists, so testing the "add to hand" (non-Unicorn) branch needs a separate Play session with different stacking
+        ForceBlazeAndGrazeToTop();      // Bukkakecorn (a Unicorn) is now the next card, so playing this reveals a Unicorn and exercises the "bring to Stable" branch; only 1 copy exists, so testing the "add to hand" (non-Unicorn) branch needs a separate Play session with different stacking
+        ForceTheBitchiestUnicornToTop();   // drawn last among this batch — CanPlay requires a Basic Unicorn already in your Stable; play one in an earlier turn first
+        ForceFuzzyHoofcuffsToTop();        // EVERY_TURN choice — needs a hand of 2+ cards and an opponent Unicorn to fully exercise discard-then-steal
+        ForceHomicidalPsychocornToTop();   // EVERY_TURN choice — needs a hand of 1+ cards and an opponent Unicorn to fully exercise discard-then-destroy
+        ForceFreeCandyUnicornToTop();      // needs a Baby Unicorn already in the opponent's Stable to see the steal fire (partial impl — no return-on-leave tracking yet)
+        ForceSemenbiscuitToTop();          // needs a Downgrade card already in your own Stable to see the sacrifice fire
+        ForceManscapedLlamacornToTop();    // drawn 1st (currently under test) — no setup needed, opponent just needs a hand card to discard
 
         foreach (var player in turnManager.players)
         {
@@ -206,6 +212,78 @@ public class DeckManager : MonoBehaviour
         if (card == null)
         {
             Debug.LogWarning("ForceBlazeAndGrazeToTop: no BlazeAndGrazeCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Manscaped Llamacorn card.
+    void ForceManscapedLlamacornToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is ManscapedLlamacornCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceManscapedLlamacornToTop: no ManscapedLlamacornCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a The Bitchiest Unicorn card.
+    void ForceTheBitchiestUnicornToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is TheBitchiestUnicornCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceTheBitchiestUnicornToTop: no TheBitchiestUnicornCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Semenbiscuit card.
+    void ForceSemenbiscuitToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is SemenbiscuitCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceSemenbiscuitToTop: no SemenbiscuitCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Homicidal Psychocorn card.
+    void ForceHomicidalPsychocornToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is HomicidalPsychocornCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceHomicidalPsychocornToTop: no HomicidalPsychocornCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Fuzzy Hoofcuffs card.
+    void ForceFuzzyHoofcuffsToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is FuzzyHoofcuffsCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceFuzzyHoofcuffsToTop: no FuzzyHoofcuffsCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Free Candy Unicorn card.
+    void ForceFreeCandyUnicornToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is FreeCandyUnicornCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceFreeCandyUnicornToTop: no FreeCandyUnicornCardData found in play deck.");
             return;
         }
         playDeck.MoveToTop(card);

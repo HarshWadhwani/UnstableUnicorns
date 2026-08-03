@@ -29,16 +29,16 @@
 | [Eunuchorn](eunuchorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Faceless Baby Unicorn](faceless-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ✅ |
 | [Flesh-Eating Unicorn](flesh-eating-unicorn.md) | Magical Unicorn | 1 | ✅ | ✅ |
-| [Free Candy Unicorn](free-candy-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
+| [Free Candy Unicorn](free-candy-unicorn.md) | Magical Unicorn | 1 | ✅ | ✅ |
 | [Fuck. Marry. Kill](fuck-marry-kill.md) | Magic | 2 | ✅ | ✅ |
 | [Fucking Cute Baby Unicorn](fucking-cute-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ✅ |
 | [Fucking Ugly Baby Unicorn](fucking-ugly-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ✅ |
 | [Fuckboi Unicorn](fuckboi-unicorn.md) | Basic Unicorn | 3 | ✅ | ✅ |
-| [Fuzzy Hoofcuffs](fuzzy-hoofcuffs.md) | Upgrade | 1 | ✅ | ⬜ |
+| [Fuzzy Hoofcuffs](fuzzy-hoofcuffs.md) | Upgrade | 1 | ✅ | ✅ |
 | [Giant Horned Cock](giant-horned-cock.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Hell Neigh!](hell-neigh.md) | Instant | 3 | ✅ | ⬜ |
 | [Hentaicorn](hentaicorn.md) | Magical Unicorn | 1 | ✅ | ✅ |
-| [Homicidal Psychocorn](homicidal-psychocorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
+| [Homicidal Psychocorn](homicidal-psychocorn.md) | Magical Unicorn | 1 | ✅ | ✅ |
 | [Hoof Job](hoof-job.md) | Magic | 2 | ✅ | ⬜ |
 | [Horrifying Impaling](horrifying-impaling.md) | Magic | 2 | ✅ | ✅ |
 | [Horse Shit](horse-shit.md) | Downgrade | 1 | ✅ | ⬜ |
@@ -49,7 +49,7 @@
 | [Limp Horn](limp-horn.md) | Downgrade | 1 | ✅ | ⬜ |
 | [Make it Rain](make-it-rain.md) | Magic | 1 | ✅ | ⬜ |
 | [Make It Snow](make-it-snow.md) | Magic | 1 | ✅ | ⬜ |
-| [Manscaped Llamacorn](manscaped-llamacorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
+| [Manscaped Llamacorn](manscaped-llamacorn.md) | Magical Unicorn | 1 | ✅ | ✅ |
 | [Mid-sex Charlie Horse](mid-sex-charlie-horse.md) | Downgrade | 1 | ✅ | ⬜ |
 | [Moist Unicorn](moist-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Mother Fuckin' Flying Unicorn](mother-fuckin-flying-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
@@ -65,7 +65,7 @@
 | [Rainbow Shitstorm](rainbow-shitstorm.md) | Magic | 1 | ✅ | ⬜ |
 | [Safe Sex](safe-sex.md) | Magic | 1 | ✅ | ⬜ |
 | [Sadomasocorn](sadomasocorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
-| [Semenbiscuit](semenbiscuit.md) | Magical Unicorn | 1 | ✅ | ⬜ |
+| [Semenbiscuit](semenbiscuit.md) | Magical Unicorn | 1 | ✅ | ✅ |
 | [Sex, Drugs, and Unicorns](sex-drugs-and-unicorns.md) | Magic | 1 | ✅ | ⬜ |
 | [Sextra-Terrestrial Unicorn](sextra-terrestrial-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Shotgun Baby Unicorn](shotgun-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ✅ |
@@ -75,7 +75,7 @@
 | [Stoner Unicorn](stoner-unicorn.md) | Basic Unicorn | 3 | ✅ | ✅ |
 | [Straight But Curious Unicorn](straight-but-curious-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Tasty Baby Unicorn](tasty-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ✅ |
-| [The Bitchiest Unicorn](the-bitchiest-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
+| [The Bitchiest Unicorn](the-bitchiest-unicorn.md) | Magical Unicorn | 1 | ✅ | ✅ |
 | [The Safeword is Neigh](the-safeword-is-neigh.md) | Instant | 5 | ✅ | ⬜ |
 | [Total Stud Unicorn](total-stud-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Twinkicorn](twinkicorn.md) | Magical Unicorn | 1 | ✅ | ✅ |
@@ -103,6 +103,6 @@
 ## Summary
 - Total cards: 91
 - Extracted: 91 / 91
-- Implemented: 36 / 91 (A Little Side Hustle, Autoerotic Asphyxiation, Baby Trap, Baby Unicorn of Incest, Bear Daddy Unicorn, Blaze and Graze, Breaking and Entering, Bukkakecorn, Bye Bye Baby Unicorn, Cannibal Baby Unicorn, Conjoined Baby Unicorn, Dumpster Baby Unicorn, Dumpster Diving Unicorn, Faceless Baby Unicorn, Flesh-Eating Unicorn, Fuck. Marry. Kill, Fuckboi Unicorn, Fucking Cute Baby Unicorn, Fucking Ugly Baby Unicorn, Hentaicorn, Horrifying Impaling, Horse With A Dildo, Pageant Baby Unicorn, Polyamorous Unicorn, Pony Play, Shotgun Baby Unicorn, Single Unicorn, Someone Else's Baby Unicorn, Stoner Unicorn, Tasty Baby Unicorn, Twinkicorn, Unicorn Enema, Unicorn on the Street Corner, Upside Down Baby Unicorn, Vanillacorn, Wasted White Unicorn)
+- Implemented: 42 / 91 (A Little Side Hustle, Autoerotic Asphyxiation, Baby Trap, Baby Unicorn of Incest, Bear Daddy Unicorn, Blaze and Graze, Breaking and Entering, Bukkakecorn, Bye Bye Baby Unicorn, Cannibal Baby Unicorn, Conjoined Baby Unicorn, Dumpster Baby Unicorn, Dumpster Diving Unicorn, Faceless Baby Unicorn, Flesh-Eating Unicorn, Free Candy Unicorn (partial — see card file), Fuck. Marry. Kill, Fuckboi Unicorn, Fucking Cute Baby Unicorn, Fucking Ugly Baby Unicorn, Fuzzy Hoofcuffs, Hentaicorn, Homicidal Psychocorn, Horrifying Impaling, Horse With A Dildo, Manscaped Llamacorn, Pageant Baby Unicorn, Polyamorous Unicorn, Pony Play, Semenbiscuit, Shotgun Baby Unicorn, Single Unicorn, Someone Else's Baby Unicorn, Stoner Unicorn, Tasty Baby Unicorn, The Bitchiest Unicorn, Twinkicorn, Unicorn Enema, Unicorn on the Street Corner, Upside Down Baby Unicorn, Vanillacorn, Wasted White Unicorn)
 
 *Update this table as cards are extracted and implemented. Mark Extracted ✅ when a card file exists in this directory with effect text filled in.*

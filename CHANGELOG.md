@@ -4,6 +4,22 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.21] — 2026-08-03
+
+### Cards
+- **Manscaped Llamacorn** — Magical Unicorn / `IMMEDIATE`. Opponent discards 1 card.
+- **The Bitchiest Unicorn** — Magical Unicorn / `EVERY_TURN`. `CanPlay` requires a Basic Unicorn already in your Stable; if in your Stable at the start of your turn, you may force the opponent to discard a card.
+- **Semenbiscuit** — Magical Unicorn / `IMMEDIATE`. Sacrifices all Downgrade cards in your own Stable on entry.
+- **Homicidal Psychocorn** — Magical Unicorn / `EVERY_TURN`. If in your Stable at the start of your turn, you may discard your entire hand then destroy an opponent Unicorn.
+- **Fuzzy Hoofcuffs** — Upgrade / `EVERY_TURN`. If in your Stable at the start of your turn, you may discard 2 cards then steal a Unicorn — same shape as Bukkakecorn, one cheaper.
+- **Free Candy Unicorn** (partial) — Magical Unicorn / `IMMEDIATE`. Steals a Baby Unicorn on entry (`StealUnicornAction.targetSubtype=BABY`, same pattern as Baby Trap). The card's "leave-stable" return-to-original-owner clause is **not implemented** — no state tracking exists for which unicorn was stolen from where.
+
+### Docs
+- 6 card files + `_checklist.md` (42/91): marked implemented.
+- `docs/cards/execution-plan.md`: removed the 6 shipped cards from "Ready now"; corrected a stale-analysis bug found while implementing this batch — Double Agent Unicorn, Putting on a Show, and Sadomasocorn were miscategorized as blocker-free (they call `SacrificeCardAction{sacrificeAll=false}`, an unimplemented stub), and Buck Naked was missing a needed `DestroyCardAction` destroy-all-of-type mode. All 4 moved to Blocked with the specific gap noted.
+
+---
+
 ## [v0.2.20] — 2026-08-03
 
 ### Cards
