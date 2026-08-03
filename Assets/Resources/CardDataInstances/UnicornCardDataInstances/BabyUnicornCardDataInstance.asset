@@ -14,21 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardNameVariations:
   - Shotgun Baby Unicorn
-  - Fucklng Ugly Baby Unicorn
+  - Fucking Ugly Baby Unicorn
   - Bye Bye Baby Unicorn
   - Upside Down Baby Unicorn
   - Tasty Baby Unicorn
   - Conjoined Baby Unicorn
-  - Paegent Baby Unicorn
+  - Pageant Baby Unicorn
   - Cannibal Baby Unicorn
   - Dumpster Baby Unicorn
   - Someone Else's Baby Unicorn
   - Fucking Cute Baby Unicorn
   - Baby Unicorn of Incest
   - Faceless Baby Unicorn
-  cardDescriptionText: 
+  cardDescriptionText:
   instances: 13
   cardType: 0
   specialActionType: 2
-  afterAction: 1
-  unicornType: 3
+  unicornType: 2

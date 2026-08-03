@@ -8,6 +8,7 @@ public abstract class NeighCardData : CardData
 
     public override void OnEnable()
     {
+        base.OnEnable();
         cardType = CardType.NEIGH;
         specialActionType = SpecialActionType.IMMEDIATE;
     }

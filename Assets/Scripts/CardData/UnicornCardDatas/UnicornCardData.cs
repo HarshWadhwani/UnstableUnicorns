@@ -8,6 +8,7 @@ public abstract class UnicornCardData : CardData
 
     public override void OnEnable()
     {
+        base.OnEnable();
         cardType = CardType.UNICORN;
         specialActionType = SpecialActionType.NONE;
     }

@@ -9,7 +9,7 @@
 | [A Little Side Hustle](a-little-side-hustle.md) | Upgrade | 2 | ✅ | ✅ |
 | [Autoerotic Asphyxiation](autoerotic-asphyxiation.md) | Downgrade | 1 | ✅ | ✅ |
 | [Baby Trap](baby-trap.md) | Magic | 2 | ✅ | ✅ |
-| [Baby Unicorn of Incest](baby-unicorn-of-incest.md) | Baby Unicorn | 1 | ✅ | ⬜ |
+| [Baby Unicorn of Incest](baby-unicorn-of-incest.md) | Baby Unicorn | 1 | ✅ | ✅ |
 | [Bear Daddy Unicorn](bear-daddy-unicorn.md) | Magical Unicorn | 1 | ✅ | ✅ |
 | [Black Market Baby Unicorn](black-market-baby-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Blaze and Graze](blaze-and-graze.md) | Magic | 1 | ✅ | ✅ |
@@ -17,22 +17,22 @@
 | [Breaking and Entering](breaking-and-entering.md) | Magic | 2 | ✅ | ✅ |
 | [Buck Naked](buck-naked.md) | Magic | 1 | ✅ | ⬜ |
 | [Bukkakecorn](bukkakecorn.md) | Magical Unicorn | 1 | ✅ | ✅ |
-| [Bye Bye Baby Unicorn](bye-bye-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ⬜ |
-| [Cannibal Baby Unicorn](cannibal-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ⬜ |
-| [Conjoined Baby Unicorn](conjoined-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ⬜ |
+| [Bye Bye Baby Unicorn](bye-bye-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ✅ |
+| [Cannibal Baby Unicorn](cannibal-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ✅ |
+| [Conjoined Baby Unicorn](conjoined-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ✅ |
 | [Cult Leader Unicorn](cult-leader-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Dominatrix Whip](dominatrix-whip.md) | Upgrade | 1 | ✅ | ⬜ |
 | [Double Agent Unicorn](double-agent-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
-| [Dumpster Baby Unicorn](dumpster-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ⬜ |
+| [Dumpster Baby Unicorn](dumpster-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ✅ |
 | [Dumpster Diving Unicorn](dumpster-diving-unicorn.md) | Magical Unicorn | 1 | ✅ | ✅ |
 | [Entitled Unicorn](entitled-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Eunuchorn](eunuchorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
-| [Faceless Baby Unicorn](faceless-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ⬜ |
+| [Faceless Baby Unicorn](faceless-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ✅ |
 | [Flesh-Eating Unicorn](flesh-eating-unicorn.md) | Magical Unicorn | 1 | ✅ | ✅ |
 | [Free Candy Unicorn](free-candy-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Fuck. Marry. Kill](fuck-marry-kill.md) | Magic | 2 | ✅ | ✅ |
-| [Fucking Cute Baby Unicorn](fucking-cute-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ⬜ |
-| [Fucking Ugly Baby Unicorn](fucking-ugly-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ⬜ |
+| [Fucking Cute Baby Unicorn](fucking-cute-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ✅ |
+| [Fucking Ugly Baby Unicorn](fucking-ugly-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ✅ |
 | [Fuckboi Unicorn](fuckboi-unicorn.md) | Basic Unicorn | 3 | ✅ | ✅ |
 | [Fuzzy Hoofcuffs](fuzzy-hoofcuffs.md) | Upgrade | 1 | ✅ | ⬜ |
 | [Giant Horned Cock](giant-horned-cock.md) | Magical Unicorn | 1 | ✅ | ⬜ |
@@ -57,7 +57,7 @@
 | [Neigh, Bitch!](neigh-bitch.md) | Instant | 3 | ✅ | ⬜ |
 | [Neigh, Motherfucker!](neigh-motherfucker.md) | Instant | 3 | ✅ | ⬜ |
 | [Officer Hornie](officer-hornie.md) | Magical Unicorn | 1 | ✅ | ⬜ |
-| [Pageant Baby Unicorn](pageant-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ⬜ |
+| [Pageant Baby Unicorn](pageant-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ✅ |
 | [Peeping Narwhal](peeping-narwhal.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Polyamorous Unicorn](polyamorous-unicorn.md) | Magical Unicorn | 1 | ✅ | ✅ |
 | [Pony Play](pony-play.md) | Upgrade | 2 | ✅ | ✅ |
@@ -68,13 +68,13 @@
 | [Semenbiscuit](semenbiscuit.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Sex, Drugs, and Unicorns](sex-drugs-and-unicorns.md) | Magic | 1 | ✅ | ⬜ |
 | [Sextra-Terrestrial Unicorn](sextra-terrestrial-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
-| [Shotgun Baby Unicorn](shotgun-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ⬜ |
+| [Shotgun Baby Unicorn](shotgun-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ✅ |
 | [Single Unicorn](single-unicorn.md) | Basic Unicorn | 3 | ✅ | ✅ |
-| [Someone Else's Baby Unicorn](someone-elses-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ⬜ |
+| [Someone Else's Baby Unicorn](someone-elses-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ✅ |
 | [Sticky Situation](sticky-situation.md) | Downgrade | 1 | ✅ | ⬜ |
 | [Stoner Unicorn](stoner-unicorn.md) | Basic Unicorn | 3 | ✅ | ✅ |
 | [Straight But Curious Unicorn](straight-but-curious-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
-| [Tasty Baby Unicorn](tasty-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ⬜ |
+| [Tasty Baby Unicorn](tasty-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ✅ |
 | [The Bitchiest Unicorn](the-bitchiest-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [The Safeword is Neigh](the-safeword-is-neigh.md) | Instant | 5 | ✅ | ⬜ |
 | [Total Stud Unicorn](total-stud-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
@@ -94,7 +94,7 @@
 | [Unicorn Speed](unicorn-speed.md) | Upgrade | 2 | ✅ | ⬜ |
 | [Unicorn with Benefits](unicorn-with-benefits.md) | Upgrade | 1 | ✅ | ⬜ |
 | [Unicorgy](unicorgy.md) | Magic | 2 | ✅ | ⬜ |
-| [Upside Down Baby Unicorn](upside-down-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ⬜ |
+| [Upside Down Baby Unicorn](upside-down-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ✅ |
 | [Vanillacorn](vanillacorn.md) | Basic Unicorn | 3 | ✅ | ✅ |
 | [Wasted White Unicorn](wasted-white-unicorn.md) | Basic Unicorn | 3 | ✅ | ✅ |
 
@@ -103,6 +103,6 @@
 ## Summary
 - Total cards: 91
 - Extracted: 91 / 91
-- Implemented: 23 / 91 (A Little Side Hustle, Autoerotic Asphyxiation, Baby Trap, Bear Daddy Unicorn, Blaze and Graze, Breaking and Entering, Bukkakecorn, Dumpster Diving Unicorn, Flesh-Eating Unicorn, Fuck. Marry. Kill, Fuckboi Unicorn, Hentaicorn, Horrifying Impaling, Horse With A Dildo, Polyamorous Unicorn, Pony Play, Single Unicorn, Stoner Unicorn, Twinkicorn, Unicorn Enema, Unicorn on the Street Corner, Vanillacorn, Wasted White Unicorn)
+- Implemented: 36 / 91 (A Little Side Hustle, Autoerotic Asphyxiation, Baby Trap, Baby Unicorn of Incest, Bear Daddy Unicorn, Blaze and Graze, Breaking and Entering, Bukkakecorn, Bye Bye Baby Unicorn, Cannibal Baby Unicorn, Conjoined Baby Unicorn, Dumpster Baby Unicorn, Dumpster Diving Unicorn, Faceless Baby Unicorn, Flesh-Eating Unicorn, Fuck. Marry. Kill, Fuckboi Unicorn, Fucking Cute Baby Unicorn, Fucking Ugly Baby Unicorn, Hentaicorn, Horrifying Impaling, Horse With A Dildo, Pageant Baby Unicorn, Polyamorous Unicorn, Pony Play, Shotgun Baby Unicorn, Single Unicorn, Someone Else's Baby Unicorn, Stoner Unicorn, Tasty Baby Unicorn, Twinkicorn, Unicorn Enema, Unicorn on the Street Corner, Upside Down Baby Unicorn, Vanillacorn, Wasted White Unicorn)
 
 *Update this table as cards are extracted and implemented. Mark Extracted ✅ when a card file exists in this directory with effect text filled in.*

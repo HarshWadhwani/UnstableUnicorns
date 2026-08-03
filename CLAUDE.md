@@ -29,8 +29,9 @@ Card data assets (ScriptableObjects) live in `Assets/Resources/CardDataInstances
 
 **`CardData` (ScriptableObject)** is the base for all card types:
 - Subclasses: `UnicornCardData`, `MagicCardData`, `UpgradeCardData`, `DowngradeCardData`, `NeighCardData`
-- Each subclass sets `cardType` and `specialActionType` in `OnEnable()`
+- Each subclass sets `cardType` and `specialActionType` in `OnEnable()`, always calling `base.OnEnable()` first so the chain reaches `CardData.OnEnable()`
 - Cards with effects define a `List<CardAction> actions` — these are executed sequentially by `CardActionExecutor`
+- `CardData.NextCardName()` cycles through `cardNameVariations` by index (reset in `OnEnable()`) — the default behavior for every subclass, not just unicorns. This is how one shared asset (e.g. `BabyUnicornCardDataInstance.asset`, `Basic Unicorn Card Data.asset`) can represent many distinctly-named cards with identical effects; any future rollup (e.g. Neigh cards) gets this for free without overriding anything.
 
 **`Card` (MonoBehaviour)** is the runtime instance. It holds a reference to its `CardData` and its current `CardSpace`.
 

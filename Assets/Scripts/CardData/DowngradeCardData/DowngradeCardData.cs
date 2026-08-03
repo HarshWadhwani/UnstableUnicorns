@@ -7,6 +7,7 @@ public class DowngradeCardData : CardData
 {
     public override void OnEnable()
     {
+        base.OnEnable();
         cardType = CardType.DOWNGRADE;
         specialActionType = SpecialActionType.EVERY_TURN;
     }

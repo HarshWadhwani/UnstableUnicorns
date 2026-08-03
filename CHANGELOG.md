@@ -4,6 +4,20 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.20] — 2026-08-03
+
+### Cards
+- **13 no-effect Baby Unicorns** rolled up into the existing `BabyUnicornCardData` class + `BabyUnicornCardDataInstance.asset` (a legacy asset from before the current action system, previously untested against it): Baby Unicorn of Incest, Bye Bye Baby Unicorn, Cannibal Baby Unicorn, Conjoined Baby Unicorn, Dumpster Baby Unicorn, Faceless Baby Unicorn, Fucking Cute Baby Unicorn, Fucking Ugly Baby Unicorn, Pageant Baby Unicorn, Shotgun Baby Unicorn, Someone Else's Baby Unicorn, Tasty Baby Unicorn, Upside Down Baby Unicorn. Fixed two name typos in the asset and the stale `unicornType`/obsolete `afterAction` serialized fields.
+
+### Refactor
+- **`CardData.NextCardName()` cycling moved to the base class.** Previously only `BasicUnicornCardData` overrode it to round-robin through `cardNameVariations`; `BabyUnicornCardData` (and any future rollup card, e.g. Neigh cards) silently returned `cardNameVariations[0]` every time. Moved `nextNameIndex` and the cycling logic into `CardData`, made `OnEnable()` virtual (was abstract) with a reset body, and added `base.OnEnable()` calls to the five type-level classes (`UnicornCardData`, `MagicCardData`, `UpgradeCardData`, `DowngradeCardData`, `NeighCardData`) that previously had nothing to call. Every leaf subclass already called `base.OnEnable()`, so the fix required no changes below the type level.
+
+### Docs
+- 13 baby-unicorn card files + `_checklist.md` (36/91): marked implemented.
+- `CLAUDE.md`: documented the `NextCardName()` default-cycling behavior and the `base.OnEnable()` chain requirement.
+
+---
+
 ## [v0.2.19] — 2026-08-02
 
 ### Cards

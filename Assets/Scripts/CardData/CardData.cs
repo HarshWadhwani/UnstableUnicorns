@@ -11,9 +11,19 @@ public abstract class CardData : ScriptableObject
     public SpecialActionType specialActionType;
     public List<CardAction> actions = new List<CardAction>();
 
-    public abstract void OnEnable();
+    private int nextNameIndex;
 
-    public virtual string NextCardName() => cardNameVariations[0];
+    public virtual void OnEnable()
+    {
+        nextNameIndex = 0;
+    }
+
+    public virtual string NextCardName()
+    {
+        string cardName = cardNameVariations[nextNameIndex % cardNameVariations.Count];
+        nextNameIndex++;
+        return cardName;
+    }
 
     public virtual bool CanPlay(Player activePlayer, Player opponentPlayer) => true;
 

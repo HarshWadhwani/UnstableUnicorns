@@ -7,6 +7,7 @@ public class UpgradeCardData : CardData
 {
     public override void OnEnable()
     {
+        base.OnEnable();
         cardType = CardType.UPGRADE;
         specialActionType = SpecialActionType.EVERY_TURN;
     }
