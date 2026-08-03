@@ -12,7 +12,7 @@
 | [Baby Unicorn of Incest](baby-unicorn-of-incest.md) | Baby Unicorn | 1 | ✅ | ⬜ |
 | [Bear Daddy Unicorn](bear-daddy-unicorn.md) | Magical Unicorn | 1 | ✅ | ✅ |
 | [Black Market Baby Unicorn](black-market-baby-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
-| [Blaze and Graze](blaze-and-graze.md) | Magic | 1 | ✅ | ⬜ |
+| [Blaze and Graze](blaze-and-graze.md) | Magic | 1 | ✅ | ✅ |
 | [Blow Up Unicorn](blow-up-unicorn.md) | Upgrade | 2 | ✅ | ⬜ |
 | [Breaking and Entering](breaking-and-entering.md) | Magic | 2 | ✅ | ✅ |
 | [Buck Naked](buck-naked.md) | Magic | 1 | ✅ | ⬜ |
@@ -103,6 +103,6 @@
 ## Summary
 - Total cards: 91
 - Extracted: 91 / 91
-- Implemented: 22 / 91 (A Little Side Hustle, Autoerotic Asphyxiation, Baby Trap, Bear Daddy Unicorn, Breaking and Entering, Bukkakecorn, Dumpster Diving Unicorn, Flesh-Eating Unicorn, Fuck. Marry. Kill, Fuckboi Unicorn, Hentaicorn, Horrifying Impaling, Horse With A Dildo, Polyamorous Unicorn, Pony Play, Single Unicorn, Stoner Unicorn, Twinkicorn, Unicorn Enema, Unicorn on the Street Corner, Vanillacorn, Wasted White Unicorn)
+- Implemented: 23 / 91 (A Little Side Hustle, Autoerotic Asphyxiation, Baby Trap, Bear Daddy Unicorn, Blaze and Graze, Breaking and Entering, Bukkakecorn, Dumpster Diving Unicorn, Flesh-Eating Unicorn, Fuck. Marry. Kill, Fuckboi Unicorn, Hentaicorn, Horrifying Impaling, Horse With A Dildo, Polyamorous Unicorn, Pony Play, Single Unicorn, Stoner Unicorn, Twinkicorn, Unicorn Enema, Unicorn on the Street Corner, Vanillacorn, Wasted White Unicorn)
 
 *Update this table as cards are extracted and implemented. Mark Extracted ✅ when a card file exists in this directory with effect text filled in.*

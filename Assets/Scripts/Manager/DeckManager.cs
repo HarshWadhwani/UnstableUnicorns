@@ -34,7 +34,8 @@ public class DeckManager : MonoBehaviour
         ForceBearDaddyUnicornToTop();   // needs Twinkicorn also in the deck
         ForcePonyPlayToTop();           // a known Upgrade card kept in hand to test A Little Side Hustle's "bring in" branch
         ForceALittleSideHustleToTop();
-        ForceBukkakecornToTop();        // drawn 1st (currently under test) — needs a hand of 3+ cards (Discard 3) and an opponent unicorn (Steal) to fully exercise
+        ForceBukkakecornToTop();        // needs a hand of 3+ cards (Discard 3) and an opponent unicorn (Steal) to fully exercise
+        ForceBlazeAndGrazeToTop();      // drawn 1st (currently under test) — Bukkakecorn (a Unicorn) is now the next card, so playing this reveals a Unicorn and exercises the "bring to Stable" branch; only 1 copy exists, so testing the "add to hand" (non-Unicorn) branch needs a separate Play session with different stacking
 
         foreach (var player in turnManager.players)
         {
@@ -193,6 +194,18 @@ public class DeckManager : MonoBehaviour
         if (card == null)
         {
             Debug.LogWarning("ForceBukkakecornToTop: no BukkakecornCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Blaze and Graze card.
+    void ForceBlazeAndGrazeToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is BlazeAndGrazeCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceBlazeAndGrazeToTop: no BlazeAndGrazeCardData found in play deck.");
             return;
         }
         playDeck.MoveToTop(card);

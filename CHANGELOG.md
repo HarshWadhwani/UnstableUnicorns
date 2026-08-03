@@ -4,6 +4,20 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.19] — 2026-08-02
+
+### Cards
+- **Blaze and Graze** — Magic / `IMMEDIATE`. Reveals the top card of the deck; a Unicorn card goes straight into your Stable (win condition checked), anything else goes to your hand.
+
+### New action type
+- **`RevealTopDeckAction`** — reveals the play deck's top card and routes it based on its own `CardType` (`UNICORN` → Unicorn stable, else → hand). No parameters, no player prompt, skips silently on an empty deck.
+
+### Docs
+- `docs/cards/card-data/blaze-and-graze.md`, `_checklist.md` (23/91): marked implemented.
+- `docs/cards/card-implementation-guide.md`, `CLAUDE.md`: documented `RevealTopDeckAction`.
+
+---
+
 ## [v0.2.18] — 2026-08-02
 
 ### Cards
