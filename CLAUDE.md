@@ -158,6 +158,7 @@ Detailed reasoning and per-card notes live in `docs/` — read on demand, not ne
 
 - `docs/design-decisions.md` — full reasoning behind structural choices (CardActionExecutor player reassignment, DowngradeStable ownership, layout decisions, OnEnable action pattern)
 - `docs/cards/card-implementation-guide.md` — decision tree, action-type reference, and template for implementing any card
+- `docs/cards/execution-plan.md` — which of the remaining 68 cards are ready to build now vs. blocked on missing functionality (grouped by what's missing), and a suggested build order — check before picking the next card to implement
 - `docs/cards/fuck-marry-kill.md` — implementation detail, execution trace, quirks, and test checklist for FMK
 - `docs/stable-positioning.md` — layout formula, B2 fix explanation, subclass override guide, and regression test
 - `docs/future-architecture-mvc.md` — when and how to migrate to a model-separated architecture (prerequisite for multiplayer, AI, save/load)
