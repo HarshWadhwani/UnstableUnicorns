@@ -4,6 +4,8 @@
 **Extracted** = wiki data written to a file in this directory.  
 **Implemented** = C# CardData class + Unity asset exist in the project.
 
+**Source:** [Unstable Games Wiki — Unstable Unicorns](https://www.unstablegameswiki.com/index.php?title=Unstable_Unicorns)
+
 | Card | Type | Copies | Extracted | Implemented |
 |------|------|--------|-----------|-------------|
 | [A Little Side Hustle](a-little-side-hustle.md) | Upgrade | 2 | ✅ | ✅ |
@@ -103,6 +105,6 @@
 ## Summary
 - Total cards: 91
 - Extracted: 91 / 91
-- Implemented: 42 / 91 (A Little Side Hustle, Autoerotic Asphyxiation, Baby Trap, Baby Unicorn of Incest, Bear Daddy Unicorn, Blaze and Graze, Breaking and Entering, Bukkakecorn, Bye Bye Baby Unicorn, Cannibal Baby Unicorn, Conjoined Baby Unicorn, Dumpster Baby Unicorn, Dumpster Diving Unicorn, Faceless Baby Unicorn, Flesh-Eating Unicorn, Free Candy Unicorn (partial — see card file), Fuck. Marry. Kill, Fuckboi Unicorn, Fucking Cute Baby Unicorn, Fucking Ugly Baby Unicorn, Fuzzy Hoofcuffs, Hentaicorn, Homicidal Psychocorn, Horrifying Impaling, Horse With A Dildo, Manscaped Llamacorn, Pageant Baby Unicorn, Polyamorous Unicorn, Pony Play, Semenbiscuit, Shotgun Baby Unicorn, Single Unicorn, Someone Else's Baby Unicorn, Stoner Unicorn, Tasty Baby Unicorn, The Bitchiest Unicorn, Twinkicorn, Unicorn Enema, Unicorn on the Street Corner, Upside Down Baby Unicorn, Vanillacorn, Wasted White Unicorn)
+- Implemented: 42 / 91 (A Little Side Hustle, Autoerotic Asphyxiation, Baby Trap, Baby Unicorn of Incest, Bear Daddy Unicorn, Blaze and Graze, Breaking and Entering, Bukkakecorn, Bye Bye Baby Unicorn, Cannibal Baby Unicorn, Conjoined Baby Unicorn, Dumpster Baby Unicorn, Dumpster Diving Unicorn, Faceless Baby Unicorn, Flesh-Eating Unicorn, Free Candy Unicorn, Fuck. Marry. Kill, Fuckboi Unicorn, Fucking Cute Baby Unicorn, Fucking Ugly Baby Unicorn, Fuzzy Hoofcuffs, Hentaicorn, Homicidal Psychocorn, Horrifying Impaling, Horse With A Dildo, Manscaped Llamacorn, Pageant Baby Unicorn, Polyamorous Unicorn, Pony Play, Semenbiscuit, Shotgun Baby Unicorn, Single Unicorn, Someone Else's Baby Unicorn, Stoner Unicorn, Tasty Baby Unicorn, The Bitchiest Unicorn, Twinkicorn, Unicorn Enema, Unicorn on the Street Corner, Upside Down Baby Unicorn, Vanillacorn, Wasted White Unicorn)
 
 *Update this table as cards are extracted and implemented. Mark Extracted ✅ when a card file exists in this directory with effect text filled in.*
