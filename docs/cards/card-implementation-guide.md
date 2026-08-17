@@ -123,6 +123,7 @@ Some card effects don't trigger on play — they intercept game events passively
 | Interface | When to use |
 |-----------|-------------|
 | `ISacrificeShield` | Card auto-sacrifices itself to absorb an incoming destroy. Implement `CanInterceptDestroy(DestroyCardAction.TargetStable)` — return `true` if this card should intercept for the given destroy scope. |
+| `IReturnsStolenCardOnLeave` | Card steals a Baby Unicorn on entry, and returns it to its original stable if this card later leaves a `UnicornStable` (sacrificed, destroyed, or any future "return to hand"). Marker only — no methods. `CardActionExecutor.ExecutePendingAction` links the stolen card onto `Card.linkedBabyUnicorn`/`linkedBabyUnicornOriginStable` when the steal resolves, but **only if the stolen card is a Baby Unicorn** (`UnicornType.BABY`) — a non-Baby steal never populates these fields, so this mechanism can't affect unrelated cards. `CardManager.MoveCard` checks the interface on every move out of a `UnicornStable` and performs the return if the linked card is still where it was left. |
 
 **Example — Hentaicorn:**
 

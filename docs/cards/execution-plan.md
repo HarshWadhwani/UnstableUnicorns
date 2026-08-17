@@ -17,7 +17,7 @@ Cards move between sections as new action types/frameworks get built or cards ge
 
 ## Ready now (0) — everything from the original batch is implemented or reclassified
 
-All 19 cards that were genuinely blocker-free are done (13 no-effect Baby Unicorns rolled into `BabyUnicornCardData` + `BabyUnicornCardDataInstance.asset`; Manscaped Llamacorn, The Bitchiest Unicorn, Semenbiscuit, Homicidal Psychocorn, Fuzzy Hoofcuffs, Free Candy Unicorn as individual cards — Free Candy Unicorn ships partial, steal-only, see its card file). The remaining 4 originally listed here (Buck Naked, Double Agent Unicorn, Putting on a Show, Sadomasocorn) turned out to need real code and are reclassified below.
+All 19 cards that were genuinely blocker-free are done (13 no-effect Baby Unicorns rolled into `BabyUnicornCardData` + `BabyUnicornCardDataInstance.asset`; Manscaped Llamacorn, The Bitchiest Unicorn, Semenbiscuit, Homicidal Psychocorn, Fuzzy Hoofcuffs, Free Candy Unicorn as individual cards). Free Candy Unicorn shipped steal-only at first; its leave-stable return clause is now also implemented via the new `IReturnsStolenCardOnLeave` interface (see CLAUDE.md's Card Ability Interfaces table). The remaining 4 originally listed here (Buck Naked, Double Agent Unicorn, Putting on a Show, Sadomasocorn) turned out to need real code and are reclassified below.
 
 ---
 

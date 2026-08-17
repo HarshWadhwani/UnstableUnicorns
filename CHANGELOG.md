@@ -4,6 +4,22 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.22] — 2026-08-07
+
+### Cards
+- **Free Candy Unicorn** — completed the previously-partial implementation. The "if this card leaves your Stable, return that Baby Unicorn card to the Stable from which you stole it" clause now works.
+
+### New interface
+- **`IReturnsStolenCardOnLeave`** — marker interface in `CardData/CardAbilities/`, same pattern as `ISacrificeShield`. When a `StealCard` steal resolves for a card implementing it, and the stolen card is a Baby Unicorn (`UnicornType.BABY` — never any other card), `CardActionExecutor.ExecutePendingAction` links the stolen card and its origin stable onto two new `Card` fields, `linkedBabyUnicorn`/`linkedBabyUnicornOriginStable`. `CardManager.MoveCard` — the single choke-point for all card movement — checks the interface on every move out of a `UnicornStable` and returns the linked Baby Unicorn to its origin if it's still sitting where it was left (skipped silently if it was itself discarded/destroyed/moved elsewhere since, rather than resurrecting it). Scoped deliberately to Baby Unicorns only, so reusing the interface on a future card that steals something else can't accidentally trigger this behavior.
+- Relies on an existing ordering quirk: `TriggerSpecialAction` for a `UNICORN`-type `IMMEDIATE` card fires before `CardManager.PlayCardForCurrentPlayer` moves the card into the Unicorn stable, so the steal resolves while Free Candy Unicorn is still in hand — the entry move itself never false-triggers the leave-hook.
+
+### Docs
+- `docs/cards/card-data/free-candy-unicorn.md`: `impl_status` → `done`, documented the interface.
+- `docs/cards/card-implementation-guide.md`, `CLAUDE.md`: documented `IReturnsStolenCardOnLeave` in the Passive ability interfaces / Card Ability Interfaces tables.
+- `docs/cards/execution-plan.md`: updated the stale "ships partial" note.
+
+---
+
 ## [v0.2.21] — 2026-08-03
 
 ### Cards

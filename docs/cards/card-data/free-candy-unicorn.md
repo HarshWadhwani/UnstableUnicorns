@@ -8,7 +8,7 @@
 | copies | 1 |
 | trigger | IMMEDIATE |
 | can_play | always |
-| impl_status | partial |
+| impl_status | done |
 | impl_class | FreeCandyUnicornCardData.cs |
 
 ## Effect (2nd Edition)
@@ -18,7 +18,7 @@
 - StealUnicornAction { targetSubtype=BABY }
 
 ## Passive Interfaces
-None
+- `IReturnsStolenCardOnLeave` — marker only, no methods. When the steal resolves, `CardActionExecutor.ExecutePendingAction` records the stolen card + its origin stable onto `Card.linkedBabyUnicorn`/`linkedBabyUnicornOriginStable` (only ever for a Baby Unicorn — checked via `UnicornType.BABY`, so this can't fire for any other card's steal). `CardManager.MoveCard` checks for the interface whenever a card leaves a `UnicornStable`; if a link is set and the linked Baby Unicorn is still sitting where it was left, it's moved back to its origin. If the Baby Unicorn was itself discarded/destroyed/moved elsewhere in the meantime, the return is skipped silently rather than resurrecting it.
 
 ## Implementation Notes
-Steal is specifically a Baby Unicorn (not any Unicorn) — implemented via `StealUnicornAction.targetSubtype`, same pattern as Baby Trap. Also has a "leave stable" triggered return effect — requires tracking which Baby Unicorn was stolen and where it came from. Complex state tracking not currently supported, so this half is **not implemented**: the stolen Baby Unicorn stays put if Free Candy Unicorn is later sacrificed/destroyed/returned instead of going back to its original stable.
+Steal is specifically a Baby Unicorn (not any Unicorn) — implemented via `StealUnicornAction.targetSubtype`, same pattern as Baby Trap. The "leave stable" return effect is now fully implemented (see Passive Interfaces above). Because `TriggerSpecialAction` for a `UNICORN`-type `IMMEDIATE` card fires *before* `CardManager.PlayCardForCurrentPlayer` moves the card from hand into the Unicorn stable, the steal resolves while Free Candy Unicorn is still in hand — so the entry move never false-triggers the leave-hook (`oldCardSpace` is `handStable`, not a `UnicornStable`).

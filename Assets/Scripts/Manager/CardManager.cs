@@ -72,5 +72,23 @@ public class CardManager : MonoBehaviour
     {
         oldCardSpace.RemoveCard(card);
         newCardSpace.AddCard(card);
+
+        // If this card is leaving a UnicornStable and has a linked Baby Unicorn (only ever set
+        // for cards implementing IReturnsStolenCardOnLeave, e.g. Free Candy Unicorn), send that
+        // Baby Unicorn back to its original stable — but only if it's still sitting where it was
+        // left; if it was itself discarded/destroyed/moved elsewhere since, skip silently rather
+        // than resurrecting it.
+        if (oldCardSpace is UnicornStable && card.cardData is IReturnsStolenCardOnLeave && card.linkedBabyUnicorn != null)
+        {
+            Card babyUnicorn = card.linkedBabyUnicorn;
+            CardSpace originStable = card.linkedBabyUnicornOriginStable;
+            card.linkedBabyUnicorn = null;
+            card.linkedBabyUnicornOriginStable = null;
+
+            if (babyUnicorn.cardSpace == oldCardSpace)
+            {
+                MoveCard(babyUnicorn, babyUnicorn.cardSpace, originStable);
+            }
+        }
     }
 }

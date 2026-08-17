@@ -155,6 +155,18 @@ public class CardActionExecutor : MonoBehaviour
         else
         {
             CardSpace source = pendingSourceStable ?? card.cardSpace;
+
+            // Only ever links a Baby Unicorn — a non-Baby-Unicorn steal (e.g. Fuzzy Hoofcuffs)
+            // never populates these fields, so it can't trigger the leave-hook in CardManager.
+            if (currentPendingAction == PendingActionType.StealCard
+                && currentContext.sourceCard.cardData is IReturnsStolenCardOnLeave
+                && card.cardData is UnicornCardData stolenUnicorn
+                && stolenUnicorn.unicornType == UnicornType.BABY)
+            {
+                currentContext.sourceCard.linkedBabyUnicorn = card;
+                currentContext.sourceCard.linkedBabyUnicornOriginStable = source;
+            }
+
             cardManager.MoveCard(card, source, pendingDestinationStable);
         }
 

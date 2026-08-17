@@ -89,6 +89,7 @@ Passive card abilities that react to game events (rather than firing actions on 
 | Interface | Method | Checked by | Effect |
 |-----------|--------|------------|--------|
 | `ISacrificeShield` | `bool CanInterceptDestroy(DestroyCardAction.TargetStable)` | `DestroyCardAction.Execute` | If any card in the target player's stables implements this and `CanInterceptDestroy` returns `true`, that card is automatically moved to the discard pile and the destroyer is never prompted to select a target. First match in unicorn → upgrade → downgrade order wins. |
+| `IReturnsStolenCardOnLeave` | marker, no methods | `CardActionExecutor.ExecutePendingAction` (records the link), `CardManager.MoveCard` (performs the return) | When a `StealCard` steal resolves for a card implementing this, and the stolen card is a Baby Unicorn (`UnicornType.BABY` — never for anything else), the stolen card and its origin stable are recorded on `Card.linkedBabyUnicorn`/`linkedBabyUnicornOriginStable`. `CardManager.MoveCard` — the single choke-point for all card movement — checks this on every move out of a `UnicornStable`; if set, and the linked Baby Unicorn is still sitting where it was left (not itself discarded/destroyed/moved since), it's sent back to its origin stable. Used by Free Candy Unicorn. |
 
 **Worked example — Fuck Marry Kill** (see `docs/cards/fuck-marry-kill.md` for the full trace):
 

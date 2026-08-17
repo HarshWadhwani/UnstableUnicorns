@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "CardData/UnicornCardData/FreeCandyUnicornCardData")]
-public class FreeCandyUnicornCardData : UnicornCardData
+public class FreeCandyUnicornCardData : UnicornCardData, IReturnsStolenCardOnLeave
 {
     public override void OnEnable()
     {
