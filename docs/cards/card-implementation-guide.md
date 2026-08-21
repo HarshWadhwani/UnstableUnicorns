@@ -78,9 +78,11 @@ Moves cards from the **active player's own** stables to the discard pile. Contra
 
 ```
 targetStable:   Unicorn | Upgrade | Downgrade | Any   — which of the active player's stables
-sacrificeAll:   bool                                   — true = take all cards automatically; false = not yet implemented
+sacrificeAll:   bool                                   — true = take all cards automatically; false = player chooses
+numberOfCards:  int                                    — how many, when sacrificeAll=false (default 1)
+targetSubtype:  UnicornType?                            — optional filter, e.g. BASIC — only meaningful when targetStable includes Unicorn
 ```
-When `sacrificeAll = true`, no player input is required — cards are moved immediately.
+When `sacrificeAll = true`, no player input is required — cards are moved immediately. When `sacrificeAll = false`, the active player is prompted to click a card in one of their own stables matching `targetStable`/`targetSubtype` — skips silently (no prompt) if no eligible card exists anywhere in scope.
 
 ### SearchDeckForCardAction
 Searches the play deck (only the deck — not hand, discard, or stables) for a card of a specific `CardData` subclass, moves it to the active player's hand, then shuffles the deck. Skips silently (but still shuffles) if no matching card is in the deck.

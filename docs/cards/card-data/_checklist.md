@@ -24,7 +24,7 @@
 | [Conjoined Baby Unicorn](conjoined-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ✅ |
 | [Cult Leader Unicorn](cult-leader-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Dominatrix Whip](dominatrix-whip.md) | Upgrade | 1 | ✅ | ⬜ |
-| [Double Agent Unicorn](double-agent-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
+| [Double Agent Unicorn](double-agent-unicorn.md) | Magical Unicorn | 1 | ✅ | ✅ |
 | [Dumpster Baby Unicorn](dumpster-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ✅ |
 | [Dumpster Diving Unicorn](dumpster-diving-unicorn.md) | Magical Unicorn | 1 | ✅ | ✅ |
 | [Entitled Unicorn](entitled-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
@@ -63,10 +63,10 @@
 | [Peeping Narwhal](peeping-narwhal.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Polyamorous Unicorn](polyamorous-unicorn.md) | Magical Unicorn | 1 | ✅ | ✅ |
 | [Pony Play](pony-play.md) | Upgrade | 2 | ✅ | ✅ |
-| [Putting on a Show](putting-on-a-show.md) | Upgrade | 2 | ✅ | ⬜ |
+| [Putting on a Show](putting-on-a-show.md) | Upgrade | 2 | ✅ | ✅ |
 | [Rainbow Shitstorm](rainbow-shitstorm.md) | Magic | 1 | ✅ | ⬜ |
 | [Safe Sex](safe-sex.md) | Magic | 1 | ✅ | ⬜ |
-| [Sadomasocorn](sadomasocorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
+| [Sadomasocorn](sadomasocorn.md) | Magical Unicorn | 1 | ✅ | ✅ |
 | [Semenbiscuit](semenbiscuit.md) | Magical Unicorn | 1 | ✅ | ✅ |
 | [Sex, Drugs, and Unicorns](sex-drugs-and-unicorns.md) | Magic | 1 | ✅ | ⬜ |
 | [Sextra-Terrestrial Unicorn](sextra-terrestrial-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
@@ -105,6 +105,6 @@
 ## Summary
 - Total cards: 91
 - Extracted: 91 / 91
-- Implemented: 42 / 91 (A Little Side Hustle, Autoerotic Asphyxiation, Baby Trap, Baby Unicorn of Incest, Bear Daddy Unicorn, Blaze and Graze, Breaking and Entering, Bukkakecorn, Bye Bye Baby Unicorn, Cannibal Baby Unicorn, Conjoined Baby Unicorn, Dumpster Baby Unicorn, Dumpster Diving Unicorn, Faceless Baby Unicorn, Flesh-Eating Unicorn, Free Candy Unicorn, Fuck. Marry. Kill, Fuckboi Unicorn, Fucking Cute Baby Unicorn, Fucking Ugly Baby Unicorn, Fuzzy Hoofcuffs, Hentaicorn, Homicidal Psychocorn, Horrifying Impaling, Horse With A Dildo, Manscaped Llamacorn, Pageant Baby Unicorn, Polyamorous Unicorn, Pony Play, Semenbiscuit, Shotgun Baby Unicorn, Single Unicorn, Someone Else's Baby Unicorn, Stoner Unicorn, Tasty Baby Unicorn, The Bitchiest Unicorn, Twinkicorn, Unicorn Enema, Unicorn on the Street Corner, Upside Down Baby Unicorn, Vanillacorn, Wasted White Unicorn)
+- Implemented: 45 / 91 (A Little Side Hustle, Autoerotic Asphyxiation, Baby Trap, Baby Unicorn of Incest, Bear Daddy Unicorn, Blaze and Graze, Breaking and Entering, Bukkakecorn, Bye Bye Baby Unicorn, Cannibal Baby Unicorn, Conjoined Baby Unicorn, Double Agent Unicorn, Dumpster Baby Unicorn, Dumpster Diving Unicorn, Faceless Baby Unicorn, Flesh-Eating Unicorn, Free Candy Unicorn, Fuck. Marry. Kill, Fuckboi Unicorn, Fucking Cute Baby Unicorn, Fucking Ugly Baby Unicorn, Fuzzy Hoofcuffs, Hentaicorn, Homicidal Psychocorn, Horrifying Impaling, Horse With A Dildo, Manscaped Llamacorn, Pageant Baby Unicorn, Polyamorous Unicorn, Pony Play, Putting on a Show, Sadomasocorn, Semenbiscuit, Shotgun Baby Unicorn, Single Unicorn, Someone Else's Baby Unicorn, Stoner Unicorn, Tasty Baby Unicorn, The Bitchiest Unicorn, Twinkicorn, Unicorn Enema, Unicorn on the Street Corner, Upside Down Baby Unicorn, Vanillacorn, Wasted White Unicorn)
 
 *Update this table as cards are extracted and implemented. Mark Extracted ✅ when a card file exists in this directory with effect text filled in.*

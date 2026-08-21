@@ -82,6 +82,41 @@ public class Stable : CardSpace
             return;
         }
 
+        if (CardActionExecutor.Instance.currentPendingAction == PendingActionType.SacrificeCard)
+        {
+            if (player != CardActionExecutor.Instance.pendingSacrificeTargetPlayer)
+            {
+                Debug.LogWarning("Must target your own stable.");
+                return;
+            }
+
+            SacrificeCardAction.TargetStable? stableFilter = CardActionExecutor.Instance.pendingSacrificeTargetStable;
+            bool stableMatches = !stableFilter.HasValue || stableFilter.Value switch
+            {
+                SacrificeCardAction.TargetStable.Unicorn => this is UnicornStable,
+                SacrificeCardAction.TargetStable.Upgrade => this is UpgradeStable,
+                SacrificeCardAction.TargetStable.Downgrade => this is DowngradeStable,
+                _ => true
+            };
+            if (!stableMatches)
+            {
+                Debug.LogWarning($"Must target your {stableFilter.Value} stable.");
+                return;
+            }
+
+            UnicornType? subtypeFilter = CardActionExecutor.Instance.pendingSacrificeSubtypeFilter;
+            if (subtypeFilter.HasValue
+                && (!(card.cardData is UnicornCardData u) || u.unicornType != subtypeFilter.Value))
+            {
+                Debug.LogWarning($"Must target a {subtypeFilter.Value} unicorn.");
+                return;
+            }
+
+            CardActionExecutor.Instance.ExecutePendingAction(card);
+            PositionCardsInStable();
+            return;
+        }
+
         if (turnManager.currentPhase == TurnPhase.EveryTurnSpecial
             && CardActionExecutor.Instance.currentPendingAction == PendingActionType.None
             && player == turnManager.activePlayer)

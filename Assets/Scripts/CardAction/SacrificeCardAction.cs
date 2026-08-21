@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
@@ -8,6 +9,9 @@ public class SacrificeCardAction : CardAction
 
     public TargetStable targetStable = TargetStable.Downgrade;
     public bool sacrificeAll = true;
+    public int numberOfCards = 1;
+    // Null = any unicorn. Only meaningful when targetStable includes the Unicorn stable.
+    public UnicornType? targetSubtype = null;
 
     public override void Execute(CardActionExecutor executor, CardActionContext context)
     {
@@ -15,7 +19,17 @@ public class SacrificeCardAction : CardAction
 
         if (!sacrificeAll)
         {
-            Debug.LogWarning("SacrificeCardAction: PlayerChooses mode is not yet implemented.");
+            List<CardSpace> targetStables = GetTargetStables(activePlayer);
+            if (!targetStables.Any(s => s.spaceCards.Any(MatchesSubtype)))
+            {
+                Debug.Log($"{activePlayer.name} has no eligible cards to sacrifice.");
+                return;
+            }
+
+            executor.pendingSacrificeTargetPlayer = activePlayer;
+            executor.pendingSacrificeTargetStable = targetStable;
+            executor.pendingSacrificeSubtypeFilter = targetSubtype;
+            executor.PromptPlayerToSelectCards(activePlayer, null, context.discardPile, numberOfCards, PendingActionType.SacrificeCard);
             return;
         }
 
@@ -34,6 +48,9 @@ public class SacrificeCardAction : CardAction
             Debug.Log($"{activePlayer.name} sacrificed {toSacrifice.Count} card(s) from {stable.name}.");
         }
     }
+
+    private bool MatchesSubtype(Card c) =>
+        !targetSubtype.HasValue || (c.cardData is UnicornCardData u && u.unicornType == targetSubtype.Value);
 
     private List<CardSpace> GetTargetStables(Player player)
     {

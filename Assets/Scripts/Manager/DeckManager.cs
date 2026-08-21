@@ -41,7 +41,10 @@ public class DeckManager : MonoBehaviour
         ForceHomicidalPsychocornToTop();   // EVERY_TURN choice — needs a hand of 1+ cards and an opponent Unicorn to fully exercise discard-then-destroy
         ForceFreeCandyUnicornToTop();      // needs a Baby Unicorn already in the opponent's Stable to see the steal fire (partial impl — no return-on-leave tracking yet)
         ForceSemenbiscuitToTop();          // needs a Downgrade card already in your own Stable to see the sacrifice fire
-        ForceManscapedLlamacornToTop();    // drawn 1st (currently under test) — no setup needed, opponent just needs a hand card to discard
+        ForceManscapedLlamacornToTop();    // no setup needed, opponent just needs a hand card to discard
+        ForceDoubleAgentUnicornToTop();    // drawn last among this batch — needs a Basic Unicorn already in your own Stable to see the sacrifice fire
+        ForceSadomasocornToTop();          // needs an opponent Unicorn to see the destroy fire
+        ForcePuttingOnAShowToTop();        // drawn 1st (currently under test) — sacrifice always has a target (the card itself sits in your Upgrade stable), opponent just needs any stable card to destroy
 
         foreach (var player in turnManager.players)
         {
@@ -284,6 +287,42 @@ public class DeckManager : MonoBehaviour
         if (card == null)
         {
             Debug.LogWarning("ForceFreeCandyUnicornToTop: no FreeCandyUnicornCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Double Agent Unicorn card.
+    void ForceDoubleAgentUnicornToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is DoubleAgentUnicornCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceDoubleAgentUnicornToTop: no DoubleAgentUnicornCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Sadomasocorn card.
+    void ForceSadomasocornToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is SadomasocornCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceSadomasocornToTop: no SadomasocornCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Putting on a Show card.
+    void ForcePuttingOnAShowToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is PuttingOnAShowCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForcePuttingOnAShowToTop: no PuttingOnAShowCardData found in play deck.");
             return;
         }
         playDeck.MoveToTop(card);

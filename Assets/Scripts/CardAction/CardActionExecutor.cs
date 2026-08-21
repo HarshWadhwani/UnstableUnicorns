@@ -9,7 +9,8 @@ public enum  PendingActionType
     DestroyCard,
     DestroyUnicornCard,
     StealCard,
-    PlayCardFromHand
+    PlayCardFromHand,
+    SacrificeCard
 }
 
 public class CardActionExecutor : MonoBehaviour
@@ -28,6 +29,9 @@ public class CardActionExecutor : MonoBehaviour
     public Player pendingDestroyTargetPlayer;
     public UnicornType? pendingStealSubtypeFilter;
     public CardType? pendingPlayCardTypeFilter;
+    public Player pendingSacrificeTargetPlayer;
+    public SacrificeCardAction.TargetStable? pendingSacrificeTargetStable;
+    public UnicornType? pendingSacrificeSubtypeFilter;
 
     private Player originalActivePlayer;
     private Queue<CardAction> actionQueue = new Queue<CardAction>();
@@ -192,6 +196,9 @@ public class CardActionExecutor : MonoBehaviour
         pendingDestroyTargetPlayer = null;
         pendingStealSubtypeFilter = null;
         pendingPlayCardTypeFilter = null;
+        pendingSacrificeTargetPlayer = null;
+        pendingSacrificeTargetStable = null;
+        pendingSacrificeSubtypeFilter = null;
         originalActivePlayer = null;
 
         ExecuteNextAction();

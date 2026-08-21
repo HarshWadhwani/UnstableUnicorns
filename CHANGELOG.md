@@ -4,6 +4,23 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.23] — 2026-08-21
+
+### Cards
+- **Double Agent Unicorn** — Magical Unicorn / `EVERY_TURN`. If in your Stable at the start of your turn, you may sacrifice a Basic Unicorn, then pull a random card from the opponent's hand. Guarded by `CanActivateEveryTurn` so a player with no Basic Unicorn can't get a free pull.
+- **Putting on a Show** — Upgrade / `EVERY_TURN`. If in your Stable at the start of your turn, you may sacrifice any of your own cards, then destroy any of the opponent's.
+- **Sadomasocorn** — Magical Unicorn / `EVERY_TURN`. If in your Stable at the start of your turn, you may sacrifice any of your own cards, then destroy an opponent Unicorn.
+
+### `SacrificeCardAction.sacrificeAll=false` (PlayerChooses) implemented
+Previously a stub that logged a warning and no-op'd. Now mirrors `DiscardCardAction`'s `PlayerChooses` branch: prompts the active player to click a card in one of their own stables. Added `PendingActionType.SacrificeCard`, `CardActionExecutor.pendingSacrificeTargetPlayer`/`pendingSacrificeTargetStable`/`pendingSacrificeSubtypeFilter` (same pattern as `pendingDestroyTargetPlayer`/`pendingStealSubtypeFilter`), and a new `Stable.HandleCardClick` branch to validate the click. Also added `SacrificeCardAction.targetSubtype` (`UnicornType?`), same shape as `StealUnicornAction.targetSubtype`, used by Double Agent Unicorn to restrict the sacrifice to Basic Unicorns.
+
+### Docs
+- 3 card files + `_checklist.md` (45/91): marked implemented.
+- `docs/cards/card-implementation-guide.md`, `CLAUDE.md`: documented `SacrificeCardAction`'s new params and the `SacrificeCard` pending-action pattern.
+- `docs/cards/execution-plan.md`: moved all 3 out of Blocked; Buck Naked is now the only card still blocked on a `DestroyCardAction` gap.
+
+---
+
 ## [v0.2.22] — 2026-08-07
 
 ### Cards

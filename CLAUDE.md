@@ -60,7 +60,7 @@ Card effects are composed from serializable `CardAction` subclasses defined on t
 | `GiveCardAction` | `giver` (ActivePlayer/Opponent), `numberOfCards` | Giver picks N cards from their hand and transfers them to the other player's hand. |
 | `DestroyCardAction` | `destroyer` (ActivePlayer/Opponent), `targetStable` (Any/Unicorn), `numberOfCards` | Destroyer picks N cards from the opposing player's stables and sends them to the discard pile. `targetStable=Any` allows unicorn/upgrade/downgrade; `targetStable=Unicorn` restricts to unicorn cards only (uses `PendingActionType.DestroyUnicornCard`). |
 | `PullCardAction` | `numberOfCards`, `skipDrawPhaseOnSuccess` (bool) | Randomly moves N cards from the **opponent's** hand to the **active player's** hand. Capped at opponent's hand size. If `skipDrawPhaseOnSuccess=true` and ≥1 card was pulled, sets `TurnManager.skipNextDrawPhase` to skip the Draw phase. |
-| `SacrificeCardAction` | `targetStable` (Unicorn/Upgrade/Downgrade/Any), `sacrificeAll` (bool) | Moves cards from the **active player's own** stables to the discard pile. `sacrificeAll=true` auto-moves all; PlayerChooses not yet implemented. |
+| `SacrificeCardAction` | `targetStable` (Unicorn/Upgrade/Downgrade/Any), `sacrificeAll` (bool), `numberOfCards`, `targetSubtype` (`UnicornType?`) | Moves cards from the **active player's own** stables to the discard pile. `sacrificeAll=true` auto-moves all matching cards immediately, no prompt. `sacrificeAll=false` prompts the active player to click a card in one of their own stables matching `targetStable`/`targetSubtype` (mirrors `DiscardCardAction`'s `PlayerChooses` mode); skips silently (no prompt) if no eligible card exists anywhere in scope. `targetSubtype` works like `StealUnicornAction.targetSubtype` and is only meaningful when `targetStable` includes the Unicorn stable. |
 | `StealUnicornAction` | `targetSubtype` (`UnicornType?`, default `null` = any) | Active player picks a unicorn from the **opponent's** unicorn stable to move into their own. If `targetSubtype` is set, only unicorns of that `UnicornType` are eligible — skips silently if none match. The filter is carried through the click-prompt via `CardActionExecutor.pendingStealSubtypeFilter`; `Stable.HandleCardClick`'s `StealCard` branch enforces both `this is UnicornStable` and the subtype match. |
 | `MoveSelfToOpponentStableAction` | none | Moves the source card itself from the active player's unicorn stable into the opponent's unicorn stable. Used by Polyamorous Unicorn to hop stables each turn. |
 | `TakeFromDiscardAction` | none | Moves the top card of the discard pile into the active player's hand. Skips silently if the discard pile is empty. Currently always takes the top card — no player choice yet (see `docs/issues.md` M4). |
@@ -78,7 +78,7 @@ Each action's `Execute(executor, context)` resolves which players/spaces are inv
 
 `pendingSourceStable` locks the source space when an action targets a single stable (e.g., discard from hand). For `DestroyCard` it is `null` — the source is derived from `card.cardSpace` at click time, allowing the destroyer to pick from any opposing stable.
 
-`pendingDestroyTargetPlayer` is set by `DestroyCardAction` before prompting and records exactly which player's stable cards may be selected from. `Stable.HandleCardClick` checks `player == pendingDestroyTargetPlayer` to accept or reject a click — this is more reliable than comparing against `turnManager.activePlayer`, which can be temporarily reassigned during multi-step action sequences.
+`pendingDestroyTargetPlayer` is set by `DestroyCardAction` before prompting and records exactly which player's stable cards may be selected from. `Stable.HandleCardClick` checks `player == pendingDestroyTargetPlayer` to accept or reject a click — this is more reliable than comparing against `turnManager.activePlayer`, which can be temporarily reassigned during multi-step action sequences. `pendingSacrificeTargetPlayer` is the same pattern for `SacrificeCardAction`'s `PlayerChooses` mode (`PendingActionType.SacrificeCard`); `pendingSacrificeTargetStable`/`pendingSacrificeSubtypeFilter` additionally restrict which stable type and unicorn subtype are valid to click, mirroring `pendingStealSubtypeFilter`.
 
 Cards that cannot always be played (e.g., require a non-empty opponent stable) override `CardData.CanPlay(activePlayer, opponentPlayer)`. `CardManager.PlayCardForCurrentPlayer` calls this before triggering any action; returning `false` keeps the card in hand and cancels the play. The sibling hook `CanActivateEveryTurn(activePlayer, opponentPlayer)` (see `TurnManager` above) is the equivalent gate for an EVERY_TURN choice card's *stable* activation, not its play.
 
@@ -112,7 +112,7 @@ Full decision tree, action-type reference, and worked examples: `docs/cards/card
 - `CardType`: `UNICORN`, `MAGIC`, `UPGRADE`, `DOWNGRADE`, `NEIGH`
 - `SpecialActionType`: `IMMEDIATE` (triggers on play), `EVERY_TURN`, `NONE`
 - `TurnPhase`: `Draw`, `Action`, `ImmediateSpecial`, `EveryTurnSpecial`
-- `PendingActionType`: `None`, `DiscardCard`, `GiveCard`, `DestroyCard`, `DestroyUnicornCard`, `StealCard`, `PlayCardFromHand`
+- `PendingActionType`: `None`, `DiscardCard`, `GiveCard`, `DestroyCard`, `DestroyUnicornCard`, `StealCard`, `PlayCardFromHand`, `SacrificeCard`
 
 ---
 
