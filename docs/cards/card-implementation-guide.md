@@ -95,10 +95,11 @@ targetCardDataType:  System.Type   — the CardData subclass to search for, e.g.
 Prompts the active player to click a card of a specific `CardType` in their **own hand** and plays it exactly like a normal play — routed through `CardManager.PlayCardForCurrentPlayer`, so it respects that card's own `CanPlay` and any `IMMEDIATE` trigger. Skips silently if the hand has no card of that type. Used for "bring a card from your hand into your Stable" effects outside the normal Action phase.
 
 ```
-cardType:  CardType   — which CardType is selectable in hand, e.g. CardType.UPGRADE
+cardType:      CardType       — which CardType is selectable in hand, e.g. CardType.UPGRADE
+targetSubtype: UnicornType?   — optional filter, e.g. BASIC; only meaningful when cardType == UNICORN
 ```
 
-Only clicks matching `cardType` are accepted while this is pending (`HandStable.HandleCardClick` checks `CardActionExecutor.pendingPlayCardTypeFilter`) — clicking a card of the wrong type just logs a warning and leaves the prompt open. Caution if reusing this for `CardType.MAGIC`/`UNICORN` (`IMMEDIATE`): `PlayCardForCurrentPlayer` will call `TriggerSpecialAction`, which re-enters `CardActionExecutor.ExecuteActions` and clears the in-flight action queue — untested nesting, only exercised so far with `UPGRADE` (never `IMMEDIATE`).
+Only clicks matching `cardType`/`targetSubtype` are accepted while this is pending (`HandStable.HandleCardClick` checks `CardActionExecutor.pendingPlayCardTypeFilter`/`pendingPlayCardSubtypeFilter`) — clicking a card of the wrong type or subtype just logs a warning and leaves the prompt open. Caution if reusing this for `CardType.MAGIC`/`UNICORN` cards whose `specialActionType` is `IMMEDIATE`: `PlayCardForCurrentPlayer` will call `TriggerSpecialAction`, which re-enters `CardActionExecutor.ExecuteActions` and clears the in-flight action queue — untested nesting. Basic Unicorns are the one `UNICORN` case proven safe (Unicorn with Benefits): their `specialActionType` is always `NONE`, so no re-entrancy risk.
 
 ### RevealTopDeckAction
 Reveals the top card of the play deck and routes it based on its own `CardType`: `UNICORN` goes to the active player's Unicorn stable (and checks win condition, same as a normal unicorn play); anything else goes to the active player's hand. No parameters, no player prompt — fully automatic, same style as `TakeFromDiscardAction`. Skips silently if the deck is empty.

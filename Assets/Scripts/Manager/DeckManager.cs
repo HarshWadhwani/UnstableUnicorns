@@ -44,7 +44,8 @@ public class DeckManager : MonoBehaviour
         ForceManscapedLlamacornToTop();    // no setup needed, opponent just needs a hand card to discard
         ForceDoubleAgentUnicornToTop();    // drawn last among this batch — needs a Basic Unicorn already in your own Stable to see the sacrifice fire
         ForceSadomasocornToTop();          // needs an opponent Unicorn to see the destroy fire
-        ForcePuttingOnAShowToTop();        // drawn 1st (currently under test) — sacrifice always has a target (the card itself sits in your Upgrade stable), opponent just needs any stable card to destroy
+        ForcePuttingOnAShowToTop();        // sacrifice always has a target (the card itself sits in your Upgrade stable), opponent just needs any stable card to destroy
+        ForceUnicornWithBenefitsToTop();   // drawn 1st (currently under test) — CanPlay requires a Basic Unicorn already in your Stable, and hand needs a 2nd Basic Unicorn to bring in
 
         foreach (var player in turnManager.players)
         {
@@ -323,6 +324,18 @@ public class DeckManager : MonoBehaviour
         if (card == null)
         {
             Debug.LogWarning("ForcePuttingOnAShowToTop: no PuttingOnAShowCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Unicorn with Benefits card.
+    void ForceUnicornWithBenefitsToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is UnicornWithBenefitsCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceUnicornWithBenefitsToTop: no UnicornWithBenefitsCardData found in play deck.");
             return;
         }
         playDeck.MoveToTop(card);

@@ -29,6 +29,7 @@ public class CardActionExecutor : MonoBehaviour
     public Player pendingDestroyTargetPlayer;
     public UnicornType? pendingStealSubtypeFilter;
     public CardType? pendingPlayCardTypeFilter;
+    public UnicornType? pendingPlayCardSubtypeFilter;
     public Player pendingSacrificeTargetPlayer;
     public SacrificeCardAction.TargetStable? pendingSacrificeTargetStable;
     public UnicornType? pendingSacrificeSubtypeFilter;
@@ -196,6 +197,7 @@ public class CardActionExecutor : MonoBehaviour
         pendingDestroyTargetPlayer = null;
         pendingStealSubtypeFilter = null;
         pendingPlayCardTypeFilter = null;
+        pendingPlayCardSubtypeFilter = null;
         pendingSacrificeTargetPlayer = null;
         pendingSacrificeTargetStable = null;
         pendingSacrificeSubtypeFilter = null;

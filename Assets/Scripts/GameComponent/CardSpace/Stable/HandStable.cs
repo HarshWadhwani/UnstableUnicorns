@@ -47,6 +47,14 @@ public class HandStable : Stable
                     return;
                 }
 
+                UnicornType? subtypeFilter = CardActionExecutor.Instance.pendingPlayCardSubtypeFilter;
+                if (subtypeFilter.HasValue
+                    && (!(card.cardData is UnicornCardData u) || u.unicornType != subtypeFilter.Value))
+                {
+                    Debug.LogWarning($"Must select a {subtypeFilter.Value} unicorn.");
+                    return;
+                }
+
                 CardActionExecutor.Instance.ExecutePendingAction(card);
                 PositionCardsInStable();
                 Debug.Log("Hand stable is not starting next turn phase");

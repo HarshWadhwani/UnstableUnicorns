@@ -4,6 +4,21 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.24] — 2026-08-21
+
+### Cards
+- **Unicorn with Benefits** — Upgrade / `EVERY_TURN`. `CanPlay` requires a Basic Unicorn already in your Stable; if in your Stable at the start of your turn, you may bring another Basic Unicorn from your hand into your Stable.
+
+### `PlayCardFromHandAction.targetSubtype` added
+Same pattern as `StealUnicornAction.targetSubtype`/`SacrificeCardAction.targetSubtype`: optional `UnicornType?` filter, only meaningful when `cardType == UNICORN`. Added `CardActionExecutor.pendingPlayCardSubtypeFilter` and a matching check in `HandStable.HandleCardClick`. Basic Unicorns are `specialActionType=NONE`, so this proves the `UNICORN` case is safe without touching the still-untested `IMMEDIATE` re-entrancy concern noted for `MAGIC`/other `UNICORN` subtypes.
+
+### Docs
+- `docs/cards/card-data/unicorn-with-benefits.md`, `_checklist.md` (46/91): marked implemented.
+- `docs/cards/card-implementation-guide.md`, `CLAUDE.md`: documented `PlayCardFromHandAction.targetSubtype`.
+- `docs/cards/execution-plan.md`: removed from Blocked; updated Suggested order.
+
+---
+
 ## [v0.2.23] — 2026-08-21
 
 ### Cards

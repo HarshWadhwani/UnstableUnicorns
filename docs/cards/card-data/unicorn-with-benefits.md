@@ -7,21 +7,21 @@
 | copies | 1 |
 | trigger | EVERY_TURN |
 | can_play | requires a Basic Unicorn card in your Stable |
-| impl_status | not_started |
-| impl_class | — |
+| impl_status | done |
+| impl_class | UnicornWithBenefitsCardData.cs |
 
 ## Effect (2nd Edition)
 > "You can only play this card if there is a Basic Unicorn card in your Stable. If this card is in your Stable at the beginning of your turn, you may bring a Basic Unicorn card from your hand into your Stable."
 
 ## Action Mapping
-NEW: PlayCardFromHandToStableAction { cardType=UNICORN, unicornSubtype=Basic } — active player may play a Basic Unicorn from hand directly into their stable.
+- PlayCardFromHandAction { cardType=UNICORN, targetSubtype=BASIC }
 
 ## Passive Interfaces
 None
 
 ## CanPlay Override
 ```csharp
-activePlayer.unicornStable.Cards.Any(c => c.CardData is UnicornCardData u && u.unicornType == UnicornType.Basic)
+activePlayer.unicornStable.spaceCards.Any(c => c.cardData is UnicornCardData u && u.unicornType == UnicornType.BASIC)
 ```
 
 ## Implementation Notes
