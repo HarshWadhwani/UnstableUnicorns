@@ -104,6 +104,23 @@ Only clicks matching `cardType`/`targetSubtype` are accepted while this is pendi
 ### RevealTopDeckAction
 Reveals the top card of the play deck and routes it based on its own `CardType`: `UNICORN` goes to the active player's Unicorn stable (and checks win condition, same as a normal unicorn play); anything else goes to the active player's hand. No parameters, no player prompt — fully automatic, same style as `TakeFromDiscardAction`. Skips silently if the deck is empty.
 
+### DrawCardAction
+Draws N cards from the top of the active player's **own play deck** into their hand. No player prompt — mirrors the normal Draw-phase `CardManager.DrawCard`, just called directly instead of through a deck click. Skips remaining draws silently if the deck runs out partway through.
+
+```
+numberOfCards:  int   — how many to draw (default 1)
+```
+
+### BringFromNurseryAction
+Moves the next Baby Unicorn from the Nursery directly into the active player's **Unicorn stable** (not hand) — mirrors `TakeFromDiscardAction`'s shape. No parameters: the Nursery is homogeneous (all Baby Unicorns), so which specific card moves is irrelevant; always takes `nursery.spaceCards[0]`. Checks the win condition after moving, same as a normal Unicorn play. Skips silently if the Nursery is empty.
+
+### SearchDeckForTypeAction
+Near-identical to `SearchDeckForCardAction`, but matches by `CardType` instead of an exact `CardData` subclass — use this when the card text says "search for a Unicorn card" (any Unicorn) rather than "search for a specific named card."
+
+```
+targetCardType:  CardType   — the CardType to search for, e.g. CardType.UNICORN
+```
+
 ### Mapping examples
 
 | Card text | Action |

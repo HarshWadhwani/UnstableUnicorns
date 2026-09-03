@@ -4,6 +4,31 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.25] — 2026-09-03
+
+### Cards
+- **Black Market Baby Unicorn** — Magical Unicorn / `EVERY_TURN`. If in your Stable at the start of your turn, you may discard 2 cards, then bring a Baby Unicorn from the Nursery into your Stable. Guarded by `CanActivateEveryTurn` (hand ≥ 2 and Nursery non-empty) against the same partial-effect risk as Bukkakecorn.
+- **Kittencorn in Heat** — Magical Unicorn / `IMMEDIATE`. On entry, brings a Baby Unicorn from the Nursery into your Stable.
+- **Unexpected Miracle Unicorn** — Magical Unicorn / `IMMEDIATE`. On entry, discard 1 card, then bring a Baby Unicorn from the Nursery into your Stable.
+- **Unicorn Dancer** — Magical Unicorn / `EVERY_TURN`. If in your Stable at the start of your turn, you may draw a card and discard a card. Guarded by `CanActivateEveryTurn` (play deck non-empty).
+- **Unicorn Speed** — Upgrade / `EVERY_TURN`. `CanPlay` requires a Basic Unicorn already in your Stable; if in your Stable at the start of your turn, you may draw a card.
+- **Moist Unicorn** — Magical Unicorn / `IMMEDIATE`. On entry, search the deck for any Unicorn card, add it to hand, then shuffle.
+
+### Three new action types
+- **`DrawCardAction { numberOfCards }`** — draws N cards from the top of the active player's own play deck into their hand, no prompt. Mirrors the normal Draw-phase `CardManager.DrawCard`.
+- **`BringFromNurseryAction {}`** — moves the next Baby Unicorn from the Nursery directly into the active player's Unicorn stable (not hand), checks win condition. Always takes `nursery.spaceCards[0]` since the Nursery is homogeneous. Mirrors `TakeFromDiscardAction`'s shape.
+- **`SearchDeckForTypeAction { targetCardType }`** — near-identical to `SearchDeckForCardAction`, but matches by `CardType` instead of an exact `CardData` subclass.
+
+### New singleton
+- **`DeckManager.Instance`** — same pattern as `CardActionExecutor.Instance`. Added so `CanActivateEveryTurn` overrides (which only receive `activePlayer`/`opponentPlayer`) can reach `playDeck`/`nursery` state for partial-effect guards, e.g. Black Market Baby Unicorn checking the Nursery isn't empty before allowing its discard-then-bring to activate.
+
+### Docs
+- 6 card files + `_checklist.md` (52/91): marked implemented.
+- `docs/cards/card-implementation-guide.md`, `CLAUDE.md`: documented the three new actions and `DeckManager.Instance`.
+- `docs/cards/execution-plan.md`: removed the "small self-contained new actions" section (all shipped); Buck Naked is now the only card blocked purely on `DestroyCardAction`'s missing destroy-all-of-type mode.
+
+---
+
 ## [v0.2.24] — 2026-08-21
 
 ### Cards

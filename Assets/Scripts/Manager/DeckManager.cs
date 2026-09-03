@@ -3,17 +3,32 @@ using UnityEngine;
 
 public class DeckManager : MonoBehaviour
 {
+    public static DeckManager Instance { get; private set; }
+
     public Card cardPrefab;
     public CardData babyUnicornCardData;
 
-    public Deck playDeck;  
+    public Deck playDeck;
     public Deck nursery;
 
     public TurnManager turnManager;
     public CardManager cardManager;
 
     private List<CardData> playCardDatas;
-    
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogWarning("Multiple DeckManager instances detected. Destroying duplicate.");
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
         LoadAllCardData();
@@ -45,7 +60,13 @@ public class DeckManager : MonoBehaviour
         ForceDoubleAgentUnicornToTop();    // drawn last among this batch — needs a Basic Unicorn already in your own Stable to see the sacrifice fire
         ForceSadomasocornToTop();          // needs an opponent Unicorn to see the destroy fire
         ForcePuttingOnAShowToTop();        // sacrifice always has a target (the card itself sits in your Upgrade stable), opponent just needs any stable card to destroy
-        ForceUnicornWithBenefitsToTop();   // drawn 1st (currently under test) — CanPlay requires a Basic Unicorn already in your Stable, and hand needs a 2nd Basic Unicorn to bring in
+        ForceUnicornWithBenefitsToTop();   // CanPlay requires a Basic Unicorn already in your Stable, and hand needs a 2nd Basic Unicorn to bring in
+        ForceMoistUnicornToTop();          // no setup needed — deck always has other Unicorn cards to find
+        ForceUnicornSpeedToTop();          // CanPlay requires a Basic Unicorn already in your Stable
+        ForceUnicornDancerToTop();         // EVERY_TURN choice — no setup needed, just needs the play deck non-empty
+        ForceUnexpectedMiracleUnicornToTop(); // needs a hand card to discard and the Nursery non-empty to see both halves fire
+        ForceKittencornInHeatToTop();      // needs the Nursery non-empty to see the bring-in fire
+        ForceBlackMarketBabyUnicornToTop(); // drawn 1st (currently under test) — EVERY_TURN choice, needs a hand of 2+ cards and the Nursery non-empty to fully exercise discard-then-bring
 
         foreach (var player in turnManager.players)
         {
@@ -336,6 +357,78 @@ public class DeckManager : MonoBehaviour
         if (card == null)
         {
             Debug.LogWarning("ForceUnicornWithBenefitsToTop: no UnicornWithBenefitsCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Moist Unicorn card.
+    void ForceMoistUnicornToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is MoistUnicornCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceMoistUnicornToTop: no MoistUnicornCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Unicorn Speed card.
+    void ForceUnicornSpeedToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is UnicornSpeedCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceUnicornSpeedToTop: no UnicornSpeedCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Unicorn Dancer card.
+    void ForceUnicornDancerToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is UnicornDancerCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceUnicornDancerToTop: no UnicornDancerCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is an Unexpected Miracle Unicorn card.
+    void ForceUnexpectedMiracleUnicornToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is UnexpectedMiracleUnicornCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceUnexpectedMiracleUnicornToTop: no UnexpectedMiracleUnicornCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Kittencorn in Heat card.
+    void ForceKittencornInHeatToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is KittencornInHeatCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceKittencornInHeatToTop: no KittencornInHeatCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Black Market Baby Unicorn card.
+    void ForceBlackMarketBabyUnicornToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is BlackMarketBabyUnicornCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceBlackMarketBabyUnicornToTop: no BlackMarketBabyUnicornCardData found in play deck.");
             return;
         }
         playDeck.MoveToTop(card);
