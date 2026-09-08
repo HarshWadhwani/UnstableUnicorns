@@ -4,6 +4,13 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.27] — 2026-09-07
+
+### Bug fixes
+- **Discarded Upgrade/Downgrade cards rendered off-center in the discard pile.** `StackedStable.PositionCardsInStable()` left-edge anchors its cards (`anchorMin`/`anchorMax` = `(0, 0.5)`) for the overlapping-stack layout. `DiscardPile.AddCard()` reset `anchoredPosition`/rotation/scale but not the anchors, so a card arriving from an Upgrade or Downgrade stable stayed anchored to the pile's left edge — shifted left by half the container. `UnicornStable` and `HandStable` never touch anchors, so Unicorn/Magic/Neigh discards were unaffected. Fix: `DiscardPile.AddCard()` now also normalizes `anchorMin`/`anchorMax`/`pivot` back to `(0.5, 0.5)`.
+
+---
+
 ## [v0.2.26] — 2026-09-07
 
 ### Bug fixes
