@@ -38,11 +38,23 @@ public class CardActionExecutor : MonoBehaviour
     private Queue<CardAction> actionQueue = new Queue<CardAction>();
     private CardActionContext currentContext;
 
+    // Optional one-shot callback fired when the current action queue drains. When set, it takes
+    // over from the built-in "advance the turn phase" behaviour — the caller is then responsible
+    // for whatever comes next. Used by NeighManager to sequence a Neigh's post-cancel discard(s)
+    // before resolving (or discarding) the contested card. Consumed (nulled) when invoked.
+    private System.Action onQueueComplete;
+
     void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
+            // Host the Neigh interrupt manager here so it needs no scene wiring — it reads its
+            // manager references straight off this component in its own Awake.
+            if (NeighManager.Instance == null)
+            {
+                gameObject.AddComponent<NeighManager>();
+            }
         }
         else
         {
@@ -51,15 +63,17 @@ public class CardActionExecutor : MonoBehaviour
         }
     }
 
-    public void ExecuteActions(List<CardAction> actions, Card sourceCard)
+    public void ExecuteActions(List<CardAction> actions, Card sourceCard, System.Action onComplete = null)
     {
         if (actions == null || actions.Count == 0)
         {
             Debug.Log("No actions to execute.");
+            onComplete?.Invoke();
             return;
         }
 
         actionQueue.Clear();
+        onQueueComplete = onComplete;
         currentContext = CreateContext(sourceCard);
 
         foreach (CardAction action in actions)
@@ -78,6 +92,15 @@ public class CardActionExecutor : MonoBehaviour
         if (actionQueue.Count == 0)
         {
             Debug.Log("All actions completed.");
+
+            if (onQueueComplete != null)
+            {
+                System.Action cb = onQueueComplete;
+                onQueueComplete = null;
+                cb();
+                return;
+            }
+
             if (turnManager.currentPhase == TurnPhase.ImmediateSpecial ||
                 turnManager.currentPhase == TurnPhase.EveryTurnSpecial)
             {

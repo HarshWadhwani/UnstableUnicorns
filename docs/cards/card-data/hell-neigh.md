@@ -7,8 +7,8 @@
 | copies | 3 |
 | trigger | NONE |
 | can_play | always |
-| impl_status | not_started |
-| impl_class | — |
+| impl_status | done |
+| impl_class | BasicNeighCardData.cs (rollup) |
 
 ## Effect (2nd Edition)
 > "Play this card when another player tries to play a card. Stop their player's card from being played and send it to the discard pile."
@@ -20,4 +20,4 @@ NEW: passive ability — interrupt mechanic; played out of turn to cancel anothe
 None
 
 ## Implementation Notes
-Standard Neigh/counter effect. Requires out-of-turn play interrupt mechanic not yet implemented.
+Standard Neigh/counter effect. Handled by `NeighManager` (see CLAUDE.md "Neigh Interrupt Mechanic"). No unique C# class — rolled into `BasicNeighCardData` (`NeighType.Basic`) alongside Neigh, Bitch! and The Safeword is Neigh via `cardNameVariations`.

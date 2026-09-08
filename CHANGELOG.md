@@ -4,6 +4,43 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.28] — 2026-09-07
+
+### Neigh interrupt mechanic — 5 cards (53/91 → 58/91)
+
+"Play a Neigh out of turn to cancel another player's card." Previously tracked as a Known Gap.
+
+- **Hell Neigh!**, **Neigh, Bitch!**, **The Safeword is Neigh** — plain cancel. `BasicNeighCardData` (`NeighType.Basic`) rollup; all three share the one asset via `cardNameVariations` (11 copies total).
+- **Neigh, Motherfucker!** — cancel + the owner of the cancelled card discards 1. `DiscardNeighCardData` (`NeighType.ForceOpponentDiscard`), 3 copies.
+- **Neigh Means Neigh** — cancel; "cannot be Neigh'd" — ends the counter-chain the moment it's played. `FinalNeighCardData` (`NeighType.Final`), 1 copy.
+
+No new card classes or assets — the 3 `*NeighCardData` subclasses and their assets already existed (unwired). Added `NeighCardData.CanBeNeighed` (`false` only for `NeighType.Final`).
+
+### `NeighManager` (new, `Assets/Scripts/Manager/`)
+
+Runtime-created by `CardActionExecutor.Awake` (`AddComponent` on the same GameObject, reads its refs off `CardActionExecutor.Instance`) — **no scene wiring**. Owns the contest state machine:
+
+- `CardManager.PlayCardForCurrentPlayer` calls `TryBeginContest` after `CanPlay`. A contest opens only for a plain Action-phase hand play (not `PlayCardFromHandAction`/effect-triggered plays, not a NEIGH card) when the other player holds a Neigh. The confirmed-play body was split out as the public `CardManager.ResolvePlay`.
+- While `AwaitingResponse`, the current `Responder` plays a Neigh from hand (new branch at the top of `HandStable.HandleCardClick`) or presses the Skip button, which doubles as **Pass**. Counter-Neighs alternate between the two players until someone passes or a `Final` Neigh lands.
+- `ResolveContest`: even `neighStack` count ⇒ contested card resolves normally (`ResolvePlay`, then phase advances exactly as `HandStable` would); odd ⇒ it's discarded, effect never fires. Every "live" `ForceOpponentDiscard` in the chain (distance-from-top even) makes the owner of the card it cancelled discard 1, run before the contested card resolves/discards.
+- Assumes exactly 2 players.
+
+### Supporting changes
+
+- **`CardActionExecutor.ExecuteActions`** — optional `onComplete` callback. When set it replaces the built-in "advance the turn phase on queue drain" behaviour; backward-compatible (existing callers pass nothing). Used by `NeighManager` to sequence the forced discards before the contested card resolves.
+- **`TurnManager.SkipEveryTurnPhase`** — now early-returns unless `currentPhase == EveryTurnSpecial`. Latent bug (it never checked the phase); needed now that the Skip button's scene-persistent `onClick` binding also fires during a Neigh contest, where it must be inert.
+- **`PhaseIndicator`** — adds a runtime `onClick` listener to the Skip button for the Pass path; broadens `interactable` and relabels to "Pass" + shows the contest prompt while `AwaitingResponse`.
+- **`Stable.RepositionCards()`** — public passthrough to `PositionCardsInStable()` so `NeighManager` can re-fan a hand after pulling a card out of it.
+- **`DeckManager`** — `Force{BasicNeigh,DiscardNeigh,FinalNeigh,BasicUnicorn}ToTop` debug helpers + a Neigh test stack.
+
+### Docs
+
+- 5 card files + `_checklist.md` (58/91): marked done.
+- `CLAUDE.md`: `NeighManager` added to Manager Layer; `CardManager` entry updated; Known Gaps "Neigh card interrupts" row flipped to Done (2-player).
+- `docs/cards/execution-plan.md`: interrupt-mechanic section marked done; Blocked count 38 → 33.
+
+---
+
 ## [v0.2.27] — 2026-09-07
 
 ### Cards

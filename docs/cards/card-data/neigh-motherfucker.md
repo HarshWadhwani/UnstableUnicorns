@@ -7,8 +7,8 @@
 | copies | 3 |
 | trigger | NONE |
 | can_play | always |
-| impl_status | not_started |
-| impl_class | — |
+| impl_status | done |
+| impl_class | DiscardNeighCardData.cs |
 
 ## Effect (2nd Edition)
 > "Play this card when another player tries to play a card. Stop their player's card from being played and send it to the discard pile. That player must DISCARD a card."
@@ -20,4 +20,4 @@ NEW: passive ability — interrupt mechanic; played out of turn to cancel anothe
 None
 
 ## Implementation Notes
-Enhanced Neigh: also forces the blocked player to discard 1 additional card on top of losing the countered card.
+Enhanced Neigh: also forces the owner of the card it cancels to discard 1. `DiscardNeighCardData` (`NeighType.ForceOpponentDiscard`). `NeighManager.ResolveContest` enqueues a `DiscardCardAction` (numberOfCards 1, PlayerChooses) against that owner for every *live* copy of this in the chain, run before the contested card resolves/discards. See CLAUDE.md "Neigh Interrupt Mechanic".

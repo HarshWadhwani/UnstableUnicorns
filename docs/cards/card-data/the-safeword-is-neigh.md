@@ -7,8 +7,8 @@
 | copies | 5 |
 | trigger | NONE |
 | can_play | always |
-| impl_status | not_started |
-| impl_class | — |
+| impl_status | done |
+| impl_class | BasicNeighCardData.cs (rollup) |
 
 ## Effect (2nd Edition)
 > "Play this card when another player tries to play a card. Stop their card from being played and send it to the discard pile."
@@ -20,4 +20,4 @@ NEW: passive ability — interrupt mechanic; played out of turn to cancel anothe
 None
 
 ## Implementation Notes
-Functionally identical to Hell Neigh! and Neigh, Bitch! Standard counter/interrupt. Most copies of any Neigh variant (5 copies).
+Functionally identical to Hell Neigh! and Neigh, Bitch! Standard counter/interrupt, handled by `NeighManager` (see CLAUDE.md). Rolled into `BasicNeighCardData` (`NeighType.Basic`) via `cardNameVariations`. Most copies of any Neigh variant (5 copies).

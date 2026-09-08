@@ -67,8 +67,16 @@ public class DeckManager : MonoBehaviour
         ForceUnexpectedMiracleUnicornToTop(); // needs a hand card to discard and the Nursery non-empty to see both halves fire
         ForceKittencornInHeatToTop();      // needs the Nursery non-empty to see the bring-in fire
         ForceBlackMarketBabyUnicornToTop(); // EVERY_TURN choice, needs a hand of 2+ cards and the Nursery non-empty to fully exercise discard-then-bring
-        ForceDummyUpgradeToTop();          // drawn 2nd — P2 plays it into their Upgrade stable so P1's Buck Naked has a target
-        ForceBuckNakedToTop();             // drawn 1st (currently under test) — CanPlay requires the opponent to have 1+ Upgrade cards in their Stable; destroys all of them
+        // Neigh interrupt test. Draw order is P1,P2,P1,P2 (turns 1,1,2,2); last Force call = drawn first.
+        //   #1 P1 t1: Neigh Means Neigh  — P1 holds it to counter-Neigh (it "cannot be Neigh'd")
+        //   #2 P2 t1: plain Neigh        — P2 holds it
+        //   #3 P1 t2: Basic Unicorn      — P1 plays it; P2 Neighs; P1 counter-Neighs with Neigh Means Neigh
+        //             -> chain depth 2 (even) => the Unicorn RESOLVES. Pass instead at any point to see the odd-depth cancel.
+        //   #4 P2 t2: Neigh, Motherfucker! — spare, for the cancel + forced-discard branch
+        ForceDiscardNeighToTop();          // -> draw #4  (P2 turn 2)
+        ForceBasicUnicornToTop();          // -> draw #3  (P1 turn 2, contested)
+        ForceBasicNeighToTop();            // -> draw #2  (P2 turn 1)
+        ForceFinalNeighToTop();            // -> draw #1  (P1 turn 1)
 
         foreach (var player in turnManager.players)
         {
@@ -456,6 +464,54 @@ public class DeckManager : MonoBehaviour
         if (card == null)
         {
             Debug.LogWarning("ForceBuckNakedToTop: no BuckNakedCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a plain Basic Unicorn.
+    void ForceBasicUnicornToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is BasicUnicornCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceBasicUnicornToTop: no BasicUnicornCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a plain Neigh (Hell Neigh! / Neigh, Bitch! / The Safeword is Neigh).
+    void ForceBasicNeighToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is BasicNeighCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceBasicNeighToTop: no BasicNeighCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is Neigh, Motherfucker! (cancel + forced discard).
+    void ForceDiscardNeighToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is DiscardNeighCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceDiscardNeighToTop: no DiscardNeighCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is Neigh Means Neigh (cannot itself be Neigh'd).
+    void ForceFinalNeighToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is FinalNeighCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceFinalNeighToTop: no FinalNeighCardData found in play deck.");
             return;
         }
         playDeck.MoveToTop(card);

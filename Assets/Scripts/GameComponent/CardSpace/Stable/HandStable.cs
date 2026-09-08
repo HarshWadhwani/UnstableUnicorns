@@ -21,6 +21,21 @@ public class HandStable : Stable
 
     public override void HandleCardClick(Card card)
     {
+        // A Neigh contest is open: only the current responder may act, and only by playing a
+        // Neigh from their hand (or pressing the Skip/Pass button, handled in PhaseIndicator).
+        if (NeighManager.Instance != null && NeighManager.Instance.AwaitingResponse)
+        {
+            if (player == NeighManager.Instance.Responder && card.cardData is NeighCardData)
+            {
+                NeighManager.Instance.SubmitNeigh(card, this);
+            }
+            else
+            {
+                Debug.LogWarning($"Waiting for {NeighManager.Instance.Responder.name} to play a Neigh or pass.");
+            }
+            return;
+        }
+
         if (CardActionExecutor.Instance != null && CardActionExecutor.Instance.currentPendingAction != PendingActionType.None)
         {
             if (player != turnManager.activePlayer)
@@ -68,6 +83,15 @@ public class HandStable : Stable
             if (isCardPlayed)
             {
                 PositionCardsInStable();
+
+                // A Neigh contest opened on this play — NeighManager owns resolution and the
+                // turn-phase advance from here. Don't advance the phase ourselves.
+                if (NeighManager.Instance != null && NeighManager.Instance.ContestPending)
+                {
+                    Debug.Log("Play is being contested by a Neigh — deferring phase advance.");
+                    return;
+                }
+
                 Debug.Log("Hand stable is starting next turn phase");
                 // Synchronous IMMEDIATE actions complete before we get here, leaving no pending
                 // action. In that case, treat as NONE so we don't park in ImmediateSpecial.

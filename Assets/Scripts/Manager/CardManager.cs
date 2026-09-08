@@ -36,6 +36,26 @@ public class CardManager : MonoBehaviour
             return false;
         }
 
+        // Give the other player a window to Neigh this play. If a contest begins, the card stays
+        // in hand and NeighManager drives resolution (and the turn-phase advance) once it settles;
+        // the caller treats this as a successful play. TryBeginContest returns false for anything
+        // that can't be Neigh'd right now (no Neigh in the responder's hand, mid-effect play, etc.),
+        // in which case we resolve immediately as before.
+        if (NeighManager.Instance != null && NeighManager.Instance.TryBeginContest(card, handStable))
+        {
+            return true;
+        }
+
+        return ResolvePlay(card, handStable);
+    }
+
+    // Everything that happens once a play is confirmed (not Neigh'd): fire an IMMEDIATE effect,
+    // then route the card to its destination. Split out of PlayCardForCurrentPlayer so NeighManager
+    // can call it after a contest resolves in the caster's favour.
+    public bool ResolvePlay(Card card, HandStable handStable)
+    {
+        Player opponent = turnManager.players.FirstOrDefault(p => p != turnManager.activePlayer);
+
         if (card.cardData.specialActionType == SpecialActionType.IMMEDIATE)
         {
             card.cardData.TriggerSpecialAction(card);

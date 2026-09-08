@@ -21,18 +21,13 @@ All 19 cards that were genuinely blocker-free are done (13 no-effect Baby Unicor
 
 ---
 
-## Blocked (38) — grouped by what's missing, roughly cheapest → most expensive
+## Blocked (33) — grouped by what's missing, roughly cheapest → most expensive
 
 ### ~~`DestroyCardAction` has no "destroy all of type" mode~~ — DONE
 - Buck Naked — shipped and tested in Play mode. Added `DestroyCardAction.destroyAll` (mirrors `SacrificeCardAction.sacrificeAll`) + an `Upgrade` value on `DestroyCardAction.TargetStable`. `targetStable=Upgrade` is `destroyAll`-only; the interactive path for it is a deliberate no-op.
 
-### Interrupt mechanic — one investment unlocks 5 cards
-"Play a card outside your turn to cancel another play." Pre-existing gap, already tracked in `CLAUDE.md`'s Known Gaps table as "Neigh card interrupts."
-- Hell Neigh!
-- Neigh, Bitch!
-- Neigh Means Neigh
-- Neigh, Motherfucker!
-- The Safeword is Neigh
+### ~~Interrupt mechanic — one investment unlocks 5 cards~~ — DONE
+"Play a Neigh out of turn to cancel another play." Shipped and tested via `NeighManager` (see CLAUDE.md Manager Layer). All 5 shipped: Hell Neigh!, Neigh, Bitch!, The Safeword is Neigh (`BasicNeighCardData` rollup), Neigh, Motherfucker! (`DiscardNeighCardData`), Neigh Means Neigh (`FinalNeighCardData`). Covers counter-Neigh recursion and the `Final`/`ForceOpponentDiscard` variants; 2-player only, and effect-triggered plays (`PlayCardFromHandAction`) are not contestable.
 
 ### Passive/continuous stable-modifier effects — needs a general framework beyond `ISacrificeShield` (14 cards)
 Not one mechanic — hand-limit modifiers, play restrictions, destroy-immunity, win-condition double-counting, sacrifice-redirects. Each likely needs its own hook point. Probably the largest architectural lift in the remaining set.
@@ -95,6 +90,6 @@ Needs a new pending-action type where the *target* player (not necessarily the a
 3. ~~Build `PlayCardFromHandAction`'s subtype extension~~ Done → Unicorn with Benefits shipped.
 4. ~~Build the three small new actions (`BringFromNurseryAction`, `DrawCardAction`, `SearchDeckForTypeAction`)~~ Done → 6 cards shipped (Black Market Baby Unicorn, Kittencorn in Heat, Unexpected Miracle Unicorn, Unicorn Dancer, Unicorn Speed, Moist Unicorn).
 5. ~~Build `DestroyCardAction`'s destroy-all-of-type mode~~ Done → Buck Naked shipped and tested.
-6. Tackle the interrupt mechanic once → 5 Neigh cards at once.
+6. ~~Tackle the interrupt mechanic once~~ Done → 5 Neigh cards shipped (`NeighManager`).
 7. Hand-visibility interaction → 3 cards, plus reusable for Peeping Narwhal.
 8. Everything else roughly by ascending complexity, saving Rainbow Shitstorm and the passive-effects framework for last (highest design cost, most likely to need a real architecture decision rather than a quick add).

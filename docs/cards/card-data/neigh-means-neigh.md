@@ -7,8 +7,8 @@
 | copies | 1 |
 | trigger | NONE |
 | can_play | always |
-| impl_status | not_started |
-| impl_class | — |
+| impl_status | done |
+| impl_class | FinalNeighCardData.cs |
 
 ## Effect (2nd Edition)
 > "Play this card when another player tries to play a card. Stop their card from being played and send it to the discard pile. This card cannot be Neigh'd."
@@ -20,4 +20,4 @@ NEW: passive ability — interrupt mechanic; played out of turn to cancel anothe
 None
 
 ## Implementation Notes
-Enhanced Neigh with "cannot be Neigh'd" — immune to counter-countering. Requires the interrupt system to support uncounterable Neighs.
+Enhanced Neigh with "cannot be Neigh'd" — immune to counter-countering. `FinalNeighCardData` (`NeighType.Final`); `NeighCardData.CanBeNeighed` returns `false` for this type, so `NeighManager.SubmitNeigh` ends the counter-chain the moment it's played (no further Pass/Neigh window offered). See CLAUDE.md "Neigh Interrupt Mechanic".

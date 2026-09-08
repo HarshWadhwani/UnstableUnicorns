@@ -138,6 +138,10 @@ public class Stable : CardSpace
         PositionCardsInStable();
     }
 
+    // External callers (e.g. NeighManager) that move cards out of this stable need a way to
+    // re-run the layout afterwards — RemoveCard alone doesn't reposition the survivors.
+    public void RepositionCards() => PositionCardsInStable();
+
     protected virtual void PositionCardsInStable()
     {
         RectTransform stableRect = GetComponent<RectTransform>();

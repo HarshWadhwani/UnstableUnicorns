@@ -121,6 +121,11 @@ public class TurnManager : MonoBehaviour
 
     public void SkipEveryTurnPhase()
     {
+        // The Skip button doubles as the Neigh "Pass" control (PhaseIndicator wires that
+        // separately). Its scene-persistent onClick still points here, so ignore the call
+        // unless we're actually in the EveryTurnSpecial phase.
+        if (currentPhase != TurnPhase.EveryTurnSpecial) return;
+
         if (pendingMandatoryCards.Count > 0)
         {
             Debug.LogWarning("Cannot skip: mandatory Downgrade effects must resolve first.");
