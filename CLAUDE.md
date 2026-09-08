@@ -111,6 +111,16 @@ Use the `/add-card` skill: `/add-card "<card description>"` — Claude will walk
 
 Full decision tree, action-type reference, and worked examples: `docs/cards/card-implementation-guide.md`
 
+### UI Layer (`Assets/Scripts/UI/`)
+
+Visual-only. Gameplay never reads from here.
+
+- **`UiPalette`** — static class, the single source of truth for gameplay UI colour ("Storybook Stable" pastel scheme). `ForCard(CardData)` returns the type hue; `TypeLabel` / `TriggerLabel` return badge strings. Retune the whole look by editing this file.
+- **`CardVisuals`** — on the `Card` prefab. `Card.Initialize` calls `Apply(cardData)` once the data is known; it paints the ribbon band, art-window tint, and type chip from `UiPalette`. Serialized refs to those child Images live on the prefab.
+- **`CardHoverZoom`** — on the `Card` prefab. Lifts + scales a card ~1.7× on hover, but only while `card.cardSpace is HandStable`; no-op in stables / deck / discard. Cosmetic — clicks still route normally.
+
+Full plan and remaining phases (board chrome, fonts, polish): `docs/ui-redesign-plan.md`.
+
 ### Key Enums
 
 - `CardType`: `UNICORN`, `MAGIC`, `UPGRADE`, `DOWNGRADE`, `NEIGH`
@@ -167,5 +177,6 @@ Detailed reasoning and per-card notes live in `docs/` — read on demand, not ne
 - `docs/cards/execution-plan.md` — which of the remaining 68 cards are ready to build now vs. blocked on missing functionality (grouped by what's missing), and a suggested build order — check before picking the next card to implement
 - `docs/cards/fuck-marry-kill.md` — implementation detail, execution trace, quirks, and test checklist for FMK
 - `docs/stable-positioning.md` — layout formula, B2 fix explanation, subclass override guide, and regression test
+- `docs/ui-redesign-plan.md` — "Storybook Stable" visual pass: palette tokens, mockup link, phase checklist (Phase 0–2 done)
 - `docs/future-architecture-mvc.md` — when and how to migrate to a model-separated architecture (prerequisite for multiplayer, AI, save/load)
 - `docs/issues.md` — tracked bugs and tech debt with fix directions

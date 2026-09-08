@@ -29,6 +29,8 @@ public class Card : MonoBehaviour, IPointerClickHandler
         cardName.text = cardDisplayName;
         cardDescription.text = cardData.cardDescriptionText;
         this.cardData = cardData;
+
+        GetComponent<CardVisuals>()?.Apply(cardData);
     }
 
     public void OnPointerClick(PointerEventData eventData)

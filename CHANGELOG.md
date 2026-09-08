@@ -4,6 +4,38 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.29] — 2026-09-08
+
+### UI redesign — "Storybook Stable", phases 0–2
+
+Pastel storybook visual pass. Direction, palette tokens and remaining phases: `docs/ui-redesign-plan.md`
+(mockup: https://claude.ai/code/artifact/16ecd2a9-b048-4c29-aa3c-faee524b484a).
+
+**New — `Assets/Scripts/UI/`** (visual-only; gameplay never reads from it):
+- **`UiPalette`** — static, the single source of truth for gameplay UI colour. All tokens from the
+  mockup as `Color`, plus `ForCard(CardData)` (the six type hues, Basic/Baby vs Magical split),
+  `TypeLabel`, `TriggerLabel`.
+- **`CardVisuals`** — on the `Card` prefab; `Card.Initialize` calls `Apply(cardData)`, which paints
+  the ribbon band, art-window tint and type chip from `UiPalette`.
+- **`CardHoverZoom`** — on the `Card` prefab; lifts + scales a card ~1.7× on hover, but only while
+  it's in a `HandStable`. Cosmetic — clicks still route normally.
+
+**`Card.prefab`** restructured to the storybook frame: 66×94 → **100×140**, warm-cream rounded face,
+a type-coloured **Ribbon** band holding the name, a framed **art window**, a small type **chip**,
+navy framed card-back. Name/description TMP switched to auto-size (name 9–17 bold ink, description
+7–11 ink-soft) — the old fixed `fontSize: 6` black text is gone. Vestigial root `SpriteRenderer`
+removed. `Card.cs` gained one line to call `CardVisuals.Apply`.
+
+**`GameScene.unity`** value edits: CanvasScaler → **Scale With Screen Size**, 1920×1080, match 0.5
+(was Constant Pixel Size — the reason the board was tiny and fixed-size); camera clear colour and
+GameBoard sprite tint → the Table lavender.
+
+**Not yet done** (see the plan doc): board chrome / HUD / zone labels (Phase 4), Fredoka + Nunito
+font import (Phase 5), shadows + slot wells + fan-spacing tune (Phase 6). The GameBoard is still a
+world-space sprite, so it drifts from the canvas UI on non-16:9 windows until Phase 4.
+
+---
+
 ## [v0.2.28] — 2026-09-07
 
 ### Neigh interrupt mechanic — 5 cards (53/91 → 58/91)
