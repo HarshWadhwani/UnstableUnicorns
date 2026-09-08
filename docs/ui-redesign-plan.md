@@ -74,7 +74,30 @@ centre piles to x `±330`; phase text + Skip button moved to the top-right near 
 Import **Fredoka** + **Nunito** as TMP font assets (Font Asset Creator), repoint `UiPalette` /
 prefab text. Needs the `.ttf` files + an Editor pass.
 
-### ☐ Phase 6 — Polish
-Storybook offset shadows (`Shadow` UI component or a shadow `Image`), empty-stable slot wells
-(runtime `Image` per stable), card-back motif, rounded HUD panel sprite, hand-fan spacing tune
-for the larger cards.
+### ✅ Phase 6 — Polish
+- **Drop shadows** — `CardVisuals.Awake` adds a hard down-right `Shadow` to the card front/back
+  (paper cut-out look).
+- **Card-back motif** — a faint rotated-square diamond `Image` on the back (no font glyph, so no
+  fallback-character warning).
+- **Empty-stable slot wells** — `BoardChrome` builds 7 faint placeholder cells in each unicorn
+  stable, matching `Stable.PositionCardsInStable`'s slot maths; cards drop on top and cover them.
+- **HUD unification** — `BoardChrome` reparents the scene's phase text + Skip/Pass button *into*
+  the top-right HUD panel and restyles them (turquoise button, ink text). Scene label →
+  "Skip / Pass". Win bars now actually update (a `winFills[i]` assignment was missing; width is
+  driven by `anchorMax.x` so it needs no sprite).
+- **Game-over overlay** — hidden scrim + "X wins!" plaque, shown when a stable reaches
+  `winConditionCount` (input freezes; no restart button yet).
+- **Hand fan rewrite** — `HandStable.PositionCardsInStable` is now parametric arc maths instead of
+  the 1–8 lookup tables: one card sits straight up and centred; each extra card opens the fan by
+  `fanTotalAngle / 6` degrees; centre card upright and highest, outer cards tilt and dip. New
+  `fanCardSpacing` field (56) beside `fanTotalAngle` (90).
+- **Rounded runtime sprites** — `BoardChrome` scavenges the built-in 9-slice UISprite from an
+  existing scene `Image` (`Resources.GetBuiltinResource` no longer works in this uGUI version);
+  falls back to sharp rectangles.
+
+### ☐ Follow-ups
+- Game-over needs a restart / rematch button.
+- Board surface is still a flat two-tone panel — the mockup's subtle radial + hatch texture is
+  unshipped.
+- `docs/stable-positioning.md` predates the hand-fan rewrite (it documents the base `Stable`
+  formula, not the fan, but worth a check next time it's touched).

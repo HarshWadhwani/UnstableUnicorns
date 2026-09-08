@@ -1,14 +1,13 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Builds the board's furniture at runtime — a defined play surface, uppercase zone
-/// labels, a heads-up panel (turn + win progress), and an active-player glow — so no
-/// GameObjects have to be added to the scene by hand. Created by
-/// <see cref="CardActionExecutor"/> via AddComponent; discovers everything else itself.
-/// Cosmetic only.
+/// Builds the board's furniture at runtime — a defined play surface, empty-stable slot
+/// wells, zone labels, one unified heads-up panel (turn, win progress, phase, Skip/Pass),
+/// an active-player glow, and a game-over overlay — so no GameObjects have to be added to
+/// the scene by hand. Created by <see cref="CardActionExecutor"/> via AddComponent;
+/// discovers everything else itself. Cosmetic only.
 /// </summary>
 public class BoardChrome : MonoBehaviour
 {
@@ -23,10 +22,33 @@ public class BoardChrome : MonoBehaviour
     private readonly TMP_Text[] winLabels = new TMP_Text[2];
     private TMP_Text turnLabel;
 
+    private GameObject gameOverRoot;
+    private TMP_Text gameOverText;
+    private bool gameOverShown;
+
+    // The built-in rounded UISprite isn't reachable via Resources.GetBuiltinResource in this
+    // Unity/uGUI version, so borrow it from an existing UI Image in the scene (the Skip button
+    // and the Card prefab both use it). Falls back to null → plain sharp rectangles.
     private Sprite roundedSprite;
-    private Sprite Rounded => roundedSprite != null
-        ? roundedSprite
-        : (roundedSprite = Resources.GetBuiltinResource<Sprite>("UI/Skin/UISprite.psd"));
+    private bool roundedResolved;
+    private Sprite Rounded
+    {
+        get
+        {
+            if (roundedResolved) return roundedSprite;
+            roundedResolved = true;
+
+            Image[] images = Object.FindObjectsByType<Image>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            foreach (Image img in images)
+                if (img != null && img.sprite != null && img.sprite.border.sqrMagnitude > 0f)
+                { roundedSprite = img.sprite; break; }
+            if (roundedSprite == null)
+                foreach (Image img in images)
+                    if (img != null && img.sprite != null) { roundedSprite = img.sprite; break; }
+
+            return roundedSprite;
+        }
+    }
 
     void Awake()
     {
@@ -37,8 +59,8 @@ public class BoardChrome : MonoBehaviour
     void Start()
     {
         canvas = GameObject.Find("CardCanvas")?.GetComponent<Canvas>()
-                 ?? Object.FindFirstObjectByType<Canvas>();
-        turnManager = Object.FindFirstObjectByType<TurnManager>();
+                 ?? Object.FindAnyObjectByType<Canvas>();
+        turnManager = Object.FindAnyObjectByType<TurnManager>();
 
         if (canvas == null || turnManager == null)
         {
@@ -49,9 +71,11 @@ public class BoardChrome : MonoBehaviour
         canvasRt = canvas.transform as RectTransform;
 
         BuildBoardSurface();
+        BuildSlotWells();
         BuildZoneLabels();
         BuildPlayerGlows();
         BuildHud();
+        BuildGameOver();
     }
 
     void Update()
@@ -71,8 +95,16 @@ public class BoardChrome : MonoBehaviour
             {
                 int have = us.spaceCards.Count;
                 int need = Mathf.Max(1, us.winConditionCount);
-                if (winFills[i] != null) winFills[i].fillAmount = Mathf.Clamp01((float)have / need);
+                if (winFills[i] != null)
+                    winFills[i].rectTransform.anchorMax = new Vector2(Mathf.Clamp01((float)have / need), 1f);
                 if (winLabels[i] != null) winLabels[i].text = $"{p.name}   {have}/{need}";
+
+                if (!gameOverShown && have >= need)
+                {
+                    gameOverShown = true;
+                    if (gameOverText != null) gameOverText.text = $"{p.name} wins!";
+                    if (gameOverRoot != null) gameOverRoot.SetActive(true);
+                }
             }
         }
 
@@ -97,11 +129,42 @@ public class BoardChrome : MonoBehaviour
         Stretch(inner.rectTransform, 6, 6);
     }
 
+    // Dashed-looking placeholders where the 7 winning unicorns will sit — the win track,
+    // visible from turn one. Cards drop on top and cover them.
+    private void BuildSlotWells()
+    {
+        Color well = UiPalette.Recess; well.a = 0.6f;
+        foreach (Player p in turnManager.players)
+        {
+            UnicornStable us = p != null ? p.unicornStable : null;
+            if (us == null) continue;
+            RectTransform srt = us.GetComponent<RectTransform>();
+            if (srt == null) continue;
+
+            int slots = Mathf.Max(1, us.maxCardsInStable);
+            float w = srt.rect.width;
+            float slotW = w / slots;
+            float startX = srt.anchoredPosition.x - w / 2f + slotW / 2f;
+            float cellW = Mathf.Min(slotW * 0.8f, 96f);
+            float cellH = cellW * 1.4f;
+
+            for (int i = 0; i < slots; i++)
+            {
+                Image cell = NewImage($"SlotWell{i}", srt, well);
+                cell.rectTransform.anchorMin = cell.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+                cell.rectTransform.pivot = new Vector2(0.5f, 0.5f);
+                cell.rectTransform.sizeDelta = new Vector2(cellW, cellH);
+                cell.rectTransform.anchoredPosition = new Vector2(startX + i * slotW, 0f);
+                cell.transform.SetAsFirstSibling();
+            }
+        }
+    }
+
     private void BuildZoneLabels()
     {
         LabelZone(DeckManager.Instance != null ? DeckManager.Instance.playDeck : null, "Deck");
         LabelZone(DeckManager.Instance != null ? DeckManager.Instance.nursery : null, "Nursery");
-        LabelZone(Object.FindFirstObjectByType<DiscardPile>(), "Discard");
+        LabelZone(Object.FindAnyObjectByType<DiscardPile>(), "Discard");
     }
 
     private void LabelZone(Component zone, string text)
@@ -141,35 +204,27 @@ public class BoardChrome : MonoBehaviour
         Image panel = NewImage("HudPanel", canvasRt, UiPalette.Cream);
         panel.rectTransform.anchorMin = panel.rectTransform.anchorMax = new Vector2(1f, 1f);
         panel.rectTransform.pivot = new Vector2(1f, 1f);
-        panel.rectTransform.sizeDelta = new Vector2(236, 98);
+        panel.rectTransform.sizeDelta = new Vector2(244, 176);
         panel.rectTransform.anchoredPosition = new Vector2(-16f, -16f);
 
         turnLabel = NewLabel("HudTurn", panel.rectTransform, "Turn 1",
                              17, UiPalette.Ink, FontStyles.Bold, TextAlignmentOptions.Left);
-        turnLabel.rectTransform.anchorMin = new Vector2(0f, 1f);
-        turnLabel.rectTransform.anchorMax = new Vector2(1f, 1f);
-        turnLabel.rectTransform.pivot = new Vector2(0.5f, 1f);
-        turnLabel.rectTransform.sizeDelta = new Vector2(-24f, 24f);
-        turnLabel.rectTransform.anchoredPosition = new Vector2(0f, -9f);
+        DockRow(turnLabel.rectTransform, -9f, 24f);
 
         Color[] hues = { UiPalette.TypeBasic, UiPalette.TypeDowngrade };
         for (int i = 0; i < 2; i++)
         {
-            float y = -38f - i * 26f;
-
             Image track = NewImage($"WinTrack{i}", panel.rectTransform, UiPalette.CreamSunken);
-            track.rectTransform.anchorMin = new Vector2(0f, 1f);
-            track.rectTransform.anchorMax = new Vector2(1f, 1f);
-            track.rectTransform.pivot = new Vector2(0.5f, 1f);
-            track.rectTransform.sizeDelta = new Vector2(-28f, 13f);
-            track.rectTransform.anchoredPosition = new Vector2(0f, y);
+            DockRow(track.rectTransform, -38f - i * 24f, 13f);
 
+            // Width driven by anchorMax.x in Update (0..1) — works with or without a sprite.
             Image fill = NewImage($"WinFill{i}", track.rectTransform, hues[i]);
-            fill.type = Image.Type.Filled;
-            fill.fillMethod = Image.FillMethod.Horizontal;
-            fill.fillOrigin = 0; // left
-            fill.fillAmount = 0f;
-            Stretch(fill.rectTransform, 0, 0);
+            fill.rectTransform.anchorMin = new Vector2(0f, 0f);
+            fill.rectTransform.anchorMax = new Vector2(0f, 1f);
+            fill.rectTransform.pivot = new Vector2(0f, 0.5f);
+            fill.rectTransform.offsetMin = Vector2.zero;
+            fill.rectTransform.offsetMax = Vector2.zero;
+            winFills[i] = fill;
 
             TMP_Text lbl = NewLabel($"WinLabel{i}", track.rectTransform, "",
                                     9, UiPalette.Ink, FontStyles.Bold, TextAlignmentOptions.Right);
@@ -179,9 +234,69 @@ public class BoardChrome : MonoBehaviour
             lbl.rectTransform.offsetMax = new Vector2(-5f, 0f);
             winLabels[i] = lbl;
         }
+
+        // Fold the scene's phase text + Skip/Pass button into the same panel.
+        PhaseIndicator pi = Object.FindAnyObjectByType<PhaseIndicator>();
+        if (pi != null && pi.phaseLabel != null)
+        {
+            pi.phaseLabel.rectTransform.SetParent(panel.rectTransform, false);
+            DockRow(pi.phaseLabel.rectTransform, -96f, 22f);
+            pi.phaseLabel.fontSize = 15f;
+            pi.phaseLabel.color = UiPalette.InkSoft;
+            pi.phaseLabel.alignment = TextAlignmentOptions.Left;
+            pi.phaseLabel.enableAutoSizing = false;
+        }
+        if (pi != null && pi.skipButton != null)
+        {
+            RectTransform brt = pi.skipButton.GetComponent<RectTransform>();
+            brt.SetParent(panel.rectTransform, false);
+            DockRow(brt, -122f, 34f);
+
+            Image bimg = pi.skipButton.GetComponent<Image>();
+            if (bimg != null) bimg.color = UiPalette.Accent; // keep the button's own rounded sprite
+            TMP_Text btxt = pi.skipButton.GetComponentInChildren<TMP_Text>();
+            if (btxt != null)
+            {
+                btxt.color = UiPalette.AccentInk;
+                btxt.fontSize = 15f;
+                btxt.fontStyle = FontStyles.Bold;
+                btxt.enableAutoSizing = false;
+            }
+        }
+    }
+
+    private void BuildGameOver()
+    {
+        Color scrim = UiPalette.Ink; scrim.a = 0.6f;
+        Image backdrop = NewImage("GameOver", canvasRt, scrim);
+        Stretch(backdrop.rectTransform, 0, 0);
+        backdrop.transform.SetAsLastSibling();
+        backdrop.raycastTarget = true; // swallow clicks to the board underneath
+
+        Image plaque = NewImage("GameOverCard", backdrop.rectTransform, UiPalette.Cream);
+        plaque.rectTransform.anchorMin = plaque.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+        plaque.rectTransform.pivot = new Vector2(0.5f, 0.5f);
+        plaque.rectTransform.sizeDelta = new Vector2(480f, 220f);
+
+        gameOverText = NewLabel("GameOverText", plaque.rectTransform, string.Empty,
+                                42, UiPalette.Ink, FontStyles.Bold, TextAlignmentOptions.Center);
+        Stretch(gameOverText.rectTransform, 26, 26);
+
+        gameOverRoot = backdrop.gameObject;
+        gameOverRoot.SetActive(false);
     }
 
     // ---------------------------------------------------------------- helpers
+
+    // Lay a row across the top of the HUD panel, `y` down from the top, `h` tall.
+    private static void DockRow(RectTransform rt, float y, float h)
+    {
+        rt.anchorMin = new Vector2(0f, 1f);
+        rt.anchorMax = new Vector2(1f, 1f);
+        rt.pivot = new Vector2(0.5f, 1f);
+        rt.sizeDelta = new Vector2(-26f, h);
+        rt.anchoredPosition = new Vector2(0f, y);
+    }
 
     private Image NewImage(string goName, RectTransform parent, Color color)
     {
@@ -190,8 +305,12 @@ public class BoardChrome : MonoBehaviour
         rt.SetParent(parent, false);
         var img = go.AddComponent<Image>();
         img.color = color;
-        img.sprite = Rounded;
-        img.type = Image.Type.Sliced;
+        Sprite spr = Rounded;
+        if (spr != null)
+        {
+            img.sprite = spr;
+            img.type = Image.Type.Sliced;
+        }
         img.raycastTarget = false;
         return img;
     }

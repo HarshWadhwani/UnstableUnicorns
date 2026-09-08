@@ -1,11 +1,14 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class HandStable : Stable
 {
-    public float fanTotalAngle = 140f;
+    [Tooltip("Total spread, in degrees, across a full 7-card hand. Fewer cards fan proportionally less; one card is held straight up.")]
+    public float fanTotalAngle = 90f;
+
+    [Tooltip("Horizontal gap between neighbouring cards in the fan, in canvas units.")]
+    public float fanCardSpacing = 56f;
 
     // Start is called before the first frame update
     void Start()
@@ -118,79 +121,33 @@ public class HandStable : Stable
 
     protected override void PositionCardsInStable()
     {
-        int displayCount = Mathf.Min(spaceCards.Count, 7);
+        int n = Mathf.Min(spaceCards.Count, 7);
+        if (n == 0) return;
+
         RectTransform stableRect = GetComponent<RectTransform>();
+        float baseZ = stableRect.localEulerAngles.z;
+        float baseX = stableRect.anchoredPosition.x;
 
-        float cardSlotAngle = fanTotalAngle / displayCount;
+        // One card sits straight up. Each extra card opens the fan by `step` degrees, up to
+        // fanTotalAngle across a full 7-card hand — so the arc grows and shrinks with the hand.
+        float step = fanTotalAngle / 6f;
+        float mid = (n - 1) / 2f;                 // 0 for one card, 3 for seven
+        float yArc = 0.9f * step * (n - 1);       // how far the outer cards dip; 0 for a lone card
 
-        for (int i = 0; i < displayCount; i++)
+        for (int i = 0; i < n; i++)
         {
             RectTransform cardRect = spaceCards[i].GetComponent<RectTransform>();
 
-            float openSlot = i * cardSlotAngle;
-            float zRotation = stableRect.localEulerAngles.z + 70 - (cardSlotAngle / 2) - openSlot;
+            float offset = i - mid;                        // -mid .. +mid  (0 for a lone card)
+            float frac = mid > 0f ? offset / mid : 0f;     // -1 .. +1
 
-            var xPosition = stableRect.anchoredPosition.x + GetXPositionOffsetValue(displayCount, i);
-            var yPosition = GetYPositionOffsetValue(displayCount, i);
+            float angle = -offset * step;                  // left card tilts CCW, right card CW
+            float x = baseX + offset * fanCardSpacing;
+            float y = -yArc * frac * frac;                 // centre card highest, edges dip down
 
-            cardRect.anchoredPosition = new Vector2(xPosition, yPosition);
-            cardRect.localEulerAngles = new Vector3(stableRect.localEulerAngles.x, stableRect.localEulerAngles.y, zRotation);
-        }
-    }
-
-    private int GetXPositionOffsetValue(int numberOfCards, int currentCardIndex)
-    {
-        var xPositionOffset = (currentCardIndex - (numberOfCards / 2)) * 30;
-        if (numberOfCards % 2 == 0)
-        {
-            xPositionOffset += 15;
-        }
-
-        return xPositionOffset;
-    }
-
-    private static int GetYPositionOffsetValue(int numberOfCards, int currentCardIndex)
-    {
-        List<int> values = new List<int>();
-
-        switch (numberOfCards)
-        {
-            case 1:
-                values.Add(0);
-                break;
-            case 2:
-                values.AddRange(new int[] { 0, 0 });
-                break;
-            case 3:
-                values.AddRange(new int[] { 0, 15, 0 });
-                break;
-            case 4:
-                values.AddRange(new int[] { 0, 25, 25, 0 });
-                break;
-            case 5:
-                values.AddRange(new int[] { 0, 30, 40, 30, 0 });
-                break;
-            case 6:
-                values.AddRange(new int[] { 0, 30, 45, 45, 30, 0 });
-                break;
-            case 7:
-                values.AddRange(new int[] { 0, 30, 50, 55, 50, 30, 0 });
-                break;
-            case 8:
-                values.AddRange(new int[] { 0, 30, 55, 60, 60, 55, 30, 0 });
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(numberOfCards), "numberOfCards must be between 1 and 8");
-        }
-
-        // Return the value at the currentCard position in the list
-        if (currentCardIndex >= 0 && currentCardIndex < values.Count)
-        {
-            return values[currentCardIndex];
-        }
-        else
-        {
-            throw new ArgumentOutOfRangeException(nameof(currentCardIndex), "currentCard must be within the list range");
+            cardRect.anchoredPosition = new Vector2(x, y);
+            cardRect.localEulerAngles = new Vector3(
+                stableRect.localEulerAngles.x, stableRect.localEulerAngles.y, baseZ + angle);
         }
     }
 }

@@ -276,4 +276,5 @@ MonoBehaviour:
   allowedTurnPhases: 02000000
   maxCardsInStable: 7
   player: {fileID: 1168632485362962641}
-  fanTotalAngle: 140
+  fanTotalAngle: 90
+  fanCardSpacing: 56

@@ -4,6 +4,36 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.31] — 2026-09-08
+
+### UI redesign — Phase 6: polish
+
+- **Card shadows + back motif** — `CardVisuals.Awake` adds a hard down-right `Shadow` to the card
+  front/back and a faint rotated-square diamond `Image` on the back (an `Image`, not a glyph, so no
+  `✦`-not-in-font warning).
+- **Empty-stable slot wells** — `BoardChrome` builds 7 faint placeholder cells in each unicorn
+  stable, positioned with the same slot maths as `Stable.PositionCardsInStable`; cards cover them.
+- **Unified HUD** — `BoardChrome` reparents the scene's phase text + Skip/Pass button into the
+  top-right HUD panel and restyles them (turquoise button, ink text). Scene button label →
+  "Skip / Pass". Fixed the win-progress bars, which never updated (`winFills[i]` was never
+  assigned since Phase 4); width is now driven by `anchorMax.x`, needing no sprite.
+- **Game-over overlay** — hidden scrim + "X wins!" plaque, shown when a stable reaches
+  `winConditionCount`. Input freezes; no restart button yet.
+- **Hand fan rewrite** — `HandStable.PositionCardsInStable` replaced the 1–8 lookup tables with
+  parametric arc maths: one card is held straight up and centred (the old code's hardcoded `70`
+  put a lone card at +25°); each extra card opens the fan by `fanTotalAngle / 6` degrees; centre
+  card upright and highest, outer cards tilt (CCW left / CW right) and dip. New `fanCardSpacing`
+  field (56) beside `fanTotalAngle` (now 90).
+- **Runtime rounded sprites** — `BoardChrome` scavenges the built-in 9-slice UISprite from an
+  existing scene `Image`; `Resources.GetBuiltinResource("UI/Skin/UISprite.psd")` fails in this
+  uGUI version. Falls back to sharp rectangles. Also swapped the deprecated
+  `FindFirstObjectByType` for `FindAnyObjectByType`.
+
+Confirmed in Play mode. Remaining: Phase 5 (Fredoka + Nunito font import — needs an Editor pass),
+plus a game-over restart button and the board-surface texture.
+
+---
+
 ## [v0.2.30] — 2026-09-08
 
 ### UI redesign — Phase 4: board chrome + layout
