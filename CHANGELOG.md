@@ -4,6 +4,30 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.30] — 2026-09-08
+
+### UI redesign — Phase 4: board chrome + layout
+
+- **`Assets/Scripts/UI/BoardChrome.cs`** (new) — created at runtime by `CardActionExecutor.Awake`
+  (`AddComponent`, like `NeighManager`), so **no scene wiring**. Discovers Canvas / `TurnManager` /
+  stables / piles in `Start` and builds: a `Recess`-rimmed `Table` board surface (disabling the
+  world-space `GameBoard` sprite, which couldn't scale with the canvas), `DECK` / `NURSERY` /
+  `DISCARD` zone labels, a top-right cream HUD panel (turn number + active player + two live
+  win-progress bars), and a per-frame active-player glow.
+- **`TurnManager.turnNumber`** — display-only counter, incremented in `AdvanceToNextPlayerTurn`,
+  feeds the HUD.
+- **Layout** (`GameScene.unity` + `Player.prefab` value edits): CanvasScaler reference
+  `1920×1080 → 1520×855` — a uniform ~1.26× scale-up of the whole board (bigger, more readable,
+  relative positions preserved). Player bands pulled to root Y `±230`, root size `1000×400`; hand /
+  unicorn / upgrade / downgrade offsets spread apart; centre piles to x `±330`; phase text + Skip
+  button relocated to the top-right beside the HUD.
+
+Confirmed in Play mode. Remaining: Phase 5 (Fredoka + Nunito font import — needs an Editor pass),
+Phase 6 (shadows, empty-stable slot wells, card-back motif, board texture, hand-fan spacing, HUD
+unification, game-over screen).
+
+---
+
 ## [v0.2.29] — 2026-09-08
 
 ### UI redesign — "Storybook Stable", phases 0–2

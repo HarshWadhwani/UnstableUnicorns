@@ -118,8 +118,9 @@ Visual-only. Gameplay never reads from here.
 - **`UiPalette`** — static class, the single source of truth for gameplay UI colour ("Storybook Stable" pastel scheme). `ForCard(CardData)` returns the type hue; `TypeLabel` / `TriggerLabel` return badge strings. Retune the whole look by editing this file.
 - **`CardVisuals`** — on the `Card` prefab. `Card.Initialize` calls `Apply(cardData)` once the data is known; it paints the ribbon band, art-window tint, and type chip from `UiPalette`. Serialized refs to those child Images live on the prefab.
 - **`CardHoverZoom`** — on the `Card` prefab. Lifts + scales a card ~1.7× on hover, but only while `card.cardSpace is HandStable`; no-op in stables / deck / discard. Cosmetic — clicks still route normally.
+- **`BoardChrome`** — created at runtime by `CardActionExecutor.Awake` (`AddComponent`, like `NeighManager`); needs no scene wiring. In `Start` it discovers the Canvas / `TurnManager` / stables / piles and builds the board surface (disabling the world-space `GameBoard`), the `DECK` / `NURSERY` / `DISCARD` zone labels, a top-right HUD panel (turn number + two live win-progress bars), and a per-frame active-player glow. `TurnManager.turnNumber` (display-only counter) feeds the HUD.
 
-Full plan and remaining phases (board chrome, fonts, polish): `docs/ui-redesign-plan.md`.
+Full plan and remaining phases (fonts, polish): `docs/ui-redesign-plan.md`.
 
 ### Key Enums
 

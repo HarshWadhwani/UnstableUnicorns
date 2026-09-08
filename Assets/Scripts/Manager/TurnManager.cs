@@ -10,6 +10,9 @@ public class TurnManager : MonoBehaviour
     public Card currentEveryTurnCard;
     public bool skipNextDrawPhase = false;
 
+    // Purely for display (BoardChrome HUD). Counts each player-turn, starting at 1.
+    public int turnNumber = 1;
+
     // Downgrade EVERY_TURN cards — forced on the active player, auto-fire in order, cannot be skipped.
     private List<Card> pendingMandatoryCards = new List<Card>();
     // Unicorn/Upgrade EVERY_TURN cards — player clicks to activate, or presses Skip to bypass the rest.
@@ -149,6 +152,7 @@ public class TurnManager : MonoBehaviour
     private void AdvanceToNextPlayerTurn()
     {
         SwitchToNextPlayer();
+        turnNumber++;
         pendingMandatoryCards.Clear();
         pendingChoiceCards.Clear();
         CollectEveryTurnCards(activePlayer.downgradeStable, pendingMandatoryCards);

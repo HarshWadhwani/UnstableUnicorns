@@ -52,16 +52,23 @@ Type font: **Fredoka** (display / names / HUD) + **Nunito** (rules text) — not
 Shipped early with Phase 2 (`CardHoverZoom`). Possible follow-ups: straighten the card's fan
 rotation while hovered; re-capture base transform if `HandStable.PositionCardsInStable` runs mid-hover.
 
-### ☐ Phase 4 — Board chrome (runtime-built, zero scene edits)
-New `Assets/Scripts/UI/BoardChrome.cs`, created via `AddComponent` from an existing manager (same
-pattern as `NeighManager`). In `Start`, reads the existing `CardSpace` RectTransforms and builds:
-- uppercase zone labels: Deck · Discard · Nursery, and Your Stable · Upgrades · Downgrades per player
-- a cream **HUD panel** grouping the existing `PhaseIndicatorText` + Skip button, plus turn number
-  and two win-progress bars (`Image` fill = `unicornStable.spaceCards.Count / winConditionCount`)
-- an **active-player glow** `Image` behind `turnManager.activePlayer`'s area
-- restyle the Skip button (cream, ink)
-Also: move `GameBoard` from a world-space `SpriteRenderer` into the canvas as a full-rect `Image`
-so the table and UI scale together (fixes the drift on non-16:9 windows).
+### ✅ Phase 4 — Board chrome + layout
+`Assets/Scripts/UI/BoardChrome.cs` — created via `AddComponent` from `CardActionExecutor` (same
+pattern as `NeighManager`); discovers Canvas / `TurnManager` / stables / piles itself in `Start`
+and builds, with **zero scene edits**:
+- a `Recess`-rimmed `Table` **board surface** (and disables the world-space `GameBoard` sprite, which
+  couldn't scale with the canvas — fixes the world/UI drift)
+- uppercase zone labels: `DECK` · `NURSERY` · `DISCARD` above each pile
+- a cream **HUD panel** (top-right): turn number + active player, and two win-progress bars
+  (`Image` fill = `unicornStable.spaceCards.Count / winConditionCount`, live)
+- an **active-player glow** `Image` behind `turnManager.activePlayer`'s area, toggled per frame
+
+`TurnManager.turnNumber` (display only) added for the HUD.
+
+Layout, in `GameScene.unity` + `Player.prefab` (value edits): CanvasScaler reference `1520×855`
+(uniform ~1.26× scale-up of the whole board — bigger, more readable, relative positions kept);
+player bands pulled to root Y `±230`, root size `1000×400`; hand / stable / stack offsets spread;
+centre piles to x `±330`; phase text + Skip button moved to the top-right near the HUD.
 
 ### ☐ Phase 5 — Fonts
 Import **Fredoka** + **Nunito** as TMP font assets (Font Asset Creator), repoint `UiPalette` /

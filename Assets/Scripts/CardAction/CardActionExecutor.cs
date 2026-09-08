@@ -49,11 +49,15 @@ public class CardActionExecutor : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            // Host the Neigh interrupt manager here so it needs no scene wiring — it reads its
-            // manager references straight off this component in its own Awake.
+            // Host the runtime-built managers here so they need no scene wiring — each discovers
+            // its own references (NeighManager off this component; BoardChrome off the scene).
             if (NeighManager.Instance == null)
             {
                 gameObject.AddComponent<NeighManager>();
+            }
+            if (BoardChrome.Instance == null)
+            {
+                gameObject.AddComponent<BoardChrome>();
             }
         }
         else
