@@ -66,7 +66,9 @@ public class DeckManager : MonoBehaviour
         ForceUnicornDancerToTop();         // EVERY_TURN choice — no setup needed, just needs the play deck non-empty
         ForceUnexpectedMiracleUnicornToTop(); // needs a hand card to discard and the Nursery non-empty to see both halves fire
         ForceKittencornInHeatToTop();      // needs the Nursery non-empty to see the bring-in fire
-        ForceBlackMarketBabyUnicornToTop(); // drawn 1st (currently under test) — EVERY_TURN choice, needs a hand of 2+ cards and the Nursery non-empty to fully exercise discard-then-bring
+        ForceBlackMarketBabyUnicornToTop(); // EVERY_TURN choice, needs a hand of 2+ cards and the Nursery non-empty to fully exercise discard-then-bring
+        ForceDummyUpgradeToTop();          // drawn 2nd — P2 plays it into their Upgrade stable so P1's Buck Naked has a target
+        ForceBuckNakedToTop();             // drawn 1st (currently under test) — CanPlay requires the opponent to have 1+ Upgrade cards in their Stable; destroys all of them
 
         foreach (var player in turnManager.players)
         {
@@ -429,6 +431,31 @@ public class DeckManager : MonoBehaviour
         if (card == null)
         {
             Debug.LogWarning("ForceBlackMarketBabyUnicornToTop: no BlackMarketBabyUnicornCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a plain (no-effect) Upgrade card —
+    // the "Dummy upgrade card" rollup, which is UpgradeCardData exactly (not a subclass).
+    void ForceDummyUpgradeToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData.GetType() == typeof(UpgradeCardData));
+        if (card == null)
+        {
+            Debug.LogWarning("ForceDummyUpgradeToTop: no plain UpgradeCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Buck Naked card.
+    void ForceBuckNakedToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is BuckNakedCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceBuckNakedToTop: no BuckNakedCardData found in play deck.");
             return;
         }
         playDeck.MoveToTop(card);

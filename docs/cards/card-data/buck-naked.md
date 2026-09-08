@@ -7,22 +7,22 @@
 | copies | 1 |
 | trigger | IMMEDIATE |
 | can_play | opponent has at least one Upgrade card in their Stable |
-| impl_status | not_started |
-| impl_class | — |
+| impl_status | implemented (untested in Play mode) |
+| impl_class | BuckNakedCardData.cs |
 
 ## Effect (2nd Edition)
 > "DESTROY all Upgrade cards in another player's Stable."
 
 ## Action Mapping
-- DestroyCardAction { destroyer=ActivePlayer, targetStable=Any, numberOfCards=999 } — destroy all upgrades (would need targetStable=Upgrade and sacrificeAll=true equivalent)
+- `DestroyCardAction { destroyer=ActivePlayer, targetStable=Upgrade, destroyAll=true }` — auto-moves every card in the opponent's Upgrade stable to the discard pile, no prompt.
 
 ## Passive Interfaces
 None
 
 ## CanPlay Override
 ```csharp
-opponentPlayer.upgradeStable.Cards.Count > 0
+opponentPlayer != null && opponentPlayer.upgradeStable.spaceCards.Count > 0
 ```
 
 ## Implementation Notes
-Destroys ALL Upgrade cards (not just one). DestroyCardAction currently targets a specific stable card interactively — would need an auto-destroy-all variant for Upgrade type.
+Needed two additions to `DestroyCardAction`: an `Upgrade` value on the `TargetStable` enum, and a `destroyAll` bool that mirrors `SacrificeCardAction.sacrificeAll` — when set, every card in scope is moved to discard immediately with no player selection, and `numberOfCards` is ignored. Sacrifice shields (`ISacrificeShield`) are **not** consulted on a `destroyAll` — a mass destroy has no single target for a shield to intercept. Interactive (`destroyAll=false`) + `targetStable=Upgrade` is explicitly unsupported (logs a warning and no-ops); wiring it would need a new `PendingActionType` and `Stable.HandleCardClick` changes that no card currently requires.
