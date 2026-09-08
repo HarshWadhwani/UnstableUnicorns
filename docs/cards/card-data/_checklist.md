@@ -17,7 +17,7 @@
 | [Blaze and Graze](blaze-and-graze.md) | Magic | 1 | ✅ | ✅ |
 | [Blow Up Unicorn](blow-up-unicorn.md) | Upgrade | 2 | ✅ | ⬜ |
 | [Breaking and Entering](breaking-and-entering.md) | Magic | 2 | ✅ | ✅ |
-| [Buck Naked](buck-naked.md) | Magic | 1 | ✅ | ⬜ |
+| [Buck Naked](buck-naked.md) | Magic | 1 | ✅ | ✅ |
 | [Bukkakecorn](bukkakecorn.md) | Magical Unicorn | 1 | ✅ | ✅ |
 | [Bye Bye Baby Unicorn](bye-bye-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ✅ |
 | [Cannibal Baby Unicorn](cannibal-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ✅ |
@@ -105,6 +105,6 @@
 ## Summary
 - Total cards: 91
 - Extracted: 91 / 91
-- Implemented: 52 / 91 (A Little Side Hustle, Autoerotic Asphyxiation, Baby Trap, Baby Unicorn of Incest, Bear Daddy Unicorn, Black Market Baby Unicorn, Blaze and Graze, Breaking and Entering, Bukkakecorn, Bye Bye Baby Unicorn, Cannibal Baby Unicorn, Conjoined Baby Unicorn, Double Agent Unicorn, Dumpster Baby Unicorn, Dumpster Diving Unicorn, Faceless Baby Unicorn, Flesh-Eating Unicorn, Free Candy Unicorn, Fuck. Marry. Kill, Fuckboi Unicorn, Fucking Cute Baby Unicorn, Fucking Ugly Baby Unicorn, Fuzzy Hoofcuffs, Hentaicorn, Homicidal Psychocorn, Horrifying Impaling, Horse With A Dildo, Kittencorn in Heat, Manscaped Llamacorn, Moist Unicorn, Pageant Baby Unicorn, Polyamorous Unicorn, Pony Play, Putting on a Show, Sadomasocorn, Semenbiscuit, Shotgun Baby Unicorn, Single Unicorn, Someone Else's Baby Unicorn, Stoner Unicorn, Tasty Baby Unicorn, The Bitchiest Unicorn, Twinkicorn, Unexpected Miracle Unicorn, Unicorn Dancer, Unicorn Enema, Unicorn on the Street Corner, Unicorn Speed, Unicorn with Benefits, Upside Down Baby Unicorn, Vanillacorn, Wasted White Unicorn)
+- Implemented: 53 / 91 (A Little Side Hustle, Autoerotic Asphyxiation, Baby Trap, Baby Unicorn of Incest, Bear Daddy Unicorn, Black Market Baby Unicorn, Blaze and Graze, Breaking and Entering, Buck Naked, Bukkakecorn, Bye Bye Baby Unicorn, Cannibal Baby Unicorn, Conjoined Baby Unicorn, Double Agent Unicorn, Dumpster Baby Unicorn, Dumpster Diving Unicorn, Faceless Baby Unicorn, Flesh-Eating Unicorn, Free Candy Unicorn, Fuck. Marry. Kill, Fuckboi Unicorn, Fucking Cute Baby Unicorn, Fucking Ugly Baby Unicorn, Fuzzy Hoofcuffs, Hentaicorn, Homicidal Psychocorn, Horrifying Impaling, Horse With A Dildo, Kittencorn in Heat, Manscaped Llamacorn, Moist Unicorn, Pageant Baby Unicorn, Polyamorous Unicorn, Pony Play, Putting on a Show, Sadomasocorn, Semenbiscuit, Shotgun Baby Unicorn, Single Unicorn, Someone Else's Baby Unicorn, Stoner Unicorn, Tasty Baby Unicorn, The Bitchiest Unicorn, Twinkicorn, Unexpected Miracle Unicorn, Unicorn Dancer, Unicorn Enema, Unicorn on the Street Corner, Unicorn Speed, Unicorn with Benefits, Upside Down Baby Unicorn, Vanillacorn, Wasted White Unicorn)
 
 *Update this table as cards are extracted and implemented. Mark Extracted ✅ when a card file exists in this directory with effect text filled in.*

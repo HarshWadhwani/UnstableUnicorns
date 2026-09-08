@@ -7,7 +7,7 @@ All notable changes to this project will be documented here. Versions are tagged
 ## [v0.2.27] — 2026-09-07
 
 ### Cards
-- **Buck Naked** — Magic / `IMMEDIATE`, 1 copy. "Destroy all Upgrade cards in another player's Stable." `CanPlay` requires the opponent to have ≥ 1 Upgrade card in their stable. Single action: `DestroyCardAction { targetStable=Upgrade, destroyAll=true }`. **Untested in Play mode.**
+- **Buck Naked** — Magic / `IMMEDIATE`, 1 copy. "Destroy all Upgrade cards in another player's Stable." `CanPlay` requires the opponent to have ≥ 1 Upgrade card in their stable. Single action: `DestroyCardAction { targetStable=Upgrade, destroyAll=true }`. Tested in Play mode.
 
 ### `DestroyCardAction` — destroy-all-of-type mode
 - New **`destroyAll`** bool (default `false`, every existing card unaffected). Mirrors `SacrificeCardAction.sacrificeAll`: every card in scope is moved to the discard pile immediately, no prompt, `numberOfCards` ignored. Sacrifice shields (`ISacrificeShield`) are **not** consulted — a mass destroy has no single target to intercept.
@@ -15,7 +15,7 @@ All notable changes to this project will be documented here. Versions are tagged
 - Debug: `DeckManager.ForceBuckNakedToTop()` (drawn 1st) + `ForceDummyUpgradeToTop()` (drawn 2nd, so P2 can play an Upgrade into their stable to give Buck Naked a target).
 
 ### Docs
-- `docs/cards/card-data/buck-naked.md`: `impl_class` + notes; `impl_status` = implemented (untested). `_checklist.md` count left at 52/91 until Play-mode confirmation.
+- `docs/cards/card-data/buck-naked.md`: `impl_class` + notes; `impl_status` = done. `_checklist.md`: 52/91 → 53/91.
 - `CLAUDE.md`: `DestroyCardAction` row updated for `destroyAll` / `targetStable=Upgrade`.
 - `docs/cards/execution-plan.md`: `DestroyCardAction` destroy-all section marked done; Blocked count 39 → 38.
 

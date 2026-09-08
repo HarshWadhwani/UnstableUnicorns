@@ -24,7 +24,7 @@ All 19 cards that were genuinely blocker-free are done (13 no-effect Baby Unicor
 ## Blocked (38) — grouped by what's missing, roughly cheapest → most expensive
 
 ### ~~`DestroyCardAction` has no "destroy all of type" mode~~ — DONE
-- Buck Naked — shipped (untested in Play mode). Added `DestroyCardAction.destroyAll` (mirrors `SacrificeCardAction.sacrificeAll`) + an `Upgrade` value on `DestroyCardAction.TargetStable`. `targetStable=Upgrade` is `destroyAll`-only; the interactive path for it is a deliberate no-op.
+- Buck Naked — shipped and tested in Play mode. Added `DestroyCardAction.destroyAll` (mirrors `SacrificeCardAction.sacrificeAll`) + an `Upgrade` value on `DestroyCardAction.TargetStable`. `targetStable=Upgrade` is `destroyAll`-only; the interactive path for it is a deliberate no-op.
 
 ### Interrupt mechanic — one investment unlocks 5 cards
 "Play a card outside your turn to cancel another play." Pre-existing gap, already tracked in `CLAUDE.md`'s Known Gaps table as "Neigh card interrupts."
@@ -94,7 +94,7 @@ Needs a new pending-action type where the *target* player (not necessarily the a
 2. ~~Implement `SacrificeCardAction.sacrificeAll=false`~~ Done → Double Agent Unicorn, Putting on a Show, Sadomasocorn all shipped.
 3. ~~Build `PlayCardFromHandAction`'s subtype extension~~ Done → Unicorn with Benefits shipped.
 4. ~~Build the three small new actions (`BringFromNurseryAction`, `DrawCardAction`, `SearchDeckForTypeAction`)~~ Done → 6 cards shipped (Black Market Baby Unicorn, Kittencorn in Heat, Unexpected Miracle Unicorn, Unicorn Dancer, Unicorn Speed, Moist Unicorn).
-5. ~~Build `DestroyCardAction`'s destroy-all-of-type mode~~ Done → Buck Naked shipped (untested).
+5. ~~Build `DestroyCardAction`'s destroy-all-of-type mode~~ Done → Buck Naked shipped and tested.
 6. Tackle the interrupt mechanic once → 5 Neigh cards at once.
 7. Hand-visibility interaction → 3 cards, plus reusable for Peeping Narwhal.
 8. Everything else roughly by ascending complexity, saving Rainbow Shitstorm and the passive-effects framework for last (highest design cost, most likely to need a real architecture decision rather than a quick add).

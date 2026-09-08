@@ -7,7 +7,7 @@
 | copies | 1 |
 | trigger | IMMEDIATE |
 | can_play | opponent has at least one Upgrade card in their Stable |
-| impl_status | implemented (untested in Play mode) |
+| impl_status | done |
 | impl_class | BuckNakedCardData.cs |
 
 ## Effect (2nd Edition)
