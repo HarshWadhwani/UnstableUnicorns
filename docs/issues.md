@@ -14,6 +14,8 @@ Tracked issues from code and design review. Work through these one by one.
 | B2 | `Stable.PositionCardsInStable` off-by-one | ✅ Fixed |
 | B3 | `TriggerSpecialAction` overrides suppress base | ✅ Fixed |
 | B4 | `DestroyCardAction.Any` silently falls back to Unicorn | ✅ Fixed |
+| B5 | Fuzzy Hoofcuffs missing `CanActivateEveryTurn` guard — soft-locks on small hand | ✅ Fixed |
+| B6 | Flesh-Eating Unicorn missing `CanPlay` guard — soft-locks on small opponent hand | ✅ Fixed |
 | R1 | `UpgradeStable`/`DowngradeStable` identical `HandleCardClick` | ✅ Fixed |
 | R2 | `UpgradeStable`/`DowngradeStable` near-identical `PositionCardsInStable` | ✅ Fixed |
 | R3 | `Card` duplicates fields from `CardData` | ✅ Fixed |
@@ -57,6 +59,22 @@ Each of these overrides `TriggerSpecialAction` with only a `Debug.Log`, discardi
 **File:** `DestroyCardAction.cs`  
 `TargetStable.Any` was unimplemented and defaulted to `unicornStable` with a warning log. Any card using `Any` would have incorrectly targeted only unicorns.  
 **Fix applied:** Removed the `TargetStable` enum entirely — every `DestroyCardAction` now lets the destroyer pick any card from any of the opposing player's three stables. `CardActionExecutor.ExecutePendingAction` falls back to `card.cardSpace` when `pendingSourceStable` is null, so the source is resolved at click time. FMK's `targetStable = Unicorn` line was removed (its "Kill" step now allows targeting upgrades and downgrades).
+
+---
+
+### B5 — Fuzzy Hoofcuffs missing `CanActivateEveryTurn` guard, soft-locks the game
+**Status:** Fixed  
+**File:** `FuzzyHoofcuffsCardData.cs`  
+Runs `DiscardCardAction { selectionMode=PlayerChooses, numberOfCards=2 }`, which never caps `numberOfCards` to actual hand size (by design — see `SacrificeCardAction`/`DiscardCardAction` docs). Shipped without a `CanActivateEveryTurn` guard, unlike the otherwise-identical Bukkakecorn pattern it was modeled on. Clicking the card with a hand of 0-1 cards set `pendingCardsRemaining=2` with no way to supply the second card — the discard prompt never completes, and `CanSkipEveryTurnPhase` requires `currentPendingAction == None`, so the Skip button disables itself too. Total soft-lock, no in-game recovery.  
+**Fix applied:** Added `CanActivateEveryTurn` requiring `opponentPlayer.unicornStable.spaceCards.Count >= 1 && activePlayer.handStable.spaceCards.Count >= 2` — same shape as Bukkakecorn's guard.
+
+---
+
+### B6 — Flesh-Eating Unicorn missing `CanPlay` guard, soft-locks the game
+**Status:** Fixed  
+**File:** `FleshEatingUnicornCardData.cs`  
+Same root cause as B5 (`DiscardCardAction { PlayerChooses, numberOfCards=2 }` targeting the opponent's hand), but this card is `IMMEDIATE`, not an `EVERY_TURN` choice — there's no `CanActivateEveryTurn` equivalent for cards triggered on play, and the active player has no in-game signal preventing them from playing it regardless of the opponent's hand size. Playing it against an opponent with 0-1 cards in hand soft-locked the game the same way. Predates this session (shipped `52c2a39`, mid-July) — found during an architecture review, not during card-adding work.  
+**Fix applied:** Added `CanPlay` requiring `opponentPlayer.handStable.spaceCards.Count >= 2`.
 
 ---
 

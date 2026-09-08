@@ -20,6 +20,12 @@
 ## Passive Interfaces
 None
 
+## CanPlay Override
+```csharp
+opponentPlayer.handStable.spaceCards.Count >= 2
+```
+Fixed 2026-09-07 — originally shipped without this guard, which meant playing it against an opponent with 0-1 cards in hand left the discard prompt permanently stuck. Unlike an EVERY_TURN choice card, this is IMMEDIATE, so `CanPlay` (not `CanActivateEveryTurn`) is the only available gate — the active player has no in-game signal stopping them from playing it regardless of opponent hand size.
+
 ## Implementation Notes
 "Choose any player" — in 2-player this is always the opponent. Multi-player would need a player-selection step.
 

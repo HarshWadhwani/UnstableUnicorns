@@ -4,6 +4,21 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.26] — 2026-09-07
+
+### Bug fixes
+- **Fuzzy Hoofcuffs (B5)** — missing `CanActivateEveryTurn` guard. Activating with a hand of 0-1 cards left the discard-2-then-steal effect permanently stuck (and unskippable), since `DiscardCardAction` doesn't cap `numberOfCards` to hand size. Added a guard matching Bukkakecorn's pattern: `opponentPlayer.unicornStable.spaceCards.Count >= 1 && activePlayer.handStable.spaceCards.Count >= 2`.
+- **Flesh-Eating Unicorn (B6)** — same root cause, but `IMMEDIATE` rather than an `EVERY_TURN` choice, so no `CanActivateEveryTurn` equivalent applies. Playing it against an opponent with 0-1 cards in hand caused the same soft-lock. Added `CanPlay` requiring `opponentPlayer.handStable.spaceCards.Count >= 2`. Predates this session (shipped mid-July) — found during an architecture review, not new-card work.
+
+Both found by auditing every `DiscardCardAction`/`SacrificeCardAction`/`DestroyCardAction`/`GiveCardAction` usage with `numberOfCards > 1` for a missing hand/stable-size guard — the general failure class is now documented as a checklist item in the implementation guide.
+
+### Docs
+- `docs/issues.md`: added B5, B6 (both fixed).
+- `docs/cards/card-data/fuzzy-hoofcuffs.md`, `flesh-eating-unicorn.md`: documented the new guards.
+- `docs/cards/card-implementation-guide.md`: added "The count-check trap" — a checklist rule for any future card with `numberOfCards > 1` on a PlayerChooses action.
+
+---
+
 ## [v0.2.25] — 2026-09-03
 
 ### Cards
