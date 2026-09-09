@@ -77,6 +77,15 @@ public class DeckManager : MonoBehaviour
         ForceBasicUnicornToTop();          // -> draw #3  (P1 turn 2, contested)
         ForceBasicNeighToTop();            // -> draw #2  (P2 turn 1)
         ForceFinalNeighToTop();            // -> draw #1  (P1 turn 1)
+        // Hand-visibility batch. These calls run after the Neigh block, so they end up on top;
+        // last call = drawn first. Draw order: Hoof Job (P1 t1), Entitled Unicorn (P2 t1),
+        // Officer Hornie (P1 t2), Peeping Narwhal (P2 t2). Each opponent starts with 1 Nursery
+        // Baby Unicorn in hand, so Hoof Job's CanPlay passes and the Unicorn-filter variants
+        // have a target on turn 1.
+        ForcePeepingNarwhalToTop();
+        ForceOfficerHornieToTop();
+        ForceEntitledUnicornToTop();
+        ForceHoofJobToTop();
 
         foreach (var player in turnManager.players)
         {
@@ -512,6 +521,54 @@ public class DeckManager : MonoBehaviour
         if (card == null)
         {
             Debug.LogWarning("ForceFinalNeighToTop: no FinalNeighCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Hoof Job card.
+    void ForceHoofJobToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is HoofJobCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceHoofJobToTop: no HoofJobCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is an Entitled Unicorn card.
+    void ForceEntitledUnicornToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is EntitledUnicornCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceEntitledUnicornToTop: no EntitledUnicornCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is an Officer Hornie card.
+    void ForceOfficerHornieToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is OfficerHornieCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceOfficerHornieToTop: no OfficerHornieCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Peeping Narwhal card.
+    void ForcePeepingNarwhalToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is PeepingNarwhalCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForcePeepingNarwhalToTop: no PeepingNarwhalCardData found in play deck.");
             return;
         }
         playDeck.MoveToTop(card);

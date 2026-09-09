@@ -7,8 +7,8 @@
 | copies | 2 |
 | trigger | IMMEDIATE |
 | can_play | opponent has at least one card in hand |
-| impl_status | not_started |
-| impl_class | — |
+| impl_status | done |
+| impl_class | HoofJobCardData.cs |
 
 ## Effect (2nd Edition)
 > "Look at another player's hand. Choose a card and add it to your hand."

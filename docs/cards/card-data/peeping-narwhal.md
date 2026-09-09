@@ -8,8 +8,8 @@
 | copies | 1 |
 | trigger | IMMEDIATE |
 | can_play | always |
-| impl_status | not_started |
-| impl_class | — |
+| impl_status | done |
+| impl_class | PeepingNarwhalCardData.cs |
 
 ## Effect (2nd Edition)
 > "When this card enters your Stable, each other player must show you their hand."

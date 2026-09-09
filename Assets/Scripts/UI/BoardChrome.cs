@@ -38,7 +38,7 @@ public class BoardChrome : MonoBehaviour
             if (roundedResolved) return roundedSprite;
             roundedResolved = true;
 
-            Image[] images = Object.FindObjectsByType<Image>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            Image[] images = Object.FindObjectsByType<Image>(FindObjectsInactive.Include);
             foreach (Image img in images)
                 if (img != null && img.sprite != null && img.sprite.border.sqrMagnitude > 0f)
                 { roundedSprite = img.sprite; break; }

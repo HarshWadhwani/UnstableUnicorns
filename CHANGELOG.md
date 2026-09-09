@@ -4,6 +4,47 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.32] — 2026-09-08
+
+### Hand-visibility batch — 4 cards (58 → 62 / 91)
+
+- **`LookAndTakeFromHandAction`** — "look at another player's hand, choose 1 card." The chooser
+  clicks a card in the target player's `HandStable`; it moves to their own hand or straight to
+  the discard pile. `targetPlayer` / `destination` (`ActivePlayerHand` | `DiscardPile`) /
+  `cardTypeFilter` (`CardType?`). Modelled on `DestroyCardAction`: records
+  `pendingTakeFromHandTargetPlayer` / `pendingTakeFromHandTypeFilter` on the executor and prompts
+  with the new `PendingActionType.TakeFromHand`; `HandStable.HandleCardClick` has the matching
+  branch **before** its active-player guard (the clicked hand is the target's, not the chooser's).
+  `cardTypeFilter` set + no match ⇒ skips silently ("you may").
+- **`RevealHandsAction`** — Peeping Narwhal. No cards move; reveals each other player's hand to
+  the caster on the caster's next turn (casting a Unicorn ends the turn immediately), then
+  auto-clears. Also logs the hands.
+- **New cards:** Hoof Job (Magic ×2 — take any card → hand), Entitled Unicorn (Magical Unicorn —
+  take a Unicorn → hand), Officer Hornie (Magical Unicorn — send a Unicorn → discard), Peeping
+  Narwhal (Magical Unicorn — reveal only). `CanPlay` on Hoof Job requires a non-empty opponent
+  hand; Entitled / Officer skip silently with no Unicorn in the target hand.
+- **`DeckManager`** — `Force{HoofJob,EntitledUnicorn,OfficerHornie,PeepingNarwhal}ToTop()` debug
+  stacking, drawn first over the Neigh test block.
+
+### Hotseat hand privacy — `HandVisibilityController`
+
+- Runtime component (created by `CardActionExecutor.Awake`, like `NeighManager` / `BoardChrome`).
+  Every `LateUpdate` only the active player's hand renders face-up; every other hand is
+  face-down. Targeted reveals: the current Neigh `Responder` while `AwaitingResponse`; the
+  `TakeFromHand` target while that action is pending; a Peeping Narwhal target on the caster's
+  next turn. Prompts that reassign `activePlayer` to a non-active player
+  (`DiscardCardAction` / `GiveCardAction` on the opponent) reveal that hand for free. Display
+  only — no gameplay logic reads a card's face.
+- **`CardHoverZoom`** — now also gates on `cardFront.activeSelf` (face-down cards don't lift),
+  and abandons a held hover-capture if the card changes `CardSpace` mid-animation, undoing only
+  the zoom scale and leaving position / sibling order to the destination's layout. Fixes a
+  pre-existing bug where a card played from a hovered hand was dragged off-centre in the discard
+  pile (and, newly reachable via Hoof Job, a card taken into your hand landing outside the fan).
+- **`BoardChrome`** — dropped the deprecated `FindObjectsSortMode` argument from the
+  `FindObjectsByType<Image>` call (CS0618 warning).
+
+---
+
 ## [v0.2.31] — 2026-09-08
 
 ### UI redesign — Phase 6: polish

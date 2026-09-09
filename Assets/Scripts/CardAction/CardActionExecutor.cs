@@ -10,7 +10,8 @@ public enum  PendingActionType
     DestroyUnicornCard,
     StealCard,
     PlayCardFromHand,
-    SacrificeCard
+    SacrificeCard,
+    TakeFromHand
 }
 
 public class CardActionExecutor : MonoBehaviour
@@ -33,6 +34,11 @@ public class CardActionExecutor : MonoBehaviour
     public Player pendingSacrificeTargetPlayer;
     public SacrificeCardAction.TargetStable? pendingSacrificeTargetStable;
     public UnicornType? pendingSacrificeSubtypeFilter;
+    // LookAndTakeFromHandAction: which player's hand may be clicked, and an optional CardType
+    // filter on the pickable card. Same "record the target player" pattern as
+    // pendingDestroyTargetPlayer — more reliable than turnManager.activePlayer mid-effect.
+    public Player pendingTakeFromHandTargetPlayer;
+    public CardType? pendingTakeFromHandTypeFilter;
 
     private Player originalActivePlayer;
     private Queue<CardAction> actionQueue = new Queue<CardAction>();
@@ -50,7 +56,8 @@ public class CardActionExecutor : MonoBehaviour
         {
             Instance = this;
             // Host the runtime-built managers here so they need no scene wiring — each discovers
-            // its own references (NeighManager off this component; BoardChrome off the scene).
+            // its own references (NeighManager / HandVisibilityController off this component;
+            // BoardChrome off the scene).
             if (NeighManager.Instance == null)
             {
                 gameObject.AddComponent<NeighManager>();
@@ -58,6 +65,10 @@ public class CardActionExecutor : MonoBehaviour
             if (BoardChrome.Instance == null)
             {
                 gameObject.AddComponent<BoardChrome>();
+            }
+            if (HandVisibilityController.Instance == null)
+            {
+                gameObject.AddComponent<HandVisibilityController>();
             }
         }
         else
@@ -228,6 +239,8 @@ public class CardActionExecutor : MonoBehaviour
         pendingSacrificeTargetPlayer = null;
         pendingSacrificeTargetStable = null;
         pendingSacrificeSubtypeFilter = null;
+        pendingTakeFromHandTargetPlayer = null;
+        pendingTakeFromHandTypeFilter = null;
         originalActivePlayer = null;
 
         ExecuteNextAction();

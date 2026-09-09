@@ -39,6 +39,31 @@ public class HandStable : Stable
             return;
         }
 
+        // A "look at another player's hand and take/discard a card" effect is pending (Hoof Job,
+        // Entitled Unicorn, Officer Hornie). The clicked hand belongs to the *target* player, not
+        // the active player, so this is checked before the active-player guard below — same shape
+        // as DestroyCardAction's pendingDestroyTargetPlayer.
+        if (CardActionExecutor.Instance != null
+            && CardActionExecutor.Instance.currentPendingAction == PendingActionType.TakeFromHand)
+        {
+            if (player != CardActionExecutor.Instance.pendingTakeFromHandTargetPlayer)
+            {
+                Debug.LogWarning("Must select a card from the target player's hand.");
+                return;
+            }
+
+            CardType? typeFilter = CardActionExecutor.Instance.pendingTakeFromHandTypeFilter;
+            if (typeFilter.HasValue && card.cardData.cardType != typeFilter.Value)
+            {
+                Debug.LogWarning($"Must select a {typeFilter.Value} card.");
+                return;
+            }
+
+            CardActionExecutor.Instance.ExecutePendingAction(card);
+            PositionCardsInStable();
+            return;
+        }
+
         if (CardActionExecutor.Instance != null && CardActionExecutor.Instance.currentPendingAction != PendingActionType.None)
         {
             if (player != turnManager.activePlayer)
