@@ -7,8 +7,8 @@
 | copies | 1 |
 | trigger | IMMEDIATE |
 | can_play | opponent has at least 3 cards in hand OR at least 1 Unicorn in Stable |
-| impl_status | not_started |
-| impl_class | — |
+| impl_status | done |
+| impl_class | SexDrugsAndUnicornsCardData.cs |
 
 ## Effect (2nd Edition)
 > "Choose a player. That player must either DISCARD 3 cards or SACRIFICE a Unicorn card."

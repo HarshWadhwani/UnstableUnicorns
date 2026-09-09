@@ -4,6 +4,41 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.33] — 2026-09-08
+
+### "Choose between two effects" — 2 cards (62 → 64 / 91)
+
+- **`ChooseEffectAction`** — presents one player (`chooser` = ActivePlayer or Opponent) with two
+  labelled options, each a `List<CardAction>`. Per-option `Predicate<CardActionContext>`
+  viability check: 0 viable → silent no-op; 1 viable → run it with no prompt; 2 viable → prompt.
+  The picked option's actions are spliced onto the front of the executor's queue via the new
+  `CardActionExecutor.PrependActions`. Viability is what stops a `numberOfCards>1` sub-action
+  (Sex, Drugs & Unicorns' "discard 3") from being offered into a soft-lock. Predicates + nested
+  lists are runtime-only (rebuilt in `OnEnable`).
+- **`CardActionExecutor`** — `PendingActionType.ChooseEffect`; `pendingChoice{Title,LabelA,LabelB,
+  OptionA,OptionB}`; `PromptEffectChoice` / `ResolveEffectChoice` / `PrependActions`.
+  `ClearPendingAction` split into `ClearPendingAction` (resets + resumes queue) and
+  `ResetPendingState` (resets only), so `ResolveEffectChoice` can reuse the reset.
+- **`EffectChoicePanel`** — runtime two-button UI (created in `CardActionExecutor.Awake` like
+  `BoardChrome`). Centred cream plaque + `UiPalette.Accent` buttons + full-screen scrim; shows
+  while `ChooseEffect` is pending; buttons call `ResolveEffectChoice(0|1)`.
+- **`SacrificeCardAction`** — new `sacrificer` (ActivePlayer/Opponent, default ActivePlayer) so
+  the opponent can be made to sacrifice. Every existing caller unchanged.
+- **`DestroyCardAction`** — interactive `targetStable = Upgrade` now prompts (was a warn + no-op)
+  via `PendingActionType.DestroyUpgradeCard`; `Stable.HandleCardClick` gains the matching branch
+  (requires `this is UpgradeStable`), mirroring `DestroyUnicornCard`.
+- **New cards:** Kink Shame (Magic ×3 — caster chooses: destroy an Upgrade / sacrifice a
+  Downgrade), Sex, Drugs, and Unicorns (Magic ×1 — the opponent chooses: discard 3 / sacrifice a
+  Unicorn). `CanPlay` guards per the card data files.
+- **`DeckManager`** — `Force{KinkShame,SexDrugsAndUnicorns}ToTop()`, and a
+  `DebugStageBoardForKinkShame()` scaffold (one-line-disableable) that pre-places an effect-free
+  Upgrade in P2's stable and a Downgrade in P1's so a turn-1 Kink Shame has both options live.
+
+Kink Shame confirmed in Play mode (both choice paths + the one-viable auto-run). Sex, Drugs, and
+Unicorns shares the same `ChooseEffectAction` path; its own board-staging isn't wired yet.
+
+---
+
 ## [v0.2.32] — 2026-09-08
 
 ### Hand-visibility batch — 4 cards (58 → 62 / 91)

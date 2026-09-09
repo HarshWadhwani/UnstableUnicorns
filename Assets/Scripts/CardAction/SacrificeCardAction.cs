@@ -6,8 +6,12 @@ using UnityEngine;
 public class SacrificeCardAction : CardAction
 {
     public enum TargetStable { Unicorn, Upgrade, Downgrade, Any }
+    public enum SacrificerPlayer { ActivePlayer, Opponent }
 
     public TargetStable targetStable = TargetStable.Downgrade;
+    // Whose own stables are sacrificed from. Default ActivePlayer (every existing caller);
+    // Opponent is used by Sex, Drugs, and Unicorns ("that player must ... SACRIFICE a Unicorn").
+    public SacrificerPlayer sacrificer = SacrificerPlayer.ActivePlayer;
     public bool sacrificeAll = true;
     public int numberOfCards = 1;
     // Null = any unicorn. Only meaningful when targetStable includes the Unicorn stable.
@@ -15,37 +19,45 @@ public class SacrificeCardAction : CardAction
 
     public override void Execute(CardActionExecutor executor, CardActionContext context)
     {
-        Player activePlayer = context.activePlayer;
+        Player sacrificingPlayer = sacrificer == SacrificerPlayer.ActivePlayer
+            ? context.activePlayer
+            : context.opponentPlayer;
 
-        if (!sacrificeAll)
+        if (sacrificingPlayer == null)
         {
-            List<CardSpace> targetStables = GetTargetStables(activePlayer);
-            if (!targetStables.Any(s => s.spaceCards.Any(MatchesSubtype)))
-            {
-                Debug.Log($"{activePlayer.name} has no eligible cards to sacrifice.");
-                return;
-            }
-
-            executor.pendingSacrificeTargetPlayer = activePlayer;
-            executor.pendingSacrificeTargetStable = targetStable;
-            executor.pendingSacrificeSubtypeFilter = targetSubtype;
-            executor.PromptPlayerToSelectCards(activePlayer, null, context.discardPile, numberOfCards, PendingActionType.SacrificeCard);
+            Debug.Log("SacrificeCardAction: no sacrificing player. Skipping.");
             return;
         }
 
-        foreach (CardSpace stable in GetTargetStables(activePlayer))
+        if (!sacrificeAll)
+        {
+            List<CardSpace> targetStables = GetTargetStables(sacrificingPlayer);
+            if (!targetStables.Any(s => s.spaceCards.Any(MatchesSubtype)))
+            {
+                Debug.Log($"{sacrificingPlayer.name} has no eligible cards to sacrifice.");
+                return;
+            }
+
+            executor.pendingSacrificeTargetPlayer = sacrificingPlayer;
+            executor.pendingSacrificeTargetStable = targetStable;
+            executor.pendingSacrificeSubtypeFilter = targetSubtype;
+            executor.PromptPlayerToSelectCards(sacrificingPlayer, null, context.discardPile, numberOfCards, PendingActionType.SacrificeCard);
+            return;
+        }
+
+        foreach (CardSpace stable in GetTargetStables(sacrificingPlayer))
         {
             List<Card> toSacrifice = new List<Card>(stable.spaceCards);
             if (toSacrifice.Count == 0)
             {
-                Debug.Log($"{activePlayer.name} has no cards in {stable.name} to sacrifice.");
+                Debug.Log($"{sacrificingPlayer.name} has no cards in {stable.name} to sacrifice.");
                 continue;
             }
             foreach (Card card in toSacrifice)
             {
                 context.cardManager.MoveCard(card, stable, context.discardPile);
             }
-            Debug.Log($"{activePlayer.name} sacrificed {toSacrifice.Count} card(s) from {stable.name}.");
+            Debug.Log($"{sacrificingPlayer.name} sacrificed {toSacrifice.Count} card(s) from {stable.name}.");
         }
     }
 

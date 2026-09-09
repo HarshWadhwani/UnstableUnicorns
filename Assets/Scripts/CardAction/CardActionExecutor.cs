@@ -8,10 +8,12 @@ public enum  PendingActionType
     GiveCard,
     DestroyCard,
     DestroyUnicornCard,
+    DestroyUpgradeCard,
     StealCard,
     PlayCardFromHand,
     SacrificeCard,
-    TakeFromHand
+    TakeFromHand,
+    ChooseEffect
 }
 
 public class CardActionExecutor : MonoBehaviour
@@ -39,6 +41,13 @@ public class CardActionExecutor : MonoBehaviour
     // pendingDestroyTargetPlayer — more reliable than turnManager.activePlayer mid-effect.
     public Player pendingTakeFromHandTargetPlayer;
     public CardType? pendingTakeFromHandTypeFilter;
+    // ChooseEffectAction: the two option action-lists + their button labels + a title (usually
+    // the source card's name), read by EffectChoicePanel while currentPendingAction == ChooseEffect.
+    public string pendingChoiceTitle;
+    public string pendingChoiceLabelA;
+    public string pendingChoiceLabelB;
+    public List<CardAction> pendingChoiceOptionA;
+    public List<CardAction> pendingChoiceOptionB;
 
     private Player originalActivePlayer;
     private Queue<CardAction> actionQueue = new Queue<CardAction>();
@@ -69,6 +78,10 @@ public class CardActionExecutor : MonoBehaviour
             if (HandVisibilityController.Instance == null)
             {
                 gameObject.AddComponent<HandVisibilityController>();
+            }
+            if (EffectChoicePanel.Instance == null)
+            {
+                gameObject.AddComponent<EffectChoicePanel>();
             }
         }
         else
@@ -226,7 +239,15 @@ public class CardActionExecutor : MonoBehaviour
     private void ClearPendingAction()
     {
         Debug.Log($"Pending action {currentPendingAction} completed. Restoring active player to {originalActivePlayer.name}.");
-        
+        ResetPendingState();
+        ExecuteNextAction();
+    }
+
+    // Clears every pending-prompt field and restores the active player, WITHOUT resuming the
+    // queue. ClearPendingAction resumes after this; ResolveEffectChoice resumes itself (after
+    // splicing in the chosen actions).
+    private void ResetPendingState()
+    {
         turnManager.activePlayer = originalActivePlayer;
         currentPendingAction = PendingActionType.None;
         pendingSourceStable = null;
@@ -241,9 +262,68 @@ public class CardActionExecutor : MonoBehaviour
         pendingSacrificeSubtypeFilter = null;
         pendingTakeFromHandTargetPlayer = null;
         pendingTakeFromHandTypeFilter = null;
+        pendingChoiceTitle = null;
+        pendingChoiceLabelA = null;
+        pendingChoiceLabelB = null;
+        pendingChoiceOptionA = null;
+        pendingChoiceOptionB = null;
         originalActivePlayer = null;
+    }
 
+    // ---- ChooseEffectAction support ----
+
+    // Present `chooser` with two labelled options; EffectChoicePanel renders the pending fields
+    // and calls ResolveEffectChoice on click. Mirrors PromptPlayerToSelectCards' active-player swap.
+    public void PromptEffectChoice(Player chooser, string title,
+        string labelA, List<CardAction> optionA, string labelB, List<CardAction> optionB)
+    {
+        originalActivePlayer = turnManager.activePlayer;
+        turnManager.activePlayer = chooser;
+
+        currentPendingAction = PendingActionType.ChooseEffect;
+        pendingChoiceTitle = title;
+        pendingChoiceLabelA = labelA;
+        pendingChoiceOptionA = optionA;
+        pendingChoiceLabelB = labelB;
+        pendingChoiceOptionB = optionB;
+
+        Debug.Log($"[ChooseEffect] {chooser.name} chooses: [{labelA}] or [{labelB}].");
+    }
+
+    public void ResolveEffectChoice(int index)
+    {
+        if (currentPendingAction != PendingActionType.ChooseEffect)
+        {
+            Debug.LogWarning("ResolveEffectChoice called with no choice pending.");
+            return;
+        }
+
+        List<CardAction> chosen = index == 0 ? pendingChoiceOptionA : pendingChoiceOptionB;
+        string chosenLabel = index == 0 ? pendingChoiceLabelA : pendingChoiceLabelB;
+        Debug.Log($"[ChooseEffect] {turnManager.activePlayer.name} picked [{chosenLabel}].");
+
+        ResetPendingState();
+        if (chosen != null && chosen.Count > 0)
+        {
+            PrependActions(chosen);
+        }
         ExecuteNextAction();
+    }
+
+    // Splice `actions` onto the front of the remaining queue (a Queue has no push-front). Used by
+    // ResolveEffectChoice and by ChooseEffectAction when only one option is viable.
+    public void PrependActions(IEnumerable<CardAction> actions)
+    {
+        var rebuilt = new Queue<CardAction>();
+        foreach (CardAction a in actions)
+        {
+            if (a != null) rebuilt.Enqueue(a);
+        }
+        foreach (CardAction a in actionQueue)
+        {
+            rebuilt.Enqueue(a);
+        }
+        actionQueue = rebuilt;
     }
 }
 

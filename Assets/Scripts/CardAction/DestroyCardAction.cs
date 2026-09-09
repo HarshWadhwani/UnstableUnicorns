@@ -50,8 +50,8 @@ public class DestroyCardAction : CardAction
         }
         else if (targetStable == TargetStable.Upgrade)
         {
-            Debug.LogWarning("DestroyCardAction: interactive targetStable=Upgrade is not supported — set destroyAll=true.");
-            return;
+            totalCards = targetPlayer.upgradeStable.spaceCards.Count;
+            actionType = PendingActionType.DestroyUpgradeCard;
         }
         else
         {

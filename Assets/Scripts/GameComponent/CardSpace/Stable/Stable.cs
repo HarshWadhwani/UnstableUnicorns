@@ -55,6 +55,25 @@ public class Stable : CardSpace
             return;
         }
 
+        if (CardActionExecutor.Instance.currentPendingAction == PendingActionType.DestroyUpgradeCard)
+        {
+            if (player != CardActionExecutor.Instance.pendingDestroyTargetPlayer)
+            {
+                Debug.LogWarning("Must target the opponent's stable.");
+                return;
+            }
+
+            if (!(this is UpgradeStable))
+            {
+                Debug.LogWarning("Must target an upgrade card.");
+                return;
+            }
+
+            CardActionExecutor.Instance.ExecutePendingAction(card);
+            PositionCardsInStable();
+            return;
+        }
+
         if (CardActionExecutor.Instance.currentPendingAction == PendingActionType.StealCard)
         {
             if (player == turnManager.activePlayer)

@@ -46,7 +46,7 @@
 | [Horse Shit](horse-shit.md) | Downgrade | 1 | ✅ | ⬜ |
 | [Horse With A Dildo](horse-with-a-dildo.md) | Basic Unicorn | 3 | ✅ | ✅ |
 | [Horny Flying Unicorn](horny-flying-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
-| [Kink Shame](kink-shame.md) | Magic | 3 | ✅ | ⬜ |
+| [Kink Shame](kink-shame.md) | Magic | 3 | ✅ | ✅ |
 | [Kittencorn in Heat](kittencorn-in-heat.md) | Magical Unicorn | 1 | ✅ | ✅ |
 | [Limp Horn](limp-horn.md) | Downgrade | 1 | ✅ | ⬜ |
 | [Make it Rain](make-it-rain.md) | Magic | 1 | ✅ | ⬜ |
@@ -68,7 +68,7 @@
 | [Safe Sex](safe-sex.md) | Magic | 1 | ✅ | ⬜ |
 | [Sadomasocorn](sadomasocorn.md) | Magical Unicorn | 1 | ✅ | ✅ |
 | [Semenbiscuit](semenbiscuit.md) | Magical Unicorn | 1 | ✅ | ✅ |
-| [Sex, Drugs, and Unicorns](sex-drugs-and-unicorns.md) | Magic | 1 | ✅ | ⬜ |
+| [Sex, Drugs, and Unicorns](sex-drugs-and-unicorns.md) | Magic | 1 | ✅ | ✅ |
 | [Sextra-Terrestrial Unicorn](sextra-terrestrial-unicorn.md) | Magical Unicorn | 1 | ✅ | ⬜ |
 | [Shotgun Baby Unicorn](shotgun-baby-unicorn.md) | Baby Unicorn | 1 | ✅ | ✅ |
 | [Single Unicorn](single-unicorn.md) | Basic Unicorn | 3 | ✅ | ✅ |
@@ -105,6 +105,6 @@
 ## Summary
 - Total cards: 91
 - Extracted: 91 / 91
-- Implemented: 62 / 91 (A Little Side Hustle, Autoerotic Asphyxiation, Baby Trap, Baby Unicorn of Incest, Bear Daddy Unicorn, Black Market Baby Unicorn, Blaze and Graze, Breaking and Entering, Buck Naked, Bukkakecorn, Bye Bye Baby Unicorn, Cannibal Baby Unicorn, Conjoined Baby Unicorn, Double Agent Unicorn, Dumpster Baby Unicorn, Dumpster Diving Unicorn, Entitled Unicorn, Faceless Baby Unicorn, Flesh-Eating Unicorn, Free Candy Unicorn, Fuck. Marry. Kill, Fuckboi Unicorn, Fucking Cute Baby Unicorn, Fucking Ugly Baby Unicorn, Fuzzy Hoofcuffs, Hell Neigh!, Hentaicorn, Homicidal Psychocorn, Hoof Job, Horrifying Impaling, Horse With A Dildo, Kittencorn in Heat, Manscaped Llamacorn, Moist Unicorn, Neigh Means Neigh, Neigh Bitch!, Neigh Motherfucker!, Officer Hornie, Pageant Baby Unicorn, Peeping Narwhal, Polyamorous Unicorn, Pony Play, Putting on a Show, Sadomasocorn, Semenbiscuit, Shotgun Baby Unicorn, Single Unicorn, Someone Else's Baby Unicorn, Stoner Unicorn, Tasty Baby Unicorn, The Bitchiest Unicorn, The Safeword is Neigh, Twinkicorn, Unexpected Miracle Unicorn, Unicorn Dancer, Unicorn Enema, Unicorn on the Street Corner, Unicorn Speed, Unicorn with Benefits, Upside Down Baby Unicorn, Vanillacorn, Wasted White Unicorn)
+- Implemented: 64 / 91 (A Little Side Hustle, Autoerotic Asphyxiation, Baby Trap, Baby Unicorn of Incest, Bear Daddy Unicorn, Black Market Baby Unicorn, Blaze and Graze, Breaking and Entering, Buck Naked, Bukkakecorn, Bye Bye Baby Unicorn, Cannibal Baby Unicorn, Conjoined Baby Unicorn, Double Agent Unicorn, Dumpster Baby Unicorn, Dumpster Diving Unicorn, Entitled Unicorn, Faceless Baby Unicorn, Flesh-Eating Unicorn, Free Candy Unicorn, Fuck. Marry. Kill, Fuckboi Unicorn, Fucking Cute Baby Unicorn, Fucking Ugly Baby Unicorn, Fuzzy Hoofcuffs, Hell Neigh!, Hentaicorn, Homicidal Psychocorn, Hoof Job, Horrifying Impaling, Horse With A Dildo, Kink Shame, Kittencorn in Heat, Manscaped Llamacorn, Moist Unicorn, Neigh Means Neigh, Neigh Bitch!, Neigh Motherfucker!, Officer Hornie, Pageant Baby Unicorn, Peeping Narwhal, Polyamorous Unicorn, Pony Play, Putting on a Show, Sadomasocorn, Semenbiscuit, Sex, Drugs, and Unicorns, Shotgun Baby Unicorn, Single Unicorn, Someone Else's Baby Unicorn, Stoner Unicorn, Tasty Baby Unicorn, The Bitchiest Unicorn, The Safeword is Neigh, Twinkicorn, Unexpected Miracle Unicorn, Unicorn Dancer, Unicorn Enema, Unicorn on the Street Corner, Unicorn Speed, Unicorn with Benefits, Upside Down Baby Unicorn, Vanillacorn, Wasted White Unicorn)
 
 *Update this table as cards are extracted and implemented. Mark Extracted ✅ when a card file exists in this directory with effect text filled in.*

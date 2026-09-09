@@ -7,8 +7,8 @@
 | copies | 3 |
 | trigger | IMMEDIATE |
 | can_play | opponent has an Upgrade card OR active player has a Downgrade card |
-| impl_status | not_started |
-| impl_class | — |
+| impl_status | done |
+| impl_class | KinkShameCardData.cs |
 
 ## Effect (2nd Edition)
 > "DESTROY an Upgrade card or SACRIFICE a Downgrade card."

@@ -86,11 +86,53 @@ public class DeckManager : MonoBehaviour
         ForceOfficerHornieToTop();
         ForceEntitledUnicornToTop();
         ForceHoofJobToTop();
+        // "Choose between two effects" batch — drawn first (these run last, so end up on top).
+        //   Kink Shame (P1 t1): CanPlay needs an opponent Upgrade OR your own Downgrade in play —
+        //     blocked at game start; play a Downgrade onto P2 (or get an Upgrade into P2's Stable)
+        //     on an earlier turn first. Both viable => two-button panel; one viable => it auto-runs.
+        //   Sex, Drugs, and Unicorns (P2 t1): CanPlay needs the opponent holding 3+ cards OR with a
+        //     Unicorn in their Stable. The OPPONENT picks: Discard 3 (offered only at hand >= 3) or
+        //     Sacrifice a Unicorn.
+        ForceSexDrugsAndUnicornsToTop();
+        ForceKinkShameToTop();
 
         foreach (var player in turnManager.players)
         {
             cardManager.DrawCard(nursery.spaceCards[0], nursery, player);
         }
+
+        // DEBUG scaffolding for the card currently under test. Comment out to disable.
+        DebugStageBoardForKinkShame();
+    }
+
+    // DEBUG: put an Upgrade in P2's stable and a Downgrade in P1's stable so P1's turn-1 Kink
+    // Shame has BOTH options viable (the two-button choice panel). Prefers the effect-free plain
+    // UpgradeCardData / DowngradeCardData placeholders so nothing fires on later turns.
+    void DebugStageBoardForKinkShame()
+    {
+        if (turnManager.players == null || turnManager.players.Count < 2) return;
+        Player p1 = turnManager.players[0];
+        Player p2 = turnManager.players[1];
+
+        Card upgrade = playDeck.spaceCards.Find(c => c.cardData.GetType() == typeof(UpgradeCardData))
+                       ?? playDeck.spaceCards.Find(c => c.cardData is UpgradeCardData);
+        if (upgrade != null)
+        {
+            upgrade.RevealCard();
+            cardManager.MoveCard(upgrade, playDeck, p2.upgradeStable);
+            Debug.Log($"[DebugStage] Placed {upgrade.name} in {p2.name}'s Upgrade stable.");
+        }
+        else Debug.LogWarning("[DebugStage] No Upgrade card in the deck to place.");
+
+        Card downgrade = playDeck.spaceCards.Find(c => c.cardData.GetType() == typeof(DowngradeCardData))
+                         ?? playDeck.spaceCards.Find(c => c.cardData is DowngradeCardData);
+        if (downgrade != null)
+        {
+            downgrade.RevealCard();
+            cardManager.MoveCard(downgrade, playDeck, p1.downgradeStable);
+            Debug.Log($"[DebugStage] Placed {downgrade.name} in {p1.name}'s Downgrade stable.");
+        }
+        else Debug.LogWarning("[DebugStage] No Downgrade card in the deck to place.");
     }
 
     // DEBUG: stack the play deck so the next draw is a Flesh-Eating Unicorn card.
@@ -569,6 +611,30 @@ public class DeckManager : MonoBehaviour
         if (card == null)
         {
             Debug.LogWarning("ForcePeepingNarwhalToTop: no PeepingNarwhalCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Kink Shame card.
+    void ForceKinkShameToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is KinkShameCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceKinkShameToTop: no KinkShameCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Sex, Drugs, and Unicorns card.
+    void ForceSexDrugsAndUnicornsToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is SexDrugsAndUnicornsCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceSexDrugsAndUnicornsToTop: no SexDrugsAndUnicornsCardData found in play deck.");
             return;
         }
         playDeck.MoveToTop(card);
