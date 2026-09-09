@@ -43,6 +43,8 @@ All notable changes to this project will be documented here. Versions are tagged
 - **`BoardChrome`** — dropped the deprecated `FindObjectsSortMode` argument from the
   `FindObjectsByType<Image>` call (CS0618 warning).
 
+Confirmed in Play mode.
+
 ---
 
 ## [v0.2.31] — 2026-09-08
