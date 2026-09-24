@@ -101,8 +101,9 @@ public class DeckManager : MonoBehaviour
             cardManager.DrawCard(nursery.spaceCards[0], nursery, player);
         }
 
-        // DEBUG scaffolding for the card currently under test. Comment out to disable.
+        // DEBUG scaffolding for the cards currently under test. Comment out to disable.
         DebugStageBoardForKinkShame();
+        DebugStageBoardForSexDrugsAndUnicorns();
     }
 
     // DEBUG: put an Upgrade in P2's stable and a Downgrade in P1's stable so P1's turn-1 Kink
@@ -133,6 +134,35 @@ public class DeckManager : MonoBehaviour
             Debug.Log($"[DebugStage] Placed {downgrade.name} in {p1.name}'s Downgrade stable.");
         }
         else Debug.LogWarning("[DebugStage] No Downgrade card in the deck to place.");
+    }
+
+    // DEBUG: give P1 (the OPPONENT when P2 plays Sex, Drugs, and Unicorns — P2 draws it turn 1)
+    // both a hand of 3+ cards and a Unicorn in their stable, so both choice options are viable
+    // (the two-button panel) rather than one auto-running. Sourced from the Nursery, not the play
+    // deck, so the Force-stacked draw order above is untouched. P1 starts with 1 Nursery card
+    // already in hand and plays Kink Shame (not this) on their own turn 1, so the 2 extra cards
+    // here keep their hand at >= 3 by the time P2 acts.
+    void DebugStageBoardForSexDrugsAndUnicorns()
+    {
+        if (turnManager.players == null || turnManager.players.Count < 2) return;
+        Player p1 = turnManager.players[0];
+
+        for (int i = 0; i < 2 && nursery.spaceCards.Count > 0; i++)
+        {
+            Card babyUnicorn = nursery.spaceCards[0];
+            babyUnicorn.RevealCard();
+            cardManager.MoveCard(babyUnicorn, nursery, p1.handStable);
+        }
+        Debug.Log($"[DebugStage] {p1.name}'s hand is now {p1.handStable.spaceCards.Count} card(s).");
+
+        if (nursery.spaceCards.Count > 0)
+        {
+            Card babyUnicorn = nursery.spaceCards[0];
+            babyUnicorn.RevealCard();
+            cardManager.MoveCard(babyUnicorn, nursery, p1.unicornStable);
+            Debug.Log($"[DebugStage] Placed {babyUnicorn.name} in {p1.name}'s Unicorn stable.");
+        }
+        else Debug.LogWarning("[DebugStage] Nursery is empty — can't stage a Unicorn for Sex, Drugs, and Unicorns.");
     }
 
     // DEBUG: stack the play deck so the next draw is a Flesh-Eating Unicorn card.

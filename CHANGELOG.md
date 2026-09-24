@@ -4,6 +4,21 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.34] — 2026-09-23
+
+### Sex, Drugs, and Unicorns — board staging + Play-mode confirmation
+
+- **`DeckManager.DebugStageBoardForSexDrugsAndUnicorns()`** — gives P1 (the opponent when P2
+  draws and plays Sex, Drugs, and Unicorns on turn 1) both a hand of 3+ cards and a Unicorn in
+  their stable, so both `ChooseEffectAction` options are viable and the two-button panel actually
+  appears instead of one option auto-running. Sourced from the Nursery (not the play deck), so
+  the Force-stacked draw order for the other staged cards is untouched.
+
+Confirmed in Play mode: both choice paths (Discard 3 / Sacrifice a Unicorn) resolve correctly via
+the shared `ChooseEffectAction` / `EffectChoicePanel` path introduced in v0.2.33.
+
+---
+
 ## [v0.2.33] — 2026-09-08
 
 ### "Choose between two effects" — 2 cards (62 → 64 / 91)
