@@ -136,6 +136,48 @@ public class Stable : CardSpace
             return;
         }
 
+        if (CardActionExecutor.Instance.currentPendingAction == PendingActionType.ReturnToHand)
+        {
+            if (CardActionExecutor.Instance.pendingReturnEligibleOwners == null
+                || !CardActionExecutor.Instance.pendingReturnEligibleOwners.Contains(player))
+            {
+                Debug.LogWarning("Can't return a card from this player's stable.");
+                return;
+            }
+
+            if (CardActionExecutor.Instance.pendingReturnUnicornOnly && !(this is UnicornStable))
+            {
+                Debug.LogWarning("Must target a unicorn card.");
+                return;
+            }
+
+            CardActionExecutor.Instance.ExecutePendingAction(card);
+            PositionCardsInStable();
+            return;
+        }
+
+        if (CardActionExecutor.Instance.currentPendingAction == PendingActionType.MoveUnicorn)
+        {
+            CardActionExecutor exec = CardActionExecutor.Instance;
+            if (!(this is UnicornStable))
+            {
+                Debug.LogWarning("Must target a unicorn card.");
+                return;
+            }
+
+            if (exec.pendingMoveSourcePlayers == null || !exec.pendingMoveSourcePlayers.Contains(player)
+                || exec.GetMoveDestinations(player, exec.pendingMoveMover).Count == 0)
+            {
+                Debug.LogWarning("Can't move a unicorn out of this player's stable.");
+                return;
+            }
+
+            // The executor repositions both stables itself — the move may finish after a
+            // player choice, not during this click.
+            exec.ExecutePendingAction(card);
+            return;
+        }
+
         if (turnManager.currentPhase == TurnPhase.EveryTurnSpecial
             && CardActionExecutor.Instance.currentPendingAction == PendingActionType.None
             && player == turnManager.activePlayer)

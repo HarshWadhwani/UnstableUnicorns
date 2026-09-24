@@ -18,6 +18,27 @@ public class TurnManager : MonoBehaviour
     // Unicorn/Upgrade EVERY_TURN cards — player clicks to activate, or presses Skip to bypass the rest.
     private List<Card> pendingChoiceCards = new List<Card>();
 
+    // "At the end of your turn, ..." callbacks, keyed by the player whose turn-end fires them.
+    // Run (and removed) in AdvanceToNextPlayerTurn, before the turn passes. Used by Unicorn
+    // Cuckold's loan return (MoveUnicornAction.returnAtEndOfTurn).
+    private List<(Player player, System.Action callback)> endOfTurnCallbacks = new List<(Player, System.Action)>();
+
+    public void ScheduleAtEndOfTurn(Player player, System.Action callback)
+    {
+        endOfTurnCallbacks.Add((player, callback));
+    }
+
+    private void RunEndOfTurnCallbacks(Player player)
+    {
+        // Snapshot first — a callback may schedule another (for a later turn).
+        var due = endOfTurnCallbacks.FindAll(e => e.player == player);
+        endOfTurnCallbacks.RemoveAll(e => e.player == player);
+        foreach (var entry in due)
+        {
+            entry.callback();
+        }
+    }
+
     // UI hook (e.g. PhaseIndicator) — whether the Skip button should be interactable right now.
     public bool CanSkipEveryTurnPhase =>
         currentPhase == TurnPhase.EveryTurnSpecial
@@ -151,6 +172,7 @@ public class TurnManager : MonoBehaviour
 
     private void AdvanceToNextPlayerTurn()
     {
+        RunEndOfTurnCallbacks(activePlayer);
         SwitchToNextPlayer();
         turnNumber++;
         pendingMandatoryCards.Clear();

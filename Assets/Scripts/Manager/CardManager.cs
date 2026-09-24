@@ -101,9 +101,11 @@ public class CardManager : MonoBehaviour
 
     public void MoveCard(Card card, CardSpace oldCardSpace, CardSpace newCardSpace)
     {
-        // Baby Unicorns never go to the discard pile — anything that would put one there
-        // (sacrifice, destroy, discard) returns it to the Nursery instead.
-        if (newCardSpace is DiscardPile
+        // Baby Unicorns never go to the discard pile, or back to a hand from a stable — anything
+        // that would put one there (sacrifice, destroy, discard, return-to-hand) sends it to the
+        // Nursery instead. Nursery -> hand (the opening deal) and hand -> hand are unaffected.
+        bool stableToHand = newCardSpace is HandStable && oldCardSpace is Stable && !(oldCardSpace is HandStable);
+        if ((newCardSpace is DiscardPile || stableToHand)
             && card.cardData is UnicornCardData unicorn && unicorn.unicornType == UnicornType.BABY
             && DeckManager.Instance != null && DeckManager.Instance.nursery != null)
         {
@@ -129,6 +131,46 @@ public class CardManager : MonoBehaviour
             {
                 MoveCard(babyUnicorn, babyUnicorn.cardSpace, originStable);
             }
+        }
+
+        CheckSelfSacrificeConditions();
+    }
+
+    private bool checkingSelfSacrifice;
+
+    // "If at any time ..., SACRIFICE this card" (ISelfSacrificeCondition). Every board change goes
+    // through MoveCard, so re-checking here after each move is "at any time". The sacrifice itself
+    // is a MoveCard, so the guard stops re-entry; the loop re-scans in case one sacrifice makes
+    // another card's condition true.
+    private void CheckSelfSacrificeConditions()
+    {
+        if (checkingSelfSacrifice || turnManager == null || turnManager.players == null) return;
+        checkingSelfSacrifice = true;
+        try
+        {
+            bool sacrificedAny = true;
+            while (sacrificedAny)
+            {
+                sacrificedAny = false;
+                foreach (Player player in turnManager.players)
+                {
+                    foreach (Stable stable in new Stable[] { player.unicornStable, player.upgradeStable, player.downgradeStable })
+                    {
+                        Card doomed = stable.spaceCards.Find(c =>
+                            c.cardData is ISelfSacrificeCondition condition && condition.ShouldSacrifice(player));
+                        if (doomed == null) continue;
+
+                        MoveCard(doomed, stable, discardPile);
+                        stable.RepositionCards();
+                        Debug.Log($"{doomed.name}'s condition was met — sacrificed from {player.name}'s Stable.");
+                        sacrificedAny = true;
+                    }
+                }
+            }
+        }
+        finally
+        {
+            checkingSelfSacrifice = false;
         }
     }
 }

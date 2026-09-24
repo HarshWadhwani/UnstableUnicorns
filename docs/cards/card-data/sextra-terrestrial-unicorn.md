@@ -8,8 +8,8 @@
 | copies | 1 |
 | trigger | IMMEDIATE |
 | can_play | always |
-| impl_status | not_started |
-| impl_class | — |
+| impl_status | done |
+| impl_class | SextraTerrestrialUnicornCardData.cs |
 
 ## Effect (2nd Edition)
 > "When this card enters your Stable, you may return a card in another player's Stable to their hand."

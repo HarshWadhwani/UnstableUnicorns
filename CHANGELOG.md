@@ -4,6 +4,34 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.36] — 2026-09-23
+
+### Move/loan/return between stables — 4 cards (68 → 72 / 91)
+
+- **`ReturnToHandAction`** (`whose` Self/OtherPlayers, `targetStable` Any/Unicorn) — active player
+  clicks a card in an eligible stable; it returns to that stable owner's hand.
+  `PendingActionType.ReturnToHand`; destination resolved per click in `ExecutePendingAction`.
+- **`MoveUnicornAction`** (`source` Self/AnyPlayer, `returnAtEndOfTurn`) — click a Unicorn, then
+  (only if >1 legal destination) choose a player. Never to the card's owner or the mover.
+  `PendingActionType.MoveUnicorn`; `EligibleSources` doubles as the card's `CanActivateEveryTurn` gate.
+- **ChoosePlayer prompt** — `PendingActionType.ChoosePlayer`, `CardActionExecutor.PromptPlayerChoice`
+  / `ResolvePlayerChoice`. `EffectChoicePanel` generalized from 2 buttons to N (ChooseEffect's
+  2-button plaque unchanged). Unreachable with 2 players — first exercised at 3+.
+- **`TurnManager.ScheduleAtEndOfTurn(player, callback)`** — end-of-turn callbacks, run in
+  `AdvanceToNextPlayerTurn` before the turn passes. Cuckold's loan returns only if the card is
+  still where it was left.
+- **`ISelfSacrificeCondition`** — new card-ability interface; `CardManager.MoveCard` re-checks
+  every stable card after each move (re-entry guarded) and sacrifices any whose condition holds.
+- **Baby Unicorns** — `MoveCard` now also redirects a Baby moving stable → hand to the Nursery
+  (Nursery → hand and hand → hand unaffected).
+- **Cards:** Sextra-Terrestrial Unicorn, Unicorn Flatulence, Dominatrix Whip, Unicorn Cuckold.
+- **`DeckManager`** — Force-to-top calls + `DebugStageBoardForMoveBatch()` (P1: 1 Basic Unicorn,
+  P2: 1 Baby Unicorn); the previous batch's staging call is commented out.
+
+Confirmed in Play mode.
+
+---
+
 ## [v0.2.35] — 2026-09-23
 
 ### "Each player" effects — 4 cards (64 → 68 / 91)

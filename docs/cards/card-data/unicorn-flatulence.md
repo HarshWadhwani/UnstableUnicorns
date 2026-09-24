@@ -7,8 +7,8 @@
 | copies | 1 |
 | trigger | EVERY_TURN |
 | can_play | always |
-| impl_status | not_started |
-| impl_class | — |
+| impl_status | done |
+| impl_class | UnicornFlatulenceCardData.cs |
 
 ## Effect (2nd Edition)
 > "If this card is in your Stable at the beginning of your turn, return a Unicorn card from your Stable to your hand. If at any time you have no Unicorn cards in your Stable, SACRIFICE this card."

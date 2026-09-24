@@ -13,7 +13,10 @@ public enum  PendingActionType
     PlayCardFromHand,
     SacrificeCard,
     TakeFromHand,
-    ChooseEffect
+    ChooseEffect,
+    ReturnToHand,
+    MoveUnicorn,
+    ChoosePlayer
 }
 
 public class CardActionExecutor : MonoBehaviour
@@ -48,6 +51,20 @@ public class CardActionExecutor : MonoBehaviour
     public string pendingChoiceLabelB;
     public List<CardAction> pendingChoiceOptionA;
     public List<CardAction> pendingChoiceOptionB;
+
+    // ReturnToHandAction: whose stables may be clicked, and whether only the Unicorn stable counts.
+    // The destination is resolved per click — the clicked card's owner's hand.
+    public List<Player> pendingReturnEligibleOwners;
+    public bool pendingReturnUnicornOnly;
+    // MoveUnicornAction: whose Unicorn stables may be clicked, who is doing the moving (never a
+    // valid destination), and whether the move is a loan returned at the end of the mover's turn.
+    public List<Player> pendingMoveSourcePlayers;
+    public Player pendingMoveMover;
+    public bool pendingMoveReturnAtEndOfTurn;
+    // ChoosePlayer: the players offered (EffectChoicePanel renders one button each) and what to do
+    // with the pick. Title shared with ChooseEffect via pendingChoiceTitle.
+    public List<Player> pendingPlayerChoices;
+    private System.Action<Player> pendingPlayerChoiceCallback;
 
     private Player originalActivePlayer;
     // Each queued action carries the context it runs under. A plain ExecuteActions call tags every
@@ -203,6 +220,12 @@ public class CardActionExecutor : MonoBehaviour
             return;
         }
 
+        if (currentPendingAction == PendingActionType.MoveUnicorn)
+        {
+            HandleMoveUnicornPick(card);
+            return;
+        }
+
         if (currentPendingAction == PendingActionType.PlayCardFromHand)
         {
             bool played = cardManager.PlayCardForCurrentPlayer(card, (HandStable)card.cardSpace);
@@ -227,7 +250,12 @@ public class CardActionExecutor : MonoBehaviour
                 currentContext.sourceCard.linkedBabyUnicornOriginStable = source;
             }
 
-            cardManager.MoveCard(card, source, pendingDestinationStable);
+            // ReturnToHand: back to the hand of whoever owns the stable it was clicked in.
+            CardSpace destination = currentPendingAction == PendingActionType.ReturnToHand
+                ? ((Stable)source).player.handStable
+                : pendingDestinationStable;
+
+            cardManager.MoveCard(card, source, destination);
         }
 
         pendingCardsRemaining--;
@@ -271,6 +299,13 @@ public class CardActionExecutor : MonoBehaviour
         pendingChoiceLabelB = null;
         pendingChoiceOptionA = null;
         pendingChoiceOptionB = null;
+        pendingReturnEligibleOwners = null;
+        pendingReturnUnicornOnly = false;
+        pendingMoveSourcePlayers = null;
+        pendingMoveMover = null;
+        pendingMoveReturnAtEndOfTurn = false;
+        pendingPlayerChoices = null;
+        pendingPlayerChoiceCallback = null;
         originalActivePlayer = null;
     }
 
@@ -311,6 +346,97 @@ public class CardActionExecutor : MonoBehaviour
         {
             PrependActions(chosen);
         }
+        ExecuteNextAction();
+    }
+
+    // ---- MoveUnicornAction support ----
+
+    // Players a Unicorn in `owner`'s stable may be moved to: anyone but its owner and the mover.
+    public List<Player> GetMoveDestinations(Player owner, Player mover)
+    {
+        return turnManager.players.FindAll(p => p != owner && p != mover);
+    }
+
+    // Step 1 resolved (a Unicorn was clicked). One legal destination => move straight there;
+    // several => ask the mover to choose a player (step 2).
+    private void HandleMoveUnicornPick(Card card)
+    {
+        Stable sourceStable = (Stable)card.cardSpace;
+        Player mover = pendingMoveMover;
+        bool isLoan = pendingMoveReturnAtEndOfTurn;
+        List<Player> destinations = GetMoveDestinations(sourceStable.player, mover);
+
+        if (destinations.Count == 0)
+        {
+            Debug.LogWarning($"{card.name} has nowhere it can be moved to.");
+            return;
+        }
+
+        if (destinations.Count == 1)
+        {
+            MoveUnicorn(card, sourceStable, destinations[0], mover, isLoan);
+            ClearPendingAction();
+            return;
+        }
+
+        ResetPendingState();
+        PromptPlayerChoice(mover, $"Move {card.name} to…", destinations,
+            chosen => MoveUnicorn(card, sourceStable, chosen, mover, isLoan));
+    }
+
+    private void MoveUnicorn(Card card, Stable sourceStable, Player destination, Player mover, bool isLoan)
+    {
+        UnicornStable destinationStable = destination.unicornStable;
+        cardManager.MoveCard(card, sourceStable, destinationStable);
+        sourceStable.RepositionCards();
+        Debug.Log($"{mover.name} moved {card.name} from {sourceStable.player.name}'s Stable to {destination.name}'s.");
+
+        if (isLoan)
+        {
+            // Return it at the end of the mover's turn — but only if it's still where it was
+            // loaned; if it was destroyed/moved in the meantime, the loan is over.
+            turnManager.ScheduleAtEndOfTurn(mover, () =>
+            {
+                if (card.cardSpace != destinationStable) return;
+                cardManager.MoveCard(card, destinationStable, sourceStable);
+                destinationStable.RepositionCards();
+                Debug.Log($"{card.name} returned from {destination.name}'s Stable to {sourceStable.player.name}'s.");
+            });
+        }
+
+        destinationStable.CheckWinCondition();
+    }
+
+    // ---- ChoosePlayer support ----
+
+    // Ask `chooser` to pick one of `options`; EffectChoicePanel renders a button per player and
+    // calls ResolvePlayerChoice. The queue resumes after `onChosen` runs.
+    public void PromptPlayerChoice(Player chooser, string title, List<Player> options, System.Action<Player> onChosen)
+    {
+        originalActivePlayer = turnManager.activePlayer;
+        turnManager.activePlayer = chooser;
+
+        currentPendingAction = PendingActionType.ChoosePlayer;
+        pendingChoiceTitle = title;
+        pendingPlayerChoices = options;
+        pendingPlayerChoiceCallback = onChosen;
+
+        Debug.Log($"[ChoosePlayer] {chooser.name} chooses between {options.Count} players.");
+    }
+
+    public void ResolvePlayerChoice(int index)
+    {
+        if (currentPendingAction != PendingActionType.ChoosePlayer
+            || pendingPlayerChoices == null || index < 0 || index >= pendingPlayerChoices.Count)
+        {
+            Debug.LogWarning("ResolvePlayerChoice called with no valid player choice pending.");
+            return;
+        }
+
+        Player chosen = pendingPlayerChoices[index];
+        System.Action<Player> callback = pendingPlayerChoiceCallback;
+        ResetPendingState();
+        callback?.Invoke(chosen);
         ExecuteNextAction();
     }
 

@@ -103,6 +103,20 @@ public class DeckManager : MonoBehaviour
         ForceUnicornAcidTripToTop();
         ForceSafeSexToTop();
         ForceCultLeaderUnicornToTop();
+        // Move/loan/return batch — drawn first. Draw order:
+        //   P1 t1: Dominatrix Whip  — play it (Upgrade).
+        //   P2 t1: Unicorn Cuckold  — play it.
+        //   P1 t2: Whip fires (choice) — move P1's staged Basic Unicorn to P2. Then play
+        //          Sextra-Terrestrial Unicorn — return a card from P2's Stable (a Baby => Nursery).
+        //   P2 t2: Cuckold fires (choice) — loan a Unicorn to P1; it comes back when P2's turn
+        //          ends. Play Unicorn Flatulence onto P1.
+        //   P1 t3: Flatulence fires (mandatory) — P1 returns Sextra (their only Unicorn) to hand,
+        //          leaving 0 Unicorns => Flatulence sacrifices itself.
+        // DebugStageBoardForMoveBatch below stages P1 with 1 Basic Unicorn, P2 with 1 Baby Unicorn.
+        ForceUnicornFlatulenceToTop();
+        ForceSextraTerrestrialUnicornToTop();
+        ForceUnicornCuckoldToTop();
+        ForceDominatrixWhipToTop();
 
         foreach (var player in turnManager.players)
         {
@@ -112,7 +126,35 @@ public class DeckManager : MonoBehaviour
         // DEBUG scaffolding for the cards currently under test. Comment out to disable.
         // DebugStageBoardForKinkShame();
         // DebugStageBoardForSexDrugsAndUnicorns();
-        DebugStageBoardForEachPlayer();
+        // DebugStageBoardForEachPlayer();
+        DebugStageBoardForMoveBatch();
+    }
+
+    // DEBUG: P1 gets 1 Basic Unicorn (for Dominatrix Whip to move to P2), P2 gets 1 Baby Unicorn
+    // (for Sextra-Terrestrial to return — it should go to the Nursery, not P2's hand).
+    void DebugStageBoardForMoveBatch()
+    {
+        if (turnManager.players == null || turnManager.players.Count < 2) return;
+        Player p1 = turnManager.players[0];
+        Player p2 = turnManager.players[1];
+
+        Card basic = playDeck.spaceCards.Find(c => c.cardData is BasicUnicornCardData);
+        if (basic != null)
+        {
+            basic.RevealCard();
+            cardManager.MoveCard(basic, playDeck, p1.unicornStable);
+            Debug.Log($"[DebugStage] Placed {basic.name} in {p1.name}'s Unicorn stable.");
+        }
+        else Debug.LogWarning("[DebugStage] No Basic Unicorn in the deck to place.");
+
+        if (nursery.spaceCards.Count > 0)
+        {
+            Card babyUnicorn = nursery.spaceCards[0];
+            babyUnicorn.RevealCard();
+            cardManager.MoveCard(babyUnicorn, nursery, p2.unicornStable);
+            Debug.Log($"[DebugStage] Placed {babyUnicorn.name} in {p2.name}'s Unicorn stable.");
+        }
+        else Debug.LogWarning("[DebugStage] Nursery is empty — can't stage a Baby Unicorn.");
     }
 
     // DEBUG: 2 Nursery Baby Unicorns into each player's Unicorn stable, so Cult Leader Unicorn's
@@ -673,6 +715,54 @@ public class DeckManager : MonoBehaviour
     }
 
     // DEBUG: stack the play deck so the next draw is a Kink Shame card.
+    // DEBUG: stack the play deck so the next draw is a Dominatrix Whip card.
+    void ForceDominatrixWhipToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is DominatrixWhipCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceDominatrixWhipToTop: no DominatrixWhipCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Unicorn Cuckold card.
+    void ForceUnicornCuckoldToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is UnicornCuckoldCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceUnicornCuckoldToTop: no UnicornCuckoldCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Sextra-Terrestrial Unicorn card.
+    void ForceSextraTerrestrialUnicornToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is SextraTerrestrialUnicornCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceSextraTerrestrialUnicornToTop: no SextraTerrestrialUnicornCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Unicorn Flatulence card.
+    void ForceUnicornFlatulenceToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is UnicornFlatulenceCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceUnicornFlatulenceToTop: no UnicornFlatulenceCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
     // DEBUG: stack the play deck so the next draw is a Cult Leader Unicorn card.
     void ForceCultLeaderUnicornToTop()
     {
