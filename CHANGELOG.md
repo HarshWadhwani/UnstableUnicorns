@@ -4,6 +4,28 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.37] — 2026-09-23
+
+### Skip phase / skip turn — 2 cards (72 → 74 / 91)
+
+- **`TurnManager.RequestSkip(player, TurnSkip)`** (`TurnSkip` = `Draw` / `Action` / `Turn`) —
+  per-player pending skips, replacing the global `skipNextDrawPhase` bool. Draw/Action skips are
+  consumed by the new `BeginDrawPhase()` / `BeginActionPhase()` (every phase entry now goes
+  through them; a skipped Action phase ends the turn). Turn skips are consumed in
+  `AdvanceToNextPlayerTurn` — the skipped player is passed over, no EVERY_TURN effects fire.
+- **`PullCardAction`** — `skipDrawPhaseOnSuccess` now calls `RequestSkip(activePlayer, Draw)`.
+- **`SkipPhaseAction`** (`target` ActivePlayer/Opponent, `kind`) — records a skip, no prompt.
+- **`ChoosePlayerAction`** (`title`, `then`) — "choose a player": picks another player (auto with
+  one candidate, else the ChoosePlayer prompt), then runs `then` with `context.opponentPlayer`
+  rebound to the chosen player.
+- **Cards:** Sticky Situation (mandatory; ChooseEffect between skip Draw / skip Action),
+  Unicorn Hangover (ChoosePlayer → skip their next turn).
+- **`DeckManager`** — Force-to-top calls for both; previous batch's staging commented out.
+
+Confirmed in Play mode.
+
+---
+
 ## [v0.2.36] — 2026-09-23
 
 ### Move/loan/return between stables — 4 cards (68 → 72 / 91)

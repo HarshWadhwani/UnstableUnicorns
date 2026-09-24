@@ -117,6 +117,13 @@ public class DeckManager : MonoBehaviour
         ForceSextraTerrestrialUnicornToTop();
         ForceUnicornCuckoldToTop();
         ForceDominatrixWhipToTop();
+        // Skip batch — drawn first. Draw order:
+        //   P1 t1: Unicorn Hangover — play it; P2's next turn is skipped, so P1 goes again.
+        //   P1 t2: Sticky Situation — play it onto P2.
+        //   P2's turn: Sticky fires (mandatory) — pick Skip Draw (straight to Action) or Skip
+        //          Action (draw, then the turn ends). The other option can be tried on P2's next turn.
+        ForceStickySituationToTop();
+        ForceUnicornHangoverToTop();
 
         foreach (var player in turnManager.players)
         {
@@ -127,7 +134,7 @@ public class DeckManager : MonoBehaviour
         // DebugStageBoardForKinkShame();
         // DebugStageBoardForSexDrugsAndUnicorns();
         // DebugStageBoardForEachPlayer();
-        DebugStageBoardForMoveBatch();
+        // DebugStageBoardForMoveBatch();
     }
 
     // DEBUG: P1 gets 1 Basic Unicorn (for Dominatrix Whip to move to P2), P2 gets 1 Baby Unicorn
@@ -715,6 +722,30 @@ public class DeckManager : MonoBehaviour
     }
 
     // DEBUG: stack the play deck so the next draw is a Kink Shame card.
+    // DEBUG: stack the play deck so the next draw is a Sticky Situation card.
+    void ForceStickySituationToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is StickySituationCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceStickySituationToTop: no StickySituationCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Unicorn Hangover card.
+    void ForceUnicornHangoverToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is UnicornHangoverCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceUnicornHangoverToTop: no UnicornHangoverCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
     // DEBUG: stack the play deck so the next draw is a Dominatrix Whip card.
     void ForceDominatrixWhipToTop()
     {

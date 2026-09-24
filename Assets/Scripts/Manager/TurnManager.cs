@@ -2,13 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// What a pending skip skips — see TurnManager.RequestSkip.
+public enum TurnSkip { Draw, Action, Turn }
+
 public class TurnManager : MonoBehaviour
 {
     public List<Player> players;
     public Player activePlayer;
     public TurnPhase currentPhase;
     public Card currentEveryTurnCard;
-    public bool skipNextDrawPhase = false;
+    // Per-player pending skips, each consumed the next time that player reaches that point:
+    // Draw/Action when the phase would begin (BeginDrawPhase/BeginActionPhase), Turn when their
+    // turn would start (AdvanceToNextPlayerTurn).
+    private readonly Dictionary<Player, HashSet<TurnSkip>> pendingSkips = new Dictionary<Player, HashSet<TurnSkip>>();
+
+    public void RequestSkip(Player player, TurnSkip kind)
+    {
+        if (player == null) return;
+        if (!pendingSkips.TryGetValue(player, out HashSet<TurnSkip> skips))
+        {
+            skips = new HashSet<TurnSkip>();
+            pendingSkips[player] = skips;
+        }
+        skips.Add(kind);
+        Debug.Log($"{player.name} will skip their next {kind}.");
+    }
+
+    private bool ConsumeSkip(Player player, TurnSkip kind)
+    {
+        return player != null && pendingSkips.TryGetValue(player, out HashSet<TurnSkip> skips) && skips.Remove(kind);
+    }
 
     // Purely for display (BoardChrome HUD). Counts each player-turn, starting at 1.
     public int turnNumber = 1;
@@ -62,7 +85,7 @@ public class TurnManager : MonoBehaviour
         switch (currentPhase)
         {
             case TurnPhase.Draw:
-                currentPhase = TurnPhase.Action;
+                BeginActionPhase();
                 break;
 
             case TurnPhase.Action:
@@ -99,9 +122,7 @@ public class TurnManager : MonoBehaviour
 
         if (pendingChoiceCards.Count == 0)
         {
-            bool skip = skipNextDrawPhase;
-            skipNextDrawPhase = false;
-            currentPhase = skip ? TurnPhase.Action : TurnPhase.Draw;
+            BeginDrawPhase();
         }
         // else: stay in EveryTurnSpecial — player must click remaining choice cards or press Skip
     }
@@ -165,9 +186,29 @@ public class TurnManager : MonoBehaviour
 
         pendingChoiceCards.Clear();
         currentEveryTurnCard = null;
-        bool skip = skipNextDrawPhase;
-        skipNextDrawPhase = false;
-        currentPhase = skip ? TurnPhase.Action : TurnPhase.Draw;
+        BeginDrawPhase();
+    }
+
+    private void BeginDrawPhase()
+    {
+        if (ConsumeSkip(activePlayer, TurnSkip.Draw))
+        {
+            Debug.Log($"{activePlayer.name} skips their Draw phase.");
+            BeginActionPhase();
+            return;
+        }
+        currentPhase = TurnPhase.Draw;
+    }
+
+    private void BeginActionPhase()
+    {
+        if (ConsumeSkip(activePlayer, TurnSkip.Action))
+        {
+            Debug.Log($"{activePlayer.name} skips their Action phase — turn ends.");
+            AdvanceToNextPlayerTurn();
+            return;
+        }
+        currentPhase = TurnPhase.Action;
     }
 
     private void AdvanceToNextPlayerTurn()
@@ -175,6 +216,14 @@ public class TurnManager : MonoBehaviour
         RunEndOfTurnCallbacks(activePlayer);
         SwitchToNextPlayer();
         turnNumber++;
+        // A skipped turn never starts — no EVERY_TURN effects, no phases. Terminates: each pass
+        // consumes a skip.
+        while (ConsumeSkip(activePlayer, TurnSkip.Turn))
+        {
+            Debug.Log($"{activePlayer.name} skips their turn.");
+            SwitchToNextPlayer();
+            turnNumber++;
+        }
         pendingMandatoryCards.Clear();
         pendingChoiceCards.Clear();
         CollectEveryTurnCards(activePlayer.downgradeStable, pendingMandatoryCards);
@@ -192,7 +241,7 @@ public class TurnManager : MonoBehaviour
         }
         else
         {
-            currentPhase = TurnPhase.Draw;
+            BeginDrawPhase();
         }
     }
 

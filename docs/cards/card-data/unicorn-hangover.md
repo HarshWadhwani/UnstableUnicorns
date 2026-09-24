@@ -7,8 +7,8 @@
 | copies | 1 |
 | trigger | IMMEDIATE |
 | can_play | always |
-| impl_status | not_started |
-| impl_class | — |
+| impl_status | done |
+| impl_class | UnicornHangoverCardData.cs |
 
 ## Effect (2nd Edition)
 > "Force another player to skip their next turn."

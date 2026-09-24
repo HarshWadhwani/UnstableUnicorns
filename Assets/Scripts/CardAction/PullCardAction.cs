@@ -28,7 +28,7 @@ public class PullCardAction : CardAction
 
         if (skipDrawPhaseOnSuccess && cardsToPull > 0)
         {
-            context.turnManager.skipNextDrawPhase = true;
+            context.turnManager.RequestSkip(context.activePlayer, TurnSkip.Draw);
         }
     }
 }
