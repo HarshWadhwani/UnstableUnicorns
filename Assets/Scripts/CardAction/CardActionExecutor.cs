@@ -50,7 +50,10 @@ public class CardActionExecutor : MonoBehaviour
     public List<CardAction> pendingChoiceOptionB;
 
     private Player originalActivePlayer;
-    private Queue<CardAction> actionQueue = new Queue<CardAction>();
+    // Each queued action carries the context it runs under. A plain ExecuteActions call tags every
+    // action with the one context built from the caster; ForEachPlayerAction enqueues copies of
+    // its template bound to a per-player context (that player is "you"/activePlayer).
+    private Queue<(CardAction action, CardActionContext context)> actionQueue = new Queue<(CardAction, CardActionContext)>();
     private CardActionContext currentContext;
 
     // Optional one-shot callback fired when the current action queue drains. When set, it takes
@@ -108,7 +111,7 @@ public class CardActionExecutor : MonoBehaviour
         {
             if (action != null)
             {
-                actionQueue.Enqueue(action);
+                actionQueue.Enqueue((action, currentContext));
             }
         }
 
@@ -137,7 +140,8 @@ public class CardActionExecutor : MonoBehaviour
             return;
         }
 
-        CardAction nextAction = actionQueue.Dequeue();
+        var (nextAction, nextContext) = actionQueue.Dequeue();
+        currentContext = nextContext;
         nextAction.Execute(this, currentContext);
 
         // Synchronous actions don't set a pending action — chain immediately to the next.
@@ -311,17 +315,31 @@ public class CardActionExecutor : MonoBehaviour
     }
 
     // Splice `actions` onto the front of the remaining queue (a Queue has no push-front). Used by
-    // ResolveEffectChoice and by ChooseEffectAction when only one option is viable.
-    public void PrependActions(IEnumerable<CardAction> actions)
+    // ResolveEffectChoice and by ChooseEffectAction when only one option is viable. The spliced
+    // actions run under `context`, or the context of the action that's splicing them if null.
+    public void PrependActions(IEnumerable<CardAction> actions, CardActionContext context = null)
     {
-        var rebuilt = new Queue<CardAction>();
+        CardActionContext ctx = context ?? currentContext;
+        var bound = new List<(CardAction, CardActionContext)>();
         foreach (CardAction a in actions)
         {
-            if (a != null) rebuilt.Enqueue(a);
+            bound.Add((a, ctx));
         }
-        foreach (CardAction a in actionQueue)
+        PrependActions(bound);
+    }
+
+    // Same, with a context per action — ForEachPlayerAction binds each copy of its template to
+    // that player's context.
+    public void PrependActions(IEnumerable<(CardAction action, CardActionContext context)> actions)
+    {
+        var rebuilt = new Queue<(CardAction, CardActionContext)>();
+        foreach (var entry in actions)
         {
-            rebuilt.Enqueue(a);
+            if (entry.action != null) rebuilt.Enqueue(entry);
+        }
+        foreach (var entry in actionQueue)
+        {
+            rebuilt.Enqueue(entry);
         }
         actionQueue = rebuilt;
     }

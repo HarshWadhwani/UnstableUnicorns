@@ -4,6 +4,39 @@ All notable changes to this project will be documented here. Versions are tagged
 
 ---
 
+## [v0.2.35] — 2026-09-23
+
+### "Each player" effects — 4 cards (64 → 68 / 91)
+
+- **`ForEachPlayerAction`** — runs a template `List<CardAction>` once per player, in seat order
+  starting with the caster. Each pass runs under a context rebound to that player
+  (`activePlayer` = them, `opponentPlayer` = next in seat order), so every existing action
+  targeting `ActivePlayer` means "this player" with no changes. N-player ready — no Active/Opponent
+  pairing baked into card definitions.
+- **`CardActionExecutor`** — the queue now carries a context per action
+  (`Queue<(CardAction, CardActionContext)>`); `PrependActions` takes an optional context plus a
+  per-action overload. Existing cards unchanged (a plain `ExecuteActions` tags every action with
+  the one caster context).
+- **`CardActionContext`** — new `caster` (never rebound by the loop) and `ForPlayer(player, opponent)`.
+- **New actions:** `ReturnBabyToNurseryAction`, `DiscardHandAction` (`redrawSameCount`), 
+  `ShuffleDiscardIntoDeckAction`. Hand actions skip the source card (a Magic card is still in hand
+  while its effect runs).
+- **`CardManager.ResolvePlay`** — Unicorn/Upgrade/Downgrade cards now enter their stable
+  **before** their `IMMEDIATE` effect fires ("when this card enters your Stable"); Magic/Neigh
+  still fire first and are discarded after. Lets Cult Leader Unicorn be sacrificed to its own effect.
+- **Baby Unicorns → Nursery** — `CardManager.MoveCard` redirects any Baby Unicorn headed for the
+  discard pile to the Nursery (sacrifice, destroy, discard). `Deck.AddCard` now flips returned
+  cards face-down and resets their transform.
+- **Cards:** Cult Leader Unicorn, Safe Sex, Unicorn Acid Trip ("draw 2 more" via
+  `ChooseEffectAction`), Rainbow Shitstorm.
+- **`DeckManager`** — Force-to-top calls for the 4 cards + `DebugStageBoardForEachPlayer()`
+  (2 Nursery Baby Unicorns into each stable); the Kink Shame / Sex, Drugs, and Unicorns staging
+  calls are commented out.
+
+Confirmed in Play mode.
+
+---
+
 ## [v0.2.34] — 2026-09-23
 
 ### Sex, Drugs, and Unicorns — board staging + Play-mode confirmation

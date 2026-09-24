@@ -7,8 +7,8 @@
 | copies | 1 |
 | trigger | IMMEDIATE |
 | can_play | always |
-| impl_status | not_started |
-| impl_class | — |
+| impl_status | done |
+| impl_class | SafeSexCardData.cs |
 
 ## Effect (2nd Edition)
 > "Each player (including you) must return a Baby Unicorn card from their Stable to the Nursery."

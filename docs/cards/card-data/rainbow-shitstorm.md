@@ -7,8 +7,8 @@
 | copies | 1 |
 | trigger | IMMEDIATE |
 | can_play | always |
-| impl_status | not_started |
-| impl_class | — |
+| impl_status | done |
+| impl_class | RainbowShitstormCardData.cs |
 
 ## Effect (2nd Edition)
 > "Each player (including you) must SACRIFICE a card and DISCARD their hand. Shuffle the discard pile into the deck, then deal 5 cards to each player."

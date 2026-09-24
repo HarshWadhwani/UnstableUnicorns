@@ -56,19 +56,20 @@ public class CardManager : MonoBehaviour
     {
         Player opponent = turnManager.players.FirstOrDefault(p => p != turnManager.activePlayer);
 
-        if (card.cardData.specialActionType == SpecialActionType.IMMEDIATE)
-        {
-            card.cardData.TriggerSpecialAction(card);
-        }
-
+        // Cards that stay in play (Unicorn/Upgrade/Downgrade) enter their stable BEFORE their
+        // IMMEDIATE effect fires — "when this card enters your Stable" — so the effect sees the
+        // card in play (e.g. Cult Leader Unicorn can be sacrificed to its own effect). Magic/Neigh
+        // cards fire first and are discarded after, so they're still in hand while the effect runs.
         switch (card.cardData.cardType)
         {
             case CardType.UNICORN:
                 MoveCard(card, handStable, turnManager.activePlayer.unicornStable);
                 turnManager.activePlayer.unicornStable.CheckWinCondition();
+                TriggerIfImmediate(card);
                 return true;
             case CardType.UPGRADE:
                 MoveCard(card, handStable, turnManager.activePlayer.upgradeStable);
+                TriggerIfImmediate(card);
                 return true;
             case CardType.DOWNGRADE:
                 if (opponent == null)
@@ -78,9 +79,11 @@ public class CardManager : MonoBehaviour
                 }
 
                 MoveCard(card, handStable, opponent.downgradeStable);
+                TriggerIfImmediate(card);
                 return true;
             case CardType.MAGIC:
             case CardType.NEIGH:
+                TriggerIfImmediate(card);
                 MoveCard(card, handStable, discardPile);
                 return true;
             default:
@@ -88,8 +91,25 @@ public class CardManager : MonoBehaviour
         }
     }
 
+    private void TriggerIfImmediate(Card card)
+    {
+        if (card.cardData.specialActionType == SpecialActionType.IMMEDIATE)
+        {
+            card.cardData.TriggerSpecialAction(card);
+        }
+    }
+
     public void MoveCard(Card card, CardSpace oldCardSpace, CardSpace newCardSpace)
     {
+        // Baby Unicorns never go to the discard pile — anything that would put one there
+        // (sacrifice, destroy, discard) returns it to the Nursery instead.
+        if (newCardSpace is DiscardPile
+            && card.cardData is UnicornCardData unicorn && unicorn.unicornType == UnicornType.BABY
+            && DeckManager.Instance != null && DeckManager.Instance.nursery != null)
+        {
+            newCardSpace = DeckManager.Instance.nursery;
+        }
+
         oldCardSpace.RemoveCard(card);
         newCardSpace.AddCard(card);
 

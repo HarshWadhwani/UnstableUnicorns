@@ -7,8 +7,8 @@
 | copies | 1 |
 | trigger | IMMEDIATE |
 | can_play | always |
-| impl_status | not_started |
-| impl_class | — |
+| impl_status | done |
+| impl_class | UnicornAcidTripCardData.cs |
 
 ## Effect (2nd Edition)
 > "Each player (including you) must DISCARD their hand and DRAW the same number of cards they discarded. You may DRAW an additional 2 cards."

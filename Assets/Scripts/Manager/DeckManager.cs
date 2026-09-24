@@ -95,6 +95,14 @@ public class DeckManager : MonoBehaviour
         //     Sacrifice a Unicorn.
         ForceSexDrugsAndUnicornsToTop();
         ForceKinkShameToTop();
+        // "Each player" batch — drawn first. Draw order: Cult Leader Unicorn (P1 t1), Safe Sex
+        // (P2 t1), Unicorn Acid Trip (P1 t2), Rainbow Shitstorm (P2 t2).
+        // DebugStageBoardForEachPlayer below puts 2 Nursery Baby Unicorns in each player's Stable
+        // so every sacrifice / return has a target.
+        ForceRainbowShitstormToTop();
+        ForceUnicornAcidTripToTop();
+        ForceSafeSexToTop();
+        ForceCultLeaderUnicornToTop();
 
         foreach (var player in turnManager.players)
         {
@@ -102,8 +110,26 @@ public class DeckManager : MonoBehaviour
         }
 
         // DEBUG scaffolding for the cards currently under test. Comment out to disable.
-        DebugStageBoardForKinkShame();
-        DebugStageBoardForSexDrugsAndUnicorns();
+        // DebugStageBoardForKinkShame();
+        // DebugStageBoardForSexDrugsAndUnicorns();
+        DebugStageBoardForEachPlayer();
+    }
+
+    // DEBUG: 2 Nursery Baby Unicorns into each player's Unicorn stable, so Cult Leader Unicorn's
+    // sacrifice (P1 can pick Cult Leader itself or a Baby) and Safe Sex's return both have a
+    // target for every player. Sacrificed Babies should land back in the Nursery, not the discard.
+    void DebugStageBoardForEachPlayer()
+    {
+        foreach (Player player in turnManager.players)
+        {
+            for (int i = 0; i < 2 && nursery.spaceCards.Count > 0; i++)
+            {
+                Card babyUnicorn = nursery.spaceCards[0];
+                babyUnicorn.RevealCard();
+                cardManager.MoveCard(babyUnicorn, nursery, player.unicornStable);
+            }
+            Debug.Log($"[DebugStage] {player.name}'s Unicorn stable now has {player.unicornStable.spaceCards.Count} card(s).");
+        }
     }
 
     // DEBUG: put an Upgrade in P2's stable and a Downgrade in P1's stable so P1's turn-1 Kink
@@ -647,6 +673,54 @@ public class DeckManager : MonoBehaviour
     }
 
     // DEBUG: stack the play deck so the next draw is a Kink Shame card.
+    // DEBUG: stack the play deck so the next draw is a Cult Leader Unicorn card.
+    void ForceCultLeaderUnicornToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is CultLeaderUnicornCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceCultLeaderUnicornToTop: no CultLeaderUnicornCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Safe Sex card.
+    void ForceSafeSexToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is SafeSexCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceSafeSexToTop: no SafeSexCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Unicorn Acid Trip card.
+    void ForceUnicornAcidTripToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is UnicornAcidTripCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceUnicornAcidTripToTop: no UnicornAcidTripCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
+    // DEBUG: stack the play deck so the next draw is a Rainbow Shitstorm card.
+    void ForceRainbowShitstormToTop()
+    {
+        Card card = playDeck.spaceCards.Find(c => c.cardData is RainbowShitstormCardData);
+        if (card == null)
+        {
+            Debug.LogWarning("ForceRainbowShitstormToTop: no RainbowShitstormCardData found in play deck.");
+            return;
+        }
+        playDeck.MoveToTop(card);
+    }
+
     void ForceKinkShameToTop()
     {
         Card card = playDeck.spaceCards.Find(c => c.cardData is KinkShameCardData);
